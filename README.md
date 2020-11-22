@@ -1,2 +1,2 @@
 # BachelorThesis
-Application for the bachelor thesis //product delivery
+Application for the bachelor thesis //Job Recruitment App
