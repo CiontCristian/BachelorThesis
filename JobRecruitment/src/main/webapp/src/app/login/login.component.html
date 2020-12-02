@@ -1,0 +1,32 @@
+<div class="login_container">
+  <h1>Log in</h1>
+  <form (ngSubmit)="login()">
+    <mat-form-field appearance="fill" class="login_form_field">
+      <mat-label>Email</mat-label>
+      <label>
+        <input type="email" matInput [formControl]="emailForm" required
+               placeholder="Ex. pat@example.com">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="emailForm.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="login_form_field">
+      <mat-label>Enter your password</mat-label>
+      <label>
+        <input matInput [formControl]="passwordForm" [type]="hidePassword ? 'password' : 'text'" required>
+      </label>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="passwordForm.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="emailForm.invalid || passwordForm.invalid">Log In</button>
+  </form>
+
+</div>

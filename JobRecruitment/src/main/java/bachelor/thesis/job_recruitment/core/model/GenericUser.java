@@ -17,7 +17,7 @@ public class GenericUser extends BaseEntity<Long>{
     private String username;
     @Column(length = 30)
     private String password;
-    @Column(length = 20)
+    @Column(length = 40)
     private String email;
     @Column(length = 15)
     private String firstName;

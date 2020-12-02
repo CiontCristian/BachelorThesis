@@ -1,0 +1,113 @@
+<div class="register_container">
+  <h1>Log in</h1>
+  <form (ngSubmit)="register()" class="register_form">
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>User</mat-label>
+      <label>
+        <input type="text" matInput [formControl]="usernameForm" required
+               placeholder="Ex. cristi1234">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="usernameForm.hasError('required')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>Email</mat-label>
+      <label>
+        <input type="email" matInput [formControl]="emailForm" required
+               placeholder="Ex. pat@example.com">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="emailForm.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>Enter your password</mat-label>
+      <label>
+        <input matInput [formControl]="passwordForm" [type]="hidePassword ? 'password' : 'text'" required>
+      </label>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="passwordForm.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>First Name</mat-label>
+      <label>
+        <input type="text" matInput [formControl]="firstNameForm" required
+               placeholder="Ex. Chris">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="firstNameForm.hasError('required')">
+        First Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>Last Name</mat-label>
+      <label>
+        <input type="text" matInput [formControl]="lastNameForm" required
+               placeholder="Ex. Delgado">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="lastNameForm.hasError('required')">
+        Last Name is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>Date of Birth</mat-label>
+      <label>
+        <input type="date" matInput [formControl]="birthDateForm" required
+               placeholder="Ex. 01/01/1990">
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="birthDateForm.hasError('required')">
+        Date of Birth is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill" class="register_form_field">
+      <mat-label>Telephone</mat-label>
+      <label>
+        <span matPrefix>+40 &nbsp;</span>
+        <input type="tel" matInput placeholder="123-456-789" [formControl]="telephoneForm">
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </label>
+      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-error *ngIf="telephoneForm.hasError('required')">
+        Telephone is required
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+
+      <mat-label>Gender:  </mat-label>
+      <label>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="gender" name="gender">
+          <mat-radio-button value="M">Male</mat-radio-button>
+          <br/>
+          <mat-radio-button value="F">Female</mat-radio-button>
+        </mat-radio-group>
+      </label>
+
+    <br>
+
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="emailForm.invalid || passwordForm.invalid
+      || usernameForm.invalid || firstNameForm.invalid || lastNameForm.invalid || birthDateForm.invalid
+      || telephoneForm.invalid">Register</button>
+  </form>
+
+</div>

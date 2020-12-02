@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface UserService {
     List<GenericUser> findAll();
-    Optional<GenericUser> login(String username, String password);
+    Optional<GenericUser> verifyUserCredentials(String email, String password);
+    Optional<GenericUser> save(GenericUser user);
 }
