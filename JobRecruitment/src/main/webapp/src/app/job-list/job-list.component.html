@@ -1,0 +1,13 @@
+
+<div *ngIf="Page === 0 || pageEvent">
+  <ul *ngFor="let testObj of objects">
+    <li>{{testObj}}</li>
+  </ul>
+</div>
+
+<mat-paginator
+  [pageSizeOptions]="pageSizeOptions"
+  [pageSize]="Size"
+  (page)="pageEvent = pageNavigations($event)"
+  [length]="recordCount">
+</mat-paginator>

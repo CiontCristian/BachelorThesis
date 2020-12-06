@@ -27,7 +27,7 @@ public class GenericUser extends BaseEntity<Long>{
     @Column(length = 10)
     private String phoneNumber;
     private Character gender;
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
     private Permission permission;
 
 }

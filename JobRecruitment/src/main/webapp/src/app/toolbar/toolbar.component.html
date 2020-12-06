@@ -6,6 +6,7 @@
     <span>My App</span>
     <p *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</p>
     <span class="example-spacer"></span>
+    <a routerLink="job-list">Jobs</a>
     <a routerLink="login" *ngIf="currentUser === null">Login</a>
     <a routerLink="register" *ngIf="currentUser === null">Register</a>
     <a routerLink="" *ngIf="currentUser" (click)="logout()">Logout</a>
