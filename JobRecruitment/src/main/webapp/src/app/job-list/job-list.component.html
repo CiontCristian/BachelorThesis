@@ -1,13 +1,23 @@
 
-<div *ngIf="Page === 0 || pageEvent">
-  <ul *ngFor="let testObj of objects">
-    <li>{{testObj}}</li>
-  </ul>
+<div *ngIf="pageIndex === 0 || pageEvent">
+  <div *ngFor="let job of jobs">
+    <ul>
+      <app-job-card [job]="job"></app-job-card>
+    </ul>
+  </div>
 </div>
 
-<mat-paginator
+<mat-paginator #paginator
   [pageSizeOptions]="pageSizeOptions"
-  [pageSize]="Size"
+  [pageSize]="pageSize"
   (page)="pageEvent = pageNavigations($event)"
   [length]="recordCount">
 </mat-paginator>
+
+<input type="file" (change)="onFileChanged($event)">
+<button (click)="onAdd()">TEST</button>
+<div *ngIf="contractor !== null">
+  {{contractor.logo.name}}
+  {{contractor.logo.type}}
+  <img src="data:image/JPEG;base64,{{contractor.logo.data}}" alt="Company">
+</div>

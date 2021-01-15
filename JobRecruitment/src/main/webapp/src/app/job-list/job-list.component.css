@@ -1,0 +1,6 @@
+ul {
+  display: flex !important;
+  flex-direction: row;
+  flex-flow: wrap;
+  padding: 20px 20px 20px 110px !important;
+}

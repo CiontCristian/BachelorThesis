@@ -10,9 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,37 +33,42 @@ public class UserController {
     @Autowired
     private PermissionConverter permissionConverter;
 
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    List<UserDTO> findAll(){
+    @GetMapping(value = "/findAll")
+    ResponseEntity<List<UserDTO>> findAll(){
         List<GenericUser> users = userService.findAll();
 
         logger.trace("In UserController - method: findAll - users={}", users);
 
-        return userConverter.convertModelsToDtos(users);
+        return new ResponseEntity<>(userConverter.convertModelsToDtos(users), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/login")
-    UserDTO login(@RequestBody String[] credentials){
-        String email = credentials[0];
-        String password = credentials[1];
+    @GetMapping(value = "/login")
+    ResponseEntity<UserDTO> login(@RequestParam String email, @RequestParam String password) throws HttpClientErrorException{
 
         logger.trace("In UserController - method: login - credentials={}",email+ " " + password);
         Optional<GenericUser> genericUser = userService.verifyUserCredentials(email, password);
-        if(genericUser.isPresent()){
-            logger.trace("In UserController - method: login - retrievedUser={}",genericUser);
-            return userConverter.convertModelToDto(genericUser.get());
+
+        if (genericUser.isPresent()) {
+            logger.trace("In UserController - method: login - retrievedUser={}", genericUser);
+            return new ResponseEntity<>(userConverter.convertModelToDto(genericUser.get()), HttpStatus.OK);
         }
-        return null;
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @PostMapping(value = "/register")
-    UserDTO register(@RequestBody UserDTO userDTO){
+    ResponseEntity<UserDTO> register(@RequestBody UserDTO userDTO){
         logger.trace("In UserController - method: register - user={}", userDTO);
         Optional<GenericUser> genericUser = userService.save(userConverter.convertDtoToModel(userDTO));
 
-        if(genericUser.isEmpty())
-            return null;
-        return userConverter.convertModelToDto(genericUser.get());
+        if(genericUser.isPresent()) {
+            logger.trace("In UserController - method: register - savedUser={}", genericUser);
+            return new ResponseEntity<>(userConverter.convertModelToDto(genericUser.get()), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
+

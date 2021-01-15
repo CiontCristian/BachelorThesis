@@ -17,6 +17,12 @@ import {AccountService} from "./service/AccountService";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RegisterComponent } from './register/register.component';
 import {MatRadioModule} from "@angular/material/radio";
+import { JobListComponent } from './job-list/job-list.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {JobService} from "./service/JobService";
+import { JobCardComponent } from './job-card/job-card.component';
+import {MatCardModule} from "@angular/material/card";
+import {ContractorService} from "./service/ContractorService";
 
 @NgModule({
   declarations: [
@@ -24,23 +30,27 @@ import {MatRadioModule} from "@angular/material/radio";
     LoginComponent,
     ToolbarComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    JobListComponent,
+    JobCardComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        FormsModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatSnackBarModule,
-        MatRadioModule
-    ],
-  providers: [AccountService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatCardModule
+  ],
+  providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

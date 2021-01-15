@@ -18,11 +18,11 @@ public class Contractor extends BaseEntity<Long>{
     private String description;
 
 
-
-    private byte[] logo;
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+    private File logo;
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
     private Location location;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "contractor")
     private List<Job> offers;
 }

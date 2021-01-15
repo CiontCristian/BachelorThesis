@@ -50,13 +50,14 @@ export class RegisterComponent implements OnInit {
       this.gender, permission)
 
     console.log(newUser)
-    this.accountService.register(newUser).subscribe( user => {
-      this.registeredUser = user
-      if (this.registeredUser === null)
-        this.snackBar.open("Email or username already taken", "Registration Failed!")
-      else
+    this.accountService.register(newUser).subscribe( response => {
+        this.registeredUser = response.body;
         this.snackBar.open("Registration Successful", "Go to login!")
-    })
-    this.router.navigate(["login"])
+        this.router.navigate(["login"]);
+    },
+      error => {
+        console.log(error);
+        this.snackBar.open("Email or username already taken", "Registration Failed!")
+      });
   }
 }

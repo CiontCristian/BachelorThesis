@@ -7,10 +7,13 @@ import bachelor.thesis.job_recruitment.web.dto.JobDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,12 +29,12 @@ public class JobController {
     private JobConverter jobConverter;
 
     @GetMapping(value = "/findAllJobs")
-    List<JobDTO> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+    ResponseEntity<List<JobDTO>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         logger.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
         List<Job> jobs = jobService.findAll(pageIndex, pageSize);
         logger.trace("In JobController - method: findAllJobs - jobs={}", jobs);
 
-        return jobConverter.convertModelsToDtos(jobs);
+        return new ResponseEntity<>(jobConverter.convertModelsToDtos(jobs), HttpStatus.OK);
     }
 
 }

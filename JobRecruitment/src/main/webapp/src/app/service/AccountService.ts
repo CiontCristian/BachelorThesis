@@ -1,14 +1,16 @@
 import {Observable} from "rxjs";
 import {User} from "../model/User";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {map} from "rxjs/operators";
+import {Book} from "../model/Book";
 
 
 @Injectable()
 export class AccountService{
   private accountURL = 'http://localhost:8080/user';
+  private pythonURL = 'http://127.0.0.1:5000/python/books';
   public currentUser: Observable<User>;
 
   constructor(
@@ -16,8 +18,8 @@ export class AccountService{
     private router: Router
   ) {}
 
-  login(email: string, password: string) : Observable<User>{
-    return this.httpClient.post<User>( this.accountURL + '/login', [email, password]);
+  login(email: string, password: string) : Observable<HttpResponse<User>>{
+    return this.httpClient.get<User>( this.accountURL + '/login?email=' + email +"&password=" + password, {observe: 'response'});
   }
 
   logout(){
@@ -25,8 +27,17 @@ export class AccountService{
     this.router.navigate([""])
   }
 
-  register(user: User) : Observable<User>{
+  register(user: User) : Observable<HttpResponse<User>>{
     console.log(user)
-    return this.httpClient.post<User>( this.accountURL + '/register', user)
+    return this.httpClient.post<User>( this.accountURL + '/register', user, {observe: "response"});
+  }
+
+  getAllFromPython() : Observable<Book[]>{
+    return this.httpClient.get<Book[]>(this.pythonURL + '/all');
+  }
+
+  sendAllToPython(books: Book[]) : Observable<Book[]>{
+
+    return this.httpClient.post<Book[]>(this.pythonURL + '/getData', books);
   }
 }
