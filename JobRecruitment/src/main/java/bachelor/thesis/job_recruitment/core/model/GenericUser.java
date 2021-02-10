@@ -28,6 +28,10 @@ public class GenericUser extends BaseEntity<Long>{
     private String phoneNumber;
     private Character gender;
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Background background;
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
     private Permission permission;
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Location location;
 
 }

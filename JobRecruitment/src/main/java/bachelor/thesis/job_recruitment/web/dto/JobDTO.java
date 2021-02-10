@@ -11,6 +11,12 @@ import lombok.*;
 public class JobDTO extends BaseDTO<Long>{
     private String title;
     private String description;
-    private String type;
+    private String jobType;//full-time, part-time, internship
+    private Boolean remote;
+    private String minExperience;//entry, junior, senior, lead,...
+    private Integer minCompensation;//will be optional
+    private String devType;//backend, frontend, QA, full-stack,...
+    private String techs;//java, python, c#,...
+    private Integer availablePos;
     private ContractorDTO contractor;
 }

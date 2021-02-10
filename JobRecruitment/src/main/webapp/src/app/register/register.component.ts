@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../service/AccountService";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {User} from "../model/User";
 import {Permission} from "../model/Permission";
+import {Background} from "../model/Background";
+import {Location} from "../model/Location";
 
 @Component({
   selector: 'app-register',
@@ -14,40 +16,56 @@ import {Permission} from "../model/Permission";
 export class RegisterComponent implements OnInit {
   registeredUser : User = null
 
-  emailForm = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  passwordForm = new FormControl('', [Validators.required])
-  usernameForm = new FormControl('', [Validators.required])
-  firstNameForm = new FormControl('', [Validators.required])
-  lastNameForm = new FormControl('', [Validators.required])
-  birthDateForm = new FormControl('', [Validators.required])
-  gender : string = ""
-  telephoneForm = new FormControl('', [Validators.required])
+  generalFormGroup: FormGroup;
+  locationFormGroup: FormGroup;
+  backgroundFormGroup: FormGroup;
+
   hidePassword = true
 
   constructor(private accountService: AccountService,
               private router: Router,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.generalFormGroup = this.formBuilder.group({
+      emailForm : new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]), passwordForm: new FormControl('', [Validators.required]),usernameForm: new FormControl('', [Validators.required]),
+      firstNameForm: new FormControl('', [Validators.required]), lastNameForm: new FormControl('', [Validators.required]),
+      birthDateForm: new FormControl('', [Validators.required]),telephoneForm: new FormControl('', [Validators.required]),
+      genderForm : new FormControl('', [Validators.required])
+    });
+    this.locationFormGroup = this.formBuilder.group({
+      addressForm: new FormControl(''), cityForm: new FormControl(''),
+      countryForm: new FormControl('')
+    });
+    this.backgroundFormGroup = this.formBuilder.group({
+      formalEducationForm: new FormControl('', [Validators.required]), experienceForm: new FormControl('', [Validators.required]),
+      permissionForm: new FormControl('', Validators.required)
+    });
   }
 
   getEmailErrorMessage() {
-    if (this.emailForm.hasError('required')) {
+    if (this.generalFormGroup.get('emailForm').hasError('required')) {
       return 'Email is required!';
     }
 
-    return this.emailForm.hasError('email') ? 'Not a valid email' : '';
+    return this.generalFormGroup.get('emailForm').hasError('email') ? 'Not a valid email' : '';
   }
 
   register() {
-    let permission : Permission = new Permission(0, true, false)
+    const value = this.backgroundFormGroup.get('formalEducationForm').value === 'client';
+    let permission : Permission = new Permission(0, value === true, value !== true, false);
+    let background: Background = new Background(0, this.backgroundFormGroup.get('formalEducationForm').value, this.backgroundFormGroup.get('experienceForm').value);
+    let location: Location = new Location(0, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
+      this.locationFormGroup.get('countryForm').value);
 
-    let newUser : User = new User(0, this.usernameForm.value, this.passwordForm.value, this.emailForm.value,
-      this.firstNameForm.value, this.lastNameForm.value, new Date(this.birthDateForm.value), this.telephoneForm.value,
-      this.gender, permission)
+    let newUser : User = new User(0, this.generalFormGroup.get('usernameForm').value, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
+      this.generalFormGroup.get('firstNameForm').value, this.generalFormGroup.get('lastNameForm').value,
+      new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('telephoneForm').value, this.generalFormGroup.get('genderForm').value,
+      background, permission, location);
 
     console.log(newUser)
     this.accountService.register(newUser).subscribe( response => {

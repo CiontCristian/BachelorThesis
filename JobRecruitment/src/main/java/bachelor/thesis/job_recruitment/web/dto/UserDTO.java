@@ -19,5 +19,7 @@ public class UserDTO extends BaseDTO<Long> {
     private Date dateOfBirth;
     private String phoneNumber;
     private Character gender;
+    private BackgroundDTO background;
     private PermissionDTO permission;
+    private LocationDTO location;
 }

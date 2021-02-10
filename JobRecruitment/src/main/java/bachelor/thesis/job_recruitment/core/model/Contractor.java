@@ -16,6 +16,7 @@ public class Contractor extends BaseEntity<Long>{
     private String name;
     @Column(length = 3000)
     private String description;
+    private Integer nrOfEmployees;
 
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)

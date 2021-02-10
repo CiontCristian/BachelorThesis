@@ -1,5 +1,7 @@
 import {BaseEntity} from "./BaseEntity";
 import {Permission} from "./Permission";
+import {Background} from "./Background";
+import {Location} from "./Location";
 
 export class User extends BaseEntity{
   username : string;
@@ -10,10 +12,12 @@ export class User extends BaseEntity{
   dateOfBirth : Date;
   phoneNumber : string;
   gender : string;
+  background: Background;
   permission : Permission;
+  location: Location;
 
 
-  constructor(id: number, username: string, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, phoneNumber: string, gender: string, permission: Permission) {
+  constructor(id: number, username: string, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, phoneNumber: string, gender: string, background: Background, permission: Permission, location: Location) {
     super(id);
     this.username = username;
     this.password = password;
@@ -23,7 +27,8 @@ export class User extends BaseEntity{
     this.dateOfBirth = dateOfBirth;
     this.phoneNumber = phoneNumber;
     this.gender = gender;
+    this.background = background;
     this.permission = permission;
+    this.location = location;
   }
-
 }

@@ -23,6 +23,8 @@ import {JobService} from "./service/JobService";
 import { JobCardComponent } from './job-card/job-card.component';
 import {MatCardModule} from "@angular/material/card";
 import {ContractorService} from "./service/ContractorService";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {ContractorService} from "./service/ContractorService";
     MatSnackBarModule,
     MatRadioModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    NgbModule,
+    MatStepperModule
   ],
   providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent]

@@ -14,6 +14,7 @@ import java.util.List;
 public class ContractorDTO extends BaseDTO<Long>{
     private String name;
     private String description;
+    private Integer nrOfEmployees;
     private File logo;
     private LocationDTO location;
     private List<JobDTO> offers;

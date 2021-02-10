@@ -16,7 +16,13 @@ import javax.persistence.ManyToOne;
 public class Job extends BaseEntity<Long>{
     private String title;
     private String description;
-    private String type;
+    private String jobType;//full-time, part-time, internship
+    private Boolean remote;
+    private String minExperience;//entry, junior, senior, lead,...
+    private Integer minCompensation;//will be optional
+    private String devType;//backend, frontend, QA, full-stack,...
+    private String techs;//java, python, c#,...
+    private Integer availablePos;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Contractor contractor;

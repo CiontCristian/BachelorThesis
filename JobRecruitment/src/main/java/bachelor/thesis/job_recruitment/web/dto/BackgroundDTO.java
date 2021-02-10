@@ -8,8 +8,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
-public class PermissionDTO extends BaseDTO<Long>{
-    private Boolean isClient;
-    private Boolean isCompany;
-    private Boolean isAdmin;
+public class BackgroundDTO extends BaseDTO<Long>{
+    private String formalEducation;
+    private String experience;
 }

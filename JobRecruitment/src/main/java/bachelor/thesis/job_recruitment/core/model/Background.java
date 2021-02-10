@@ -10,8 +10,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Permission extends BaseEntity<Long>{
-    private Boolean isClient;
-    private Boolean isCompany;
-    private Boolean isAdmin;
+public class Background extends BaseEntity<Long>{
+    private String formalEducation;
+    private String experience;
 }
