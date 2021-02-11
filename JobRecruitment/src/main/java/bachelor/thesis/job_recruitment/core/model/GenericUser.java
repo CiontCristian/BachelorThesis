@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +34,7 @@ public class GenericUser extends BaseEntity<Long>{
     private Permission permission;
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
     private Location location;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Contractor company;
 
 }

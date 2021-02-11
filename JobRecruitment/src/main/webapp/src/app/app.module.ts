@@ -25,6 +25,9 @@ import {MatCardModule} from "@angular/material/card";
 import {ContractorService} from "./service/ContractorService";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatStepperModule} from "@angular/material/stepper";
+import { ContractorSaveComponent } from './contractor-save/contractor-save.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { ContractorManageComponent } from './contractor-manage/contractor-manage.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import {MatStepperModule} from "@angular/material/stepper";
     HomeComponent,
     RegisterComponent,
     JobListComponent,
-    JobCardComponent
+    JobCardComponent,
+    ContractorSaveComponent,
+    ContractorManageComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,8 @@ import {MatStepperModule} from "@angular/material/stepper";
     MatPaginatorModule,
     MatCardModule,
     NgbModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSidenavModule
   ],
   providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent]

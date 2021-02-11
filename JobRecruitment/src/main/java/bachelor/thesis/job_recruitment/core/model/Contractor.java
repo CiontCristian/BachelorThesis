@@ -26,4 +26,6 @@ public class Contractor extends BaseEntity<Long>{
     private Location location;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "contractor")
     private List<Job> offers;
+    @OneToOne(fetch = FetchType.EAGER)
+    private GenericUser owner;
 }

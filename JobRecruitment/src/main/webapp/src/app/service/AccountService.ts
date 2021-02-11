@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {map} from "rxjs/operators";
 import {Book} from "../model/Book";
+import {Contractor} from "../model/Contractor";
 
 
 @Injectable()
@@ -30,6 +31,10 @@ export class AccountService{
   register(user: User) : Observable<HttpResponse<User>>{
     console.log(user)
     return this.httpClient.post<User>( this.accountURL + '/register', user, {observe: "response"});
+  }
+
+  modifyUserContractor(id: number, contractor: Contractor) : Observable<HttpResponse<User>>{
+    return this.httpClient.put<User>(this.accountURL + '/modifyCompany/' + id, contractor, {observe: "response"});
   }
 
   getAllFromPython() : Observable<Book[]>{

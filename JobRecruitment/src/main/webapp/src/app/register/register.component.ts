@@ -56,16 +56,17 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const value = this.backgroundFormGroup.get('formalEducationForm').value === 'client';
-    let permission : Permission = new Permission(0, value === true, value !== true, false);
-    let background: Background = new Background(0, this.backgroundFormGroup.get('formalEducationForm').value, this.backgroundFormGroup.get('experienceForm').value);
-    let location: Location = new Location(0, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
+    const value = this.backgroundFormGroup.get('permissionForm').value === 'client';
+    let permission : Permission = new Permission(null, value === true, value !== true, false);
+    let background: Background = new Background(null, this.backgroundFormGroup.get('formalEducationForm').value,
+      this.backgroundFormGroup.get('experienceForm').value);
+    let location: Location = new Location(null, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
       this.locationFormGroup.get('countryForm').value);
 
-    let newUser : User = new User(0, this.generalFormGroup.get('usernameForm').value, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
+    let newUser : User = new User(null, this.generalFormGroup.get('usernameForm').value, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
       this.generalFormGroup.get('firstNameForm').value, this.generalFormGroup.get('lastNameForm').value,
       new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('telephoneForm').value, this.generalFormGroup.get('genderForm').value,
-      background, permission, location);
+      background, permission, location, null);
 
     console.log(newUser)
     this.accountService.register(newUser).subscribe( response => {

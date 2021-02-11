@@ -14,10 +14,5 @@
   [length]="recordCount">
 </mat-paginator>
 
-<input type="file" (change)="onFileChanged($event)">
-<button (click)="onAdd()">TEST</button>
-<div *ngIf="contractor !== null">
-  {{contractor.logo.name}}
-  {{contractor.logo.type}}
-  <img src="data:image/JPEG;base64,{{contractor.logo.data}}" alt="Company">
-</div>
+
+<!--<img src="data:image/JPEG;base64,{{contractor.logo.data}}" alt="Company">-->

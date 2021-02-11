@@ -22,4 +22,5 @@ public class UserDTO extends BaseDTO<Long> {
     private BackgroundDTO background;
     private PermissionDTO permission;
     private LocationDTO location;
+    private ContractorDTO company;
 }

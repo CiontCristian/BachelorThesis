@@ -3,8 +3,10 @@ package bachelor.thesis.job_recruitment.web.controller;
 
 import bachelor.thesis.job_recruitment.core.model.GenericUser;
 import bachelor.thesis.job_recruitment.core.service.UserService;
+import bachelor.thesis.job_recruitment.web.converter.ContractorConverter;
 import bachelor.thesis.job_recruitment.web.converter.PermissionConverter;
 import bachelor.thesis.job_recruitment.web.converter.UserConverter;
+import bachelor.thesis.job_recruitment.web.dto.ContractorDTO;
 import bachelor.thesis.job_recruitment.web.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,8 @@ public class UserController {
     private UserConverter userConverter;
     @Autowired
     private PermissionConverter permissionConverter;
+    @Autowired
+    private ContractorConverter contractorConverter;
 
     @GetMapping(value = "/findAll")
     ResponseEntity<List<UserDTO>> findAll(){
@@ -65,6 +69,18 @@ public class UserController {
         if(genericUser.isPresent()) {
             logger.trace("In UserController - method: register - savedUser={}", genericUser);
             return new ResponseEntity<>(userConverter.convertModelToDto(genericUser.get()), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping(value = "modifyCompany/{id}")
+    ResponseEntity<UserDTO> modifyCompany(@PathVariable Long id, @RequestBody ContractorDTO contractorDTO){
+        logger.debug("In UserController - method: modifyCompany - id={}, company={}", id, contractorDTO);
+        Optional<GenericUser> modifiedUser = userService.modifyCompany(id, contractorConverter.convertDtoToModel(contractorDTO));
+
+        if(modifiedUser.isPresent()){
+            return new ResponseEntity<>(userConverter.convertModelToDto(modifiedUser.get()), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -3,6 +3,7 @@ package bachelor.thesis.job_recruitment.web.controller;
 import bachelor.thesis.job_recruitment.core.model.Contractor;
 import bachelor.thesis.job_recruitment.core.model.File;
 import bachelor.thesis.job_recruitment.core.repository.ContractorRepository;
+import bachelor.thesis.job_recruitment.core.service.ContractorService;
 import bachelor.thesis.job_recruitment.web.converter.ContractorConverter;
 import bachelor.thesis.job_recruitment.web.dto.ContractorDTO;
 import org.slf4j.Logger;
@@ -18,13 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/contractor")
 public class ContractorController {
     public static final Logger logger = LoggerFactory.getLogger(ContractorController.class);
     @Autowired
-    private ContractorRepository contractorRepository;
+    private ContractorService contractorService;
 
     @Autowired
     private ContractorConverter contractorConverter;
@@ -40,10 +42,14 @@ public class ContractorController {
         //contractorDTO.setLogo(fileObject);
         //Contractor savedContractor = contractorRepository.save(contractorConverter.convertDtoToModel(contractorDTO));
         ContractorDTO contractor = new ContractorDTO(contractorDTO.getName(),
-                contractorDTO.getDescription(), null, null, null);
+                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null,
+                contractorDTO.getOwner());
         contractor.setLogo(fileObject);
-        Contractor savedContractor = contractorRepository.save(contractorConverter.convertDtoToModel(contractor));
+        Optional<Contractor> savedContractor = contractorService.save(contractorConverter.convertDtoToModel(contractor));
+        if(savedContractor.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(contractorConverter.convertModelToDto(savedContractor), HttpStatus.OK);
+        logger.trace("In ContractorController - method: saveContractor - savedContractor={}", savedContractor);
+        return new ResponseEntity<>(contractorConverter.convertModelToDto(savedContractor.get()), HttpStatus.OK);
     }
 }

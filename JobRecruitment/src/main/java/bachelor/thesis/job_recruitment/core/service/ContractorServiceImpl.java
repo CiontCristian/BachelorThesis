@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ContractorServiceImpl implements ContractorService{
     public static final Logger logger = LoggerFactory.getLogger(ContractorService.class);
@@ -15,7 +18,23 @@ public class ContractorServiceImpl implements ContractorService{
     private ContractorRepository contractorRepository;
 
     @Override
-    public Contractor saveContractor(Contractor contractor) {
-        return contractorRepository.save(contractor);
+    public Optional<Contractor> save(Contractor contractor) {
+        logger.trace("In ContractorServiceImpl - method: saveContractor() - contractor={}", contractor);
+        Optional<Contractor> alreadyUsed = findAll().stream()
+                .filter(contractor1 -> contractor1.getName().equals(contractor.getName()))
+                .findFirst();
+        if(alreadyUsed.isPresent()) {
+            System.out.println("AAAAAAAAAAAA");
+            return Optional.empty();
+        }
+        contractorRepository.save(contractor);
+
+        return Optional.of(contractor);
+    }
+
+    @Override
+    public List<Contractor> findAll() {
+        logger.trace("In ContractorServiceImpl - method: findAll()");
+        return contractorRepository.findAll();
     }
 }

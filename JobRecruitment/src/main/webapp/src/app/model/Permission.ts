@@ -1,4 +1,5 @@
 import {BaseEntity} from "./BaseEntity";
+import {User} from "./User";
 
 export class Permission extends BaseEntity{
   isClient : boolean;

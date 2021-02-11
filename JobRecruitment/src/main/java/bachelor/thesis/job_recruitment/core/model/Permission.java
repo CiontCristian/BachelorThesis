@@ -3,6 +3,7 @@ package bachelor.thesis.job_recruitment.core.model;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

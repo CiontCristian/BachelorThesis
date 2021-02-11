@@ -16,19 +16,16 @@ public class ContractorConverter extends BaseConverter<Contractor, ContractorDTO
     private LocationConverter locationConverter;
     @Autowired
     private JobConverter jobConverter;
+    @Autowired
+    private UserConverter userConverter;
 
     @Override
     public Contractor convertDtoToModel(ContractorDTO dto) {
-        /*Contractor contractor = Contractor.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .logo(dto.getLogo())
-                .location(dto.getLocation() == null ? null : locationConverter.convertDtoToModel(dto.getLocation()))
-                .offers(dto.getOffers() == null ? null : jobConverter.convertDtosToModels(dto.getOffers()))
-                .build();*/
         Contractor contractor = modelMapper.map(dto, Contractor.class);
         contractor.setId(dto.getId());
-        //System.out.println(contractor);
+        contractor.setLocation(locationConverter.convertDtoToModel(dto.getLocation()));
+        contractor.setOffers(dto.getOffers() == null ? null : jobConverter.convertDtosToModels(dto.getOffers()));
+        contractor.setOwner(userConverter.convertDtoToModel(dto.getOwner()));
         return contractor;
     }
 
@@ -36,6 +33,9 @@ public class ContractorConverter extends BaseConverter<Contractor, ContractorDTO
     public ContractorDTO convertModelToDto(Contractor contractor) {
         ContractorDTO contractorDTO = modelMapper.map(contractor, ContractorDTO.class);
         contractorDTO.setId(contractor.getId());
+        contractorDTO.setLocation(locationConverter.convertModelToDto(contractor.getLocation()));
+        contractorDTO.setOffers(contractor.getOffers() == null ? null : jobConverter.convertModelsToDtos(contractor.getOffers()));
+        contractorDTO.setOwner(userConverter.convertModelToDto(contractor.getOwner()));
         return contractorDTO;
     }
 }

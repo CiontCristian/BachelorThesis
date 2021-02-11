@@ -21,10 +21,7 @@ export class JobListComponent implements OnInit {
   pageSize: number=5;
   recordCount: number;
   pageSizeOptions: number[] = [5,10,50,100];
-  image: File;
-  formData = new FormData();
-  contractor: Contractor = null;
-  byteArray: Uint8Array;
+
   constructor(private jobService: JobService,
               private contractorService: ContractorService,
               private router: Router) { }
@@ -51,23 +48,4 @@ export class JobListComponent implements OnInit {
 
     return event
   }
-
-  onAdd(){
-    this.formData.append("file", this.image, this.image.name);
-    console.log(this.image);
-    let contractor: Contractor = new Contractor(
-      0, "Name", "Desc", null, null, null
-    )
-    const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
-    this.formData.append("contractorDTO", contractorBlob);
-    this.contractorService.saveContractor(this.formData).subscribe(
-      response => this.contractor = response.body,
-      error => console.log(error)
-    );
-  }
-
-  onFileChanged(event) {
-    this.image = event.target.files[0]
-  }
-
 }

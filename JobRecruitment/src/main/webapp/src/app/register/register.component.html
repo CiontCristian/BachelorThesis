@@ -1,5 +1,5 @@
 <div class="register_container">
-  <h1>Log in</h1>
+  <h1>Register</h1>
   <form (ngSubmit)="register()" class="register_form">
     <mat-horizontal-stepper linear #stepper>
       <mat-step [stepControl]="generalFormGroup">
@@ -304,8 +304,8 @@
     <button type="submit" mat-raised-button color="primary" [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
       || this.generalFormGroup.get('usernameForm').invalid || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
        this.generalFormGroup.get('birthDateForm').invalid || this.generalFormGroup.get('telephoneForm').invalid ||
-      this.backgroundFormGroup.get('permissionForm').invalid || this.backgroundFormGroup.get('formalEducationForm').invalid ||
-      this.backgroundFormGroup.get('experienceForm').invalid ">Register</button>
+      this.backgroundFormGroup.get('permissionForm').invalid || (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('formalEducationForm').invalid) ||
+      (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('experienceForm').invalid ) ">Register</button>
   </form>
 
 </div>
