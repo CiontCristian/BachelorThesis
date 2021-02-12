@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/job")
@@ -43,6 +44,16 @@ public class JobController {
 
 
         return new ResponseEntity<>(jobConverter.convertModelToDto(savedJob), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findJobById/{id}")
+    ResponseEntity<JobDTO> findJobById(@PathVariable Long id){
+
+        Optional<Job> job = jobService.findJobById(id);
+        if(job.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(jobConverter.convertModelToDto(job.get()), HttpStatus.OK);
     }
 
 

@@ -18,4 +18,5 @@ public class ContractorDTO extends BaseDTO<Long>{
     private File logo;
     private LocationDTO location;
     private List<JobDTO> offers;
+    private UserDTO owner;
 }

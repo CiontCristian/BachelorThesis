@@ -42,7 +42,8 @@ public class ContractorController {
         //contractorDTO.setLogo(fileObject);
         //Contractor savedContractor = contractorRepository.save(contractorConverter.convertDtoToModel(contractorDTO));
         ContractorDTO contractor = new ContractorDTO(contractorDTO.getName(),
-                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null);
+                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null,
+                contractorDTO.getOwner());
         contractor.setLogo(fileObject);
         Optional<Contractor> savedContractor = contractorService.save(contractorConverter.convertDtoToModel(contractor));
         if(savedContractor.isEmpty())
@@ -50,5 +51,39 @@ public class ContractorController {
 
         logger.trace("In ContractorController - method: saveContractor - savedContractor={}", savedContractor);
         return new ResponseEntity<>(contractorConverter.convertModelToDto(savedContractor.get()), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findContractorForUser/{id}")
+    ResponseEntity<ContractorDTO> findContractorForUser(@PathVariable Long id){
+        Optional<Contractor> contractor = contractorService.findContractorForUser(id);
+        if(contractor.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(contractorConverter.convertModelToDto(contractor.get()), HttpStatus.OK);
+
+    }
+
+    @PutMapping(value = "/modifyContractor", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    ResponseEntity<ContractorDTO> modifyContractor(@RequestPart("file") MultipartFile file, @RequestPart("contractorDTO") ContractorDTO contractorDTO,
+                                                   @RequestPart("logoID") String id) throws IOException {
+
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        File fileObject = new File(fileName, file.getContentType(), file.getBytes());
+        fileObject.setId(Long.parseLong(id));
+
+        //contractorDTO.setLogo(fileObject);
+        //Contractor savedContractor = contractorRepository.save(contractorConverter.convertDtoToModel(contractorDTO));
+        ContractorDTO contractor = new ContractorDTO(contractorDTO.getName(),
+                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null,
+                contractorDTO.getOwner());
+        contractor.setLogo(fileObject);
+        contractor.setId(contractorDTO.getId());
+        Optional<Contractor> modifiedContractor = contractorService.modifyContractor(contractorConverter.convertDtoToModel(contractor));
+        if(modifiedContractor.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        logger.trace("In ContractorController - method: modifyContractor - modifiedContractor={}", modifiedContractor);
+        return new ResponseEntity<>(contractorConverter.convertModelToDto(modifiedContractor.get()), HttpStatus.OK);
     }
 }

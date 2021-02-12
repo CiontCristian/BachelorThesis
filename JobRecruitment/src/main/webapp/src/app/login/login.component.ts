@@ -9,6 +9,7 @@ import {User} from "../model/User";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ToolbarComponent} from "../toolbar/toolbar.component";
 import {Book} from "../model/Book";
+import {ContractorService} from "../service/ContractorService";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   arr: Book[] = [];
 
   constructor(private accountService: AccountService,
+              private contractorService: ContractorService,
               private router: Router,
               private toolbarComponent: ToolbarComponent,
               private snackBar : MatSnackBar
@@ -50,6 +52,14 @@ export class LoginComponent implements OnInit {
 
           this.snackBar.open("Login successful!", "Welcome");
           sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+          if(this.currentUser.permission.isCompany){
+            this.contractorService.findContractorForUser(this.currentUser.id).subscribe(
+              response =>{
+                  sessionStorage.setItem("contractor", JSON.stringify(response.body));
+              },
+              error => console.log("Contractor for user not yet set!")
+            )
+          }
           this.toolbarComponent.ngOnInit();
           this.router.navigate([""]);
         },

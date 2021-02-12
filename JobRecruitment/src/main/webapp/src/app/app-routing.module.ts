@@ -6,6 +6,7 @@ import {RegisterComponent} from "./register/register.component";
 import {JobListComponent} from "./job-list/job-list.component";
 import {ContractorSaveComponent} from "./contractor-save/contractor-save.component";
 import {ContractorManageComponent} from "./contractor-manage/contractor-manage.component";
+import {JobDetailsComponent} from "./job-details/job-details.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
   {path: "job-list", component: JobListComponent},
+  {path: "job-list/details/:jobID", component: JobDetailsComponent},
   {path: "contractor-save", component: ContractorSaveComponent},
   {path: "contractor-manage", component: ContractorManageComponent}
 ];

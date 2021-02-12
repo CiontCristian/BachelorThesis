@@ -11,9 +11,10 @@ export class Job extends BaseEntity{
   devType: string;
   techs: string;
   availablePos: number;
+  contractor: Contractor;
 
 
-  constructor(id: number, title: string, description: string, jobType: string, remote: boolean, minExperience: string, minCompensation: number, devType: string, techs: string, availablePos: number) {
+  constructor(id: number, title: string, description: string, jobType: string, remote: boolean, minExperience: string, minCompensation: number, devType: string, techs: string, availablePos: number, contractor: Contractor) {
     super(id);
     this.title = title;
     this.description = description;
@@ -24,5 +25,6 @@ export class Job extends BaseEntity{
     this.devType = devType;
     this.techs = techs;
     this.availablePos = availablePos;
+    this.contractor = contractor;
   }
 }

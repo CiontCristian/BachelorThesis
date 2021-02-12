@@ -1,7 +1,7 @@
 
 <div *ngIf="pageIndex === 0 || pageEvent">
   <div *ngFor="let job of jobs">
-    <ul>
+    <ul (click)="navigateToJobDetails(job.id)">
       <app-job-card [job]="job"></app-job-card>
     </ul>
   </div>

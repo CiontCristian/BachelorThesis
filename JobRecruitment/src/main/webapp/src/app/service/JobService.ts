@@ -23,4 +23,10 @@ export class JobService{
     return this.httpClient.post<Job>(this.jobURL + "/saveJob", job, {observe: "response"});
   }
 
+  getJob(id: number): Observable<HttpResponse<Job>>
+  {
+    return this.httpClient.get<Job>(this.jobURL + "/findJobById/" + id,
+      {observe: "response"});
+  }
+
 }

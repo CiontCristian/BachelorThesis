@@ -6,6 +6,7 @@ import {Job} from "../model/Job";
 import {User} from "../model/User";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
+import {Contractor} from "../model/Contractor";
 
 @Component({
   selector: 'app-job-save',
@@ -15,6 +16,7 @@ import {MatChipInputEvent} from "@angular/material/chips";
 export class JobSaveComponent implements OnInit {
 
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
+  contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
 
   titleForm = new FormControl('', [Validators.required]);
   descriptionForm = new FormControl('', [Validators.required]);
@@ -47,13 +49,13 @@ export class JobSaveComponent implements OnInit {
   register(): void{
     let job: Job = new Job(0, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
       this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value, this.devTypeForm.value.toString(),
-      this.techs.toString(), this.availablePosForm.value);
+      this.techs.toString(), this.availablePosForm.value, this.contractor);
 
     console.log(job);
     this.jobService.saveJob(job).subscribe(
       response => {
-        this.currentUser.company.offers.push(response.body);
-        sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        this.contractor.offers.push(response.body);
+        sessionStorage.setItem("contractor", JSON.stringify(this.contractor));
       }
     );
   }

@@ -48,4 +48,8 @@ export class JobListComponent implements OnInit {
 
     return event
   }
+
+  navigateToJobDetails(id: number){
+    this.router.navigate(["job-list/details/", id]);
+  }
 }

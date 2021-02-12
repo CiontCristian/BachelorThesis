@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
     let newUser : User = new User(null, this.generalFormGroup.get('usernameForm').value, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
       this.generalFormGroup.get('firstNameForm').value, this.generalFormGroup.get('lastNameForm').value,
       new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('telephoneForm').value, this.generalFormGroup.get('genderForm').value,
-      background, permission, location, null);
+      background, permission, location);
 
     console.log(newUser)
     this.accountService.register(newUser).subscribe( response => {

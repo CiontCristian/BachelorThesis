@@ -17,17 +17,17 @@ public class JobConverter extends BaseConverter<Job, JobDTO> {
     public Job convertDtoToModel(JobDTO dto) {
         Job job = modelMapper.map(dto, Job.class);
         job.setId(dto.getId());
-        //job.setContractor(contractorConverter.convertDtoToModel(dto.getContractor()));
+        job.setContractor(contractorConverter.convertDtoToModel(dto.getContractor()));
         return job;
     }
 
     @Override
     public JobDTO convertModelToDto(Job job) {
-        /*JobDTO jobDTO = modelMapper.map(job, JobDTO.class);
+        JobDTO jobDTO = modelMapper.map(job, JobDTO.class);
         jobDTO.setId(job.getId());
         jobDTO.setContractor(contractorConverter.convertModelToDto(job.getContractor()));
-        return jobDTO;*/
-        JobDTO jobDTO = JobDTO.builder()
+        return jobDTO;
+        /*JobDTO jobDTO = JobDTO.builder()
                 .title(job.getTitle())
                 .description(job.getDescription())
                 .jobType(job.getJobType())
@@ -39,6 +39,6 @@ public class JobConverter extends BaseConverter<Job, JobDTO> {
                 .techs(job.getTechs())
                 .build();
         jobDTO.setId(job.getId());
-        return jobDTO;
+        return jobDTO;*/
     }
 }

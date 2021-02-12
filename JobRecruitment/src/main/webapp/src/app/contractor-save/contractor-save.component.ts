@@ -18,7 +18,7 @@ export class ContractorSaveComponent implements OnInit {
   generalFormGroup: FormGroup;
   locationFormGroup: FormGroup;
   currentUser: User = null;
-  contractor: Contractor = null;
+  contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
 
   image: File;
   formData = new FormData();
@@ -55,19 +55,20 @@ export class ContractorSaveComponent implements OnInit {
     console.log(this.image);
     let contractor: Contractor = new Contractor(0, this.generalFormGroup.get('nameForm').value,
       this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
-      null, location, null);
+      null, location, null, this.currentUser);
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
     this.formData.append("contractorDTO", contractorBlob);
     this.contractorService.saveContractor(this.formData).subscribe(
       response => {this.contractor = response.body;
-        this.accountService.modifyUserContractor(this.currentUser.id, this.contractor)
+              sessionStorage.setItem("contractor", JSON.stringify(response.body));
+        /*this.accountService.modifyUserContractor(this.currentUser.id, this.contractor)
           .subscribe(
             response => {sessionStorage.setItem("currentUser", JSON.stringify(response.body));
               this.currentUser = response.body;
               console.log(this.currentUser)},
             error => console.log(error)
-          );},
+          );*/},
       error => console.log(error)
     );
 

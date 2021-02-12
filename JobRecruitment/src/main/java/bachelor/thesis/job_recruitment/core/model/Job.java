@@ -23,5 +23,7 @@ public class Job extends BaseEntity<Long>{
     private String devType;//backend, frontend, QA, full-stack,...
     private String techs;//java, python, c#,...
     private Integer availablePos;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Contractor contractor;
 
 }

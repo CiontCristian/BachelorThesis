@@ -3,7 +3,7 @@
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Job Recruitment</span>
+    <a routerLink=""><span>Job Recruitment</span></a>
     <p *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</p>
     <span class="example-spacer"></span>
     <a routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</a>

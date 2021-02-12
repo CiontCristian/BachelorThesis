@@ -27,7 +27,6 @@ public class UserConverter extends BaseConverter<GenericUser, UserDTO> {
         user.setBackground(backgroundConverter.convertDtoToModel(dto.getBackground()));
         user.setLocation(locationConverter.convertDtoToModel(dto.getLocation()));
         user.setPermission(permissionConverter.convertDtoToModel(dto.getPermission()));
-        user.setCompany(dto.getCompany() == null ? null : contractorConverter.convertDtoToModel(dto.getCompany()));
         return user;
     }
 
@@ -38,7 +37,6 @@ public class UserConverter extends BaseConverter<GenericUser, UserDTO> {
         userDTO.setBackground(backgroundConverter.convertModelToDto(genericUser.getBackground()));
         userDTO.setLocation(locationConverter.convertModelToDto(genericUser.getLocation()));
         userDTO.setPermission(permissionConverter.convertModelToDto(genericUser.getPermission()));
-        userDTO.setCompany(genericUser.getCompany() == null ? null : contractorConverter.convertModelToDto(genericUser.getCompany()));
         return userDTO;
     }
 }

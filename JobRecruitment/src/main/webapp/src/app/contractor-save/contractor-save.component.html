@@ -1,7 +1,7 @@
 
 <div class="register_container">
   <h1>Upload</h1>
-  <p *ngIf="currentUser.company !== null"><b>You already registered a company!</b></p>
+  <p *ngIf="contractor !== null"><b>You already registered a company!</b></p>
   <form (ngSubmit)="register()" class="register_form">
     <mat-horizontal-stepper linear #stepper>
 
@@ -104,6 +104,6 @@
     </mat-horizontal-stepper>
     <button type="submit" mat-raised-button color="primary" [disabled]="this.generalFormGroup.get('nameForm').invalid ||
      this.generalFormGroup.get('descriptionForm').invalid || this.generalFormGroup.get('nrOfEmployeesForm').invalid ||
-      this.generalFormGroup.get('logoForm').invalid || currentUser.company !== null">Confirm</button>
+      this.generalFormGroup.get('logoForm').invalid || contractor !== null">Confirm</button>
   </form>
 </div>

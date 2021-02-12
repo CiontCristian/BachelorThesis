@@ -16,10 +16,9 @@ export class User extends BaseEntity{
   background: Background;
   permission : Permission;
   location: Location;
-  company: Contractor;
 
 
-  constructor(id: number, username: string, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, phoneNumber: string, gender: string, background: Background, permission: Permission, location: Location, company: Contractor) {
+  constructor(id: number, username: string, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, phoneNumber: string, gender: string, background: Background, permission: Permission, location: Location) {
     super(id);
     this.username = username;
     this.password = password;
@@ -32,6 +31,5 @@ export class User extends BaseEntity{
     this.background = background;
     this.permission = permission;
     this.location = location;
-    this.company = company;
   }
 }

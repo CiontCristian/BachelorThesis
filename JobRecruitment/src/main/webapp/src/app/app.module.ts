@@ -37,6 +37,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSelectModule} from "@angular/material/select";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatListModule} from "@angular/material/list";
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {MatListModule} from "@angular/material/list";
     JobCardComponent,
     ContractorSaveComponent,
     ContractorManageComponent,
-    JobSaveComponent
+    JobSaveComponent,
+    JobDetailsComponent
   ],
   imports: [
     BrowserModule,

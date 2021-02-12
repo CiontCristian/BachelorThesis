@@ -25,6 +25,7 @@ export class AccountService{
 
   logout(){
     sessionStorage.removeItem("currentUser");
+    sessionStorage.removeItem("contractor");
     this.router.navigate([""])
   }
 

@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
         if(current.isEmpty())
             return Optional.empty();
 
-        current.get().setCompany(contractor);
+        //current.get().setCompany(contractor);
         return current;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,11 @@ public class JobServiceImpl implements JobService{
         logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
 
         return jobs.getContent();
+    }
+
+    @Override
+    public Optional<Job> findJobById(Long id) {
+        return jobRepository.findById(id);
     }
 
     @Override
