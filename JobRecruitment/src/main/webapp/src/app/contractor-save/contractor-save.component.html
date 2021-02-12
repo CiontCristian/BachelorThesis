@@ -55,17 +55,6 @@
             Logo is required
           </mat-error>
 
-          <!--<mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Number of Employees</mat-label>
-            <label>
-              <input type="file" (change)="onFileChanged($event)" formControlName="logoForm">
-            </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
-            <mat-error *ngIf="this.generalFormGroup.get('logoForm').hasError('required')">
-              Logo is required
-            </mat-error>
-          </mat-form-field>
-          <br>-->
 
           <div>
             <button mat-button matStepperNext>Next</button>
@@ -107,7 +96,7 @@
 
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
           </div>
         </form>
       </mat-step>

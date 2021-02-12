@@ -28,6 +28,15 @@ import {MatStepperModule} from "@angular/material/stepper";
 import { ContractorSaveComponent } from './contractor-save/contractor-save.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { ContractorManageComponent } from './contractor-manage/contractor-manage.component';
+import { JobSaveComponent } from './job-save/job-save.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSelectModule} from "@angular/material/select";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -39,7 +48,8 @@ import { ContractorManageComponent } from './contractor-manage/contractor-manage
     JobListComponent,
     JobCardComponent,
     ContractorSaveComponent,
-    ContractorManageComponent
+    ContractorManageComponent,
+    JobSaveComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +68,18 @@ import { ContractorManageComponent } from './contractor-manage/contractor-manage
     MatCardModule,
     NgbModule,
     MatStepperModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatListModule
   ],
   providers: [AccountService, JobService, ContractorService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [JobSaveComponent]
 })
 export class AppModule { }

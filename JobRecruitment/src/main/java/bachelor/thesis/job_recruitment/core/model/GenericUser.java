@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

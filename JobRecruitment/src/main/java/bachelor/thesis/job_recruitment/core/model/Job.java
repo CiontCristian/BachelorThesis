@@ -24,6 +24,4 @@ public class Job extends BaseEntity<Long>{
     private String techs;//java, python, c#,...
     private Integer availablePos;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Contractor contractor;
 }

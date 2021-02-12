@@ -11,10 +11,9 @@ export class Contractor extends BaseEntity{
   logo : FileProperties;
   location : Location;
   offers : Job[];
-  owner: User;
 
 
-  constructor(id: number, name: string, description: string, nrOfEmployees: number, logo: FileProperties, location: Location, offers: Job[], owner: User) {
+  constructor(id: number, name: string, description: string, nrOfEmployees: number, logo: FileProperties, location: Location, offers: Job[]) {
     super(id);
     this.name = name;
     this.description = description;
@@ -22,6 +21,5 @@ export class Contractor extends BaseEntity{
     this.logo = logo;
     this.location = location;
     this.offers = offers;
-    this.owner = owner;
   }
 }

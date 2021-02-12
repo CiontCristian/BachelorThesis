@@ -55,7 +55,7 @@ export class ContractorSaveComponent implements OnInit {
     console.log(this.image);
     let contractor: Contractor = new Contractor(0, this.generalFormGroup.get('nameForm').value,
       this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
-      null, location, null, this.currentUser);
+      null, location, null);
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
     this.formData.append("contractorDTO", contractorBlob);

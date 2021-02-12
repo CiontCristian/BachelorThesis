@@ -18,4 +18,9 @@ export class JobService{
     return this.httpClient.get<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize,
       {observe: "response"});
   }
+
+  saveJob(job: Job): Observable<HttpResponse<Job>>{
+    return this.httpClient.post<Job>(this.jobURL + "/saveJob", job, {observe: "response"});
+  }
+
 }

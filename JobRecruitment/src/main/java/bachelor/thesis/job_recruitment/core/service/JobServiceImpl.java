@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService{
@@ -27,5 +28,26 @@ public class JobServiceImpl implements JobService{
         logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
 
         return jobs.getContent();
+    }
+
+    @Override
+    public Job save(Job job) {
+        logger.trace("In JobServiceImpl - method: save() - job={}", job);
+
+        return jobRepository.save(job);
+    }
+
+    @Override
+    public Job modify(Job modifiedJob) {
+        logger.trace("In JobServiceImpl - method: modify() - job={}", modifiedJob);
+
+        return jobRepository.saveAndFlush(modifiedJob);
+    }
+
+    @Override
+    public void remove(Long id) {
+        logger.trace("In JobServiceImpl - method: remove() - id={}", id);
+
+        jobRepository.deleteById(id);
     }
 }

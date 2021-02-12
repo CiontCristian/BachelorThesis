@@ -2,6 +2,20 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <p>Auto-resizing sidenav</p>
     <p>Lorem, ipsum dolor sit amet consectetur.</p>
+    <button mat-mini-fab color="primary" (click)="openAddJobDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <mat-selection-list #jobList [multiple]="false">
+      <mat-list-option *ngFor="let job of jobs" [value]="job">
+        {{job.title}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <p>
+      Option selected: {{jobList.selectedOptions.selected[0]?.value}}
+    </p>
+
   </mat-drawer>
 
   <div class="example-sidenav-content">

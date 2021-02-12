@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -36,5 +33,17 @@ public class JobController {
 
         return new ResponseEntity<>(jobConverter.convertModelsToDtos(jobs), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/saveJob")
+    ResponseEntity<JobDTO> saveJob(@RequestBody JobDTO jobDTO){
+        logger.trace("In JobController - method: saveJob - jobDTO={}", jobDTO);
+
+        Job savedJob = jobService.save(jobConverter.convertDtoToModel(jobDTO));
+        logger.trace("In JobController - method: saveJob - savedJob={}", savedJob);
+
+
+        return new ResponseEntity<>(jobConverter.convertModelToDto(savedJob), HttpStatus.OK);
+    }
+
 
 }

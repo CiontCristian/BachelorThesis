@@ -72,8 +72,11 @@
           <mat-form-field appearance="fill" class="register_form_field">
             <mat-label>Date of Birth</mat-label>
             <label>
-              <input type="date" matInput formControlName="birthDateForm" required
-                     placeholder="Ex. 01/01/1990">
+              <!--<input type="date" matInput formControlName="birthDateForm" required
+                     placeholder="Ex. 01/01/1990">-->
+              <input matInput [matDatepicker]="picker" formControlName="birthDateForm" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </label>
             <mat-hint>Errors appear instantly!</mat-hint>
             <mat-error *ngIf="this.generalFormGroup.get('birthDateForm').hasError('required')">

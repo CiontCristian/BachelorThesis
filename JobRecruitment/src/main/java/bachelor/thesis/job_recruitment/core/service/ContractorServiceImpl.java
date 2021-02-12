@@ -24,7 +24,6 @@ public class ContractorServiceImpl implements ContractorService{
                 .filter(contractor1 -> contractor1.getName().equals(contractor.getName()))
                 .findFirst();
         if(alreadyUsed.isPresent()) {
-            System.out.println("AAAAAAAAAAAA");
             return Optional.empty();
         }
         contractorRepository.save(contractor);

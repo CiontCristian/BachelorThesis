@@ -42,8 +42,7 @@ public class ContractorController {
         //contractorDTO.setLogo(fileObject);
         //Contractor savedContractor = contractorRepository.save(contractorConverter.convertDtoToModel(contractorDTO));
         ContractorDTO contractor = new ContractorDTO(contractorDTO.getName(),
-                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null,
-                contractorDTO.getOwner());
+                contractorDTO.getDescription(), contractorDTO.getNrOfEmployees(), null, contractorDTO.getLocation(), null);
         contractor.setLogo(fileObject);
         Optional<Contractor> savedContractor = contractorService.save(contractorConverter.convertDtoToModel(contractor));
         if(savedContractor.isEmpty())
