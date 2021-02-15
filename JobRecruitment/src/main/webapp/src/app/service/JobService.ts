@@ -3,10 +3,12 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Job} from "../model/Job";
+import {Preference} from "../model/Preference";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class JobService{
-  private jobURL = 'http://localhost:8080/job';
+  private jobURL = environment.apiBaseUrl + '/job';
 
   constructor(
     private httpClient: HttpClient,
@@ -26,6 +28,17 @@ export class JobService{
   getJob(id: number): Observable<HttpResponse<Job>>
   {
     return this.httpClient.get<Job>(this.jobURL + "/findJobById/" + id,
+      {observe: "response"});
+  }
+
+  savePreference(preference: Preference): Observable<HttpResponse<Preference>>
+  {
+    return this.httpClient.post<Preference>(this.jobURL + "/savePreference", preference, {observe: "response"});
+  }
+
+  findJobsForContractor(id: number): Observable<HttpResponse<Job[]>>
+  {
+    return this.httpClient.get<Job[]>(this.jobURL + "/findJobsForContractor/" + id,
       {observe: "response"});
   }
 

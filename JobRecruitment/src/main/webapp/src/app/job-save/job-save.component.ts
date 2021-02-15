@@ -38,7 +38,6 @@ export class JobSaveComponent implements OnInit {
 
   minCompForm = new FormControl('');
   availablePosForm = new FormControl('', [Validators.required]);
-  availablePosValue: number = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) data,
               private jobService: JobService) { }
@@ -48,15 +47,17 @@ export class JobSaveComponent implements OnInit {
 
   register(): void{
     let job: Job = new Job(0, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
-      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value, this.devTypeForm.value.toString(),
+      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
+      : this.minCompForm.value, this.devTypeForm.value.toString(),
       this.techs.toString(), this.availablePosForm.value, this.contractor);
 
     console.log(job);
     this.jobService.saveJob(job).subscribe(
       response => {
-        this.contractor.offers.push(response.body);
+        //this.contractor.offers.push(response.body);
         sessionStorage.setItem("contractor", JSON.stringify(this.contractor));
-      }
+      },
+      error => console.log(error)
     );
   }
 

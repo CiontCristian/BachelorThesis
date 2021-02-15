@@ -1,7 +1,9 @@
 package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.Job;
+import bachelor.thesis.job_recruitment.core.model.Preference;
 import bachelor.thesis.job_recruitment.core.repository.JobRepository;
+import bachelor.thesis.job_recruitment.core.repository.PreferenceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class JobServiceImpl implements JobService{
 
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private PreferenceRepository preferenceRepository;
 
     @Override
     public List<Job> findAll(Integer pageIndex, Integer pageSize) {
@@ -55,5 +59,17 @@ public class JobServiceImpl implements JobService{
         logger.trace("In JobServiceImpl - method: remove() - id={}", id);
 
         jobRepository.deleteById(id);
+    }
+
+    @Override
+    public void savePreference(Preference preference) {
+        preferenceRepository.save(preference);
+    }
+
+    @Override
+    public List<Job> findJobsForContractor(Long id) {
+        return jobRepository.findAll().stream()
+                .filter(job -> job.getContractor().getId().equals(id))
+                .collect(Collectors.toList());
     }
 }

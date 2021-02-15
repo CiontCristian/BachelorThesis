@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
         },
           error => {
             console.log(error);
-            this.snackBar.open("Invalid credentials!", "Retry");
+            this.snackBar.open(error.error, "Retry");
             this.currentUser = null;
           })
   }

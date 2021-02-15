@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
 public class BaseEntity<ID extends Serializable> implements Serializable {
     @Id
     @GeneratedValue

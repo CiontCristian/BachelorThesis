@@ -2,10 +2,7 @@ package bachelor.thesis.job_recruitment.core.model;
 
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,6 +12,7 @@ import javax.persistence.ManyToOne;
 @Builder
 public class Job extends BaseEntity<Long>{
     private String title;
+    @Column(length = 5000)
     private String description;
     private String jobType;//full-time, part-time, internship
     private Boolean remote;
@@ -26,4 +24,18 @@ public class Job extends BaseEntity<Long>{
     @ManyToOne(fetch = FetchType.EAGER)
     private Contractor contractor;
 
+    @Override
+    public String toString() {
+        return "Job{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", jobType='" + jobType + '\'' +
+                ", remote=" + remote +
+                ", minExperience='" + minExperience + '\'' +
+                ", minCompensation=" + minCompensation +
+                ", devType='" + devType + '\'' +
+                ", techs='" + techs + '\'' +
+                ", availablePos=" + availablePos +
+                '}';
+    }
 }

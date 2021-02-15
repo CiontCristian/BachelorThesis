@@ -40,7 +40,10 @@ export class ContractorManageComponent implements OnInit {
     console.log(this.currentUser);
     console.log(this.contractor);
     if(this.contractor) {
-      this.jobs = this.contractor.offers;
+      this.jobService.findJobsForContractor(this.contractor.id).subscribe(
+        response => {this.jobs = response.body},
+        error => {console.log(error)}
+      )
 
       this.generalFormGroup = this.formBuilder.group({
         nameForm: new FormControl(this.contractor.name), descriptionForm: new FormControl(this.contractor.description),
@@ -83,7 +86,7 @@ export class ContractorManageComponent implements OnInit {
     console.log(this.image);
     let contractor: Contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
       this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
-      null, location, null, this.currentUser);
+      null, location, this.currentUser);
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
     this.formData.append("contractorDTO", contractorBlob);

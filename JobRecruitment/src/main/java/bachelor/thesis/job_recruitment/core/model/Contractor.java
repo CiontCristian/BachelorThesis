@@ -24,8 +24,6 @@ public class Contractor extends BaseEntity<Long>{
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Location location;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Job> offers;
     @OneToOne(fetch = FetchType.EAGER)
     private GenericUser owner;
 

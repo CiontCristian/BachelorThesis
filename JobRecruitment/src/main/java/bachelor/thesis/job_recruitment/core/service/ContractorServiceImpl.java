@@ -50,7 +50,6 @@ public class ContractorServiceImpl implements ContractorService{
     public Optional<Contractor> modifyContractor(Contractor modifiedContractor) {
         logger.trace("In ContractorServiceImpl - method: modifyContractor() - contractor={}", modifiedContractor);
 
-        System.out.println("AAAA" + modifiedContractor.getId());
         Optional<Contractor> contractorOptional = findAll().stream()
                 .filter(contractor1 -> contractor1.getId().equals(modifiedContractor.getId()))
                 .findFirst();

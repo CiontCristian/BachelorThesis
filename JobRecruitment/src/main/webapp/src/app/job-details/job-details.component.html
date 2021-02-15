@@ -1,1 +1,24 @@
-<p *ngIf="job">{{job.title}}</p>
+
+<div *ngIf="job" class="job_details">
+  <h1>{{job.title}}</h1>
+  <h3>-posted by {{job.contractor.name}} averaging around {{job.contractor.nrOfEmployees}} employees</h3>
+  <p><b>Available posts: {{job.availablePos}} !</b></p>
+  <p>Requirements: </p>
+  <ol>
+    <li>{{job.devType}}</li>
+    <li>{{job.minExperience}}</li>
+    <li>{{job.jobType}}</li>
+  </ol>
+  <p *ngIf="job.remote"><b>Attention: job is available remote only! </b></p>
+  <mat-divider></mat-divider>
+  <p *ngIf="job.minCompensation !== -1">Monthly salary: {{job.minCompensation}} $</p>
+  <p><b> Description: </b></p>
+  <span>{{job.description}}</span>
+  <mat-divider></mat-divider>
+  <button mat-raised-button (click)="vote(true)">
+    <mat-icon>thumb_up</mat-icon> Interested
+  </button>
+  <button mat-raised-button (click)="vote(false)">
+    <mat-icon>thumb_down</mat-icon> Not Interested
+  </button>
+</div>
