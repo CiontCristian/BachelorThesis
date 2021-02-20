@@ -38,6 +38,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatListModule} from "@angular/material/list";
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobModifyComponent } from './job-modify/job-modify.component';
+import { JobRemoveComponent } from './job-remove/job-remove.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     ContractorSaveComponent,
     ContractorManageComponent,
     JobSaveComponent,
-    JobDetailsComponent
+    JobDetailsComponent,
+    JobModifyComponent,
+    JobRemoveComponent
   ],
   imports: [
     BrowserModule,

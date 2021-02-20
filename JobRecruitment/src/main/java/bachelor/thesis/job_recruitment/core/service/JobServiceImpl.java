@@ -56,6 +56,7 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void remove(Long id) {
+        //TODO handle preference delete
         logger.trace("In JobServiceImpl - method: remove() - id={}", id);
 
         jobRepository.deleteById(id);

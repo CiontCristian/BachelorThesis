@@ -2,6 +2,7 @@ package bachelor.thesis.job_recruitment.server.controller;
 
 import bachelor.thesis.job_recruitment.core.model.Job;
 import bachelor.thesis.job_recruitment.core.model.Preference;
+import bachelor.thesis.job_recruitment.core.model.PreferenceKey;
 import bachelor.thesis.job_recruitment.core.service.JobService;
 
 import bachelor.thesis.job_recruitment.server.exception.ResourceNotFoundException;
@@ -49,6 +50,23 @@ public class JobController {
         return new ResponseEntity<>(savedJob, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/modifyJob")
+    ResponseEntity<Job> modifyJob(@RequestBody Job job){
+        logger.trace("In JobController - method: saveJob - jobDTO={}", job);
+
+        Job modifiedJob = jobService.modify(job);
+        logger.trace("In JobController - method: saveJob - savedJob={}", modifiedJob);
+
+
+        return new ResponseEntity<>(modifiedJob, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/removeJob/{id}")
+    ResponseEntity<?> removeJob(@PathVariable Long id){
+        jobService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping(value = "/findJobById/{id}")
     ResponseEntity<Job> findJobById(@PathVariable Long id){
 
@@ -61,6 +79,7 @@ public class JobController {
 
     @PostMapping(value = "/savePreference")
     ResponseEntity<?> savePreference(@RequestBody Preference preference){
+        preference.setKey(new PreferenceKey(preference.getUser().getId(), preference.getJob().getId()));
         jobService.savePreference(preference);
         return new ResponseEntity<>(HttpStatus.OK);
     }

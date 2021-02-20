@@ -25,6 +25,14 @@ export class JobService{
     return this.httpClient.post<Job>(this.jobURL + "/saveJob", job, {observe: "response"});
   }
 
+  modifyJob(job: Job): Observable<HttpResponse<Job>>{
+    return this.httpClient.put<Job>(this.jobURL + "/modifyJob", job, {observe: "response"});
+  }
+
+  removeJob(id: number): Observable<HttpResponse<void>>{
+    return this.httpClient.delete<void>(this.jobURL + "/removeJob/" + id, {observe: "response"});
+  }
+
   getJob(id: number): Observable<HttpResponse<Job>>
   {
     return this.httpClient.get<Job>(this.jobURL + "/findJobById/" + id,

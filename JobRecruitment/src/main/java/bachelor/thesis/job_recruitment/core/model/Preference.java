@@ -2,21 +2,24 @@ package bachelor.thesis.job_recruitment.core.model;
 
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-public class Preference extends BaseEntity<Long>{
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+public class Preference{
+    @EmbeddedId
+    private PreferenceKey key;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @MapsId("userId")
     private GenericUser user;
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @MapsId("jobId")
     private Job job;
     private Boolean isInterested;
 }

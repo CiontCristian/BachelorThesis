@@ -12,12 +12,12 @@
           <tr>
             <td><p><b>{{job.title}}</b></p></td>
             <td>
-              <button mat-icon-button aria-label="Edit icon">
+              <button mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
             <td>
-              <button mat-icon-button aria-label="Delete icon">
+              <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

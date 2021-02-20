@@ -10,6 +10,8 @@ import {JobService} from "../service/JobService";
 import {Contractor} from "../model/Contractor";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../model/Location";
+import {JobModifyComponent} from "../job-modify/job-modify.component";
+import {JobRemoveComponent} from "../job-remove/job-remove.component";
 
 @Component({
   selector: 'app-contractor-manage',
@@ -97,5 +99,39 @@ export class ContractorManageComponent implements OnInit {
         },
       error => console.log(error)
     );
+  }
+
+  openModifyJobDialog(job: Job) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      job
+    }
+
+    const dialogRef = this.dialog.open(JobModifyComponent,{
+      width: '50%',
+      height: '80vh',
+      data: dialogConfig.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      window.location.reload();
+    });
+  }
+
+  openRemoveJobDialog(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      id
+    }
+
+    const dialogRef = this.dialog.open(JobRemoveComponent,{
+      width: '300px',
+      height: '300px',
+      data: dialogConfig.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      window.location.reload();
+    });
   }
 }
