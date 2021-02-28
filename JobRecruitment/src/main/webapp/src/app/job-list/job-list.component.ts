@@ -21,17 +21,26 @@ export class JobListComponent implements OnInit {
   pageSize: number=5;
   recordCount: number;
   pageSizeOptions: number[] = [5,10,50,100];
+  searchValue: string = "";
 
   constructor(private jobService: JobService,
               private contractorService: ContractorService,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.jobService.receiveSearchValue().subscribe(
+      response => {this.searchValue = response;
+                //this.getAllJobs();
+                //this.jobService.sendSearchValue("");
+      }
+    );
     this.getAllJobs();
+
   }
 
   getAllJobs(): void{
-    this.jobService.getAllJobs(this.pageIndex, this.pageSize)
+    console.log(this.searchValue);
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.searchValue)
       .subscribe(response => this.jobs = response.body);
   }
 
@@ -40,7 +49,7 @@ export class JobListComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     //this.objects = this.testData.slice(this.Page, this.Page + 2)
-    this.jobService.getAllJobs(this.pageIndex, this.pageSize)
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.searchValue)
       .subscribe(response => this.jobs = response.body);
 
     //this.recordCount = this.testData.length

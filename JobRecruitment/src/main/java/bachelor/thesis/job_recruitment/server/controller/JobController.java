@@ -31,9 +31,10 @@ public class JobController {
     }
 
     @GetMapping(value = "/findAllJobs")
-    ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+    ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize
+        , @RequestParam String value){
         logger.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
-        List<Job> jobs = jobService.findAll(pageIndex, pageSize);
+        List<Job> jobs = jobService.findAll(pageIndex, pageSize, value);
         logger.trace("In JobController - method: findAllJobs - jobs={}", jobs);
 
         return new ResponseEntity<>(jobs, HttpStatus.OK);
@@ -89,6 +90,29 @@ public class JobController {
         return new ResponseEntity<>(jobService.findJobsForContractor(id),
                 HttpStatus.OK);
     }
+
+    @GetMapping(value = "/findJobsTitles")
+    ResponseEntity<List<String>> findJobsTitles(){
+        return new ResponseEntity<>(jobService.findJobsTitles(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findJobByTitle")
+    ResponseEntity<Job> findJobByTitle(@RequestParam String title){
+        Optional<Job> job = jobService.findJobByTitle(title);
+        if(job.isEmpty())
+            throw new ResourceNotFoundException("Job with the title " + title + " was not found!");
+        return new ResponseEntity<>(job.get(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getJobPreferenceForUser")
+    ResponseEntity<Preference> getJobPreferenceForUser(@RequestParam Long userId, @RequestParam Long jobId){
+        logger.debug("In JobController - method: getJobPreferenceForUser - userId={}, jobId={}",userId, jobId);
+        Optional<Preference> preference = jobService.findJobPreferenceForUser(userId, jobId);
+        if(preference.isEmpty())
+            throw new ResourceNotFoundException("Preference not found!");
+        return new ResponseEntity<>(preference.get(), HttpStatus.OK);
+    }
+
 
 
 }

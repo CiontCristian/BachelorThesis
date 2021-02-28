@@ -6,15 +6,16 @@
   text-align: center;
 }
 
-.example-sidenav-content {
+.example-sidenav-content{
   top: 0;
 
   height: inherit;
-  width: inherit;
+  width: 70%;
   align-items: center;
   justify-content: center;
 }
 
 .example-sidenav {
   padding: 20px;
+  width: 30%;
 }

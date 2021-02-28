@@ -22,4 +22,5 @@ public class Preference{
     @MapsId("jobId")
     private Job job;
     private Boolean isInterested;
+    private Integer rating;
 }

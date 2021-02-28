@@ -6,6 +6,27 @@
     <a routerLink=""><span>Job Recruitment</span></a>
     <p *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</p>
     <span class="example-spacer"></span>
+    <form>
+      <mat-form-field>
+        <input type="text"
+               placeholder="Search"
+               matInput
+               [formControl]="searchForm"
+               [matAutocomplete]="auto">
+        <button mat-button *ngIf="searchForm.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchForm.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredJobTitles | async" [value]="option" (click)="goToJobDetails(option)">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button mat-mini-fab color="primary" (click)="search(searchForm.value)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+    <span class="example-spacer"></span>
     <a routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</a>
     <a routerLink="job-list">Jobs</a>
     <button mat-mini-fab color="primary" routerLink="contractor-save" *ngIf="currentUser && currentUser.permission.isCompany">

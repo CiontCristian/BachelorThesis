@@ -1,6 +1,6 @@
 <div class="register_container">
   <h1>Register</h1>
-  <form (ngSubmit)="register()" class="register_form">
+  <form (ngSubmit)="register()" class="telephone_form">
     <mat-horizontal-stepper linear #stepper>
       <mat-step [stepControl]="generalFormGroup">
         <form [formGroup]="generalFormGroup">
@@ -85,14 +85,13 @@
           </mat-form-field>
           <br>
 
-          <mat-form-field appearance="fill" class="register_form_field">
+          <mat-form-field appearance="fill" class="telephone_form_width">
             <mat-label>Telephone</mat-label>
-            <label>
+
               <span matPrefix>+40 &nbsp;</span>
               <input type="tel" matInput placeholder="123-456-789" formControlName="telephoneForm" required>
               <mat-icon matSuffix>mode_edit</mat-icon>
-            </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
+
             <mat-error *ngIf="this.generalFormGroup.get('telephoneForm').hasError('required')">
               Telephone is required
             </mat-error>
@@ -100,13 +99,13 @@
           <br>
 
           <mat-label>Gender:  </mat-label>
-          <label>
+          <br>
             <mat-radio-group aria-label="Select an option" formControlName="genderForm" required>
               <mat-radio-button value="M">Male</mat-radio-button>
               <br/>
               <mat-radio-button value="F">Female</mat-radio-button>
             </mat-radio-group>
-          </label>
+
           <mat-error *ngIf="this.generalFormGroup.get('genderForm').hasError('required')">
             Gender is required
           </mat-error>

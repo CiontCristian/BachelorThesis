@@ -11,14 +11,18 @@
   </ol>
   <p *ngIf="job.remote"><b>Attention: job is available remote only! </b></p>
   <mat-divider></mat-divider>
+  <p>Necessary languages: {{job.techs}}</p>
   <p *ngIf="job.minCompensation !== -1">Monthly salary: {{job.minCompensation}} $</p>
   <p><b> Description: </b></p>
   <span>{{job.description}}</span>
   <mat-divider></mat-divider>
-  <button mat-raised-button (click)="vote(true)">
+  <button *ngIf="preference" mat-raised-button [disabled]="preference.isInterested" (click)="vote(true)">
     <mat-icon>thumb_up</mat-icon> Interested
   </button>
-  <button mat-raised-button (click)="vote(false)">
+  <button *ngIf="preference" mat-raised-button [disabled]="!preference.isInterested" (click)="vote(false)">
     <mat-icon>thumb_down</mat-icon> Not Interested
   </button>
+  <p>How interested are you in this job opportunity?</p>
+  <ngb-rating *ngIf="preference && preference.isInterested" [(rate)]="preference.rating"
+              [(ngModel)]="preference.rating" (click)="rate()"></ngb-rating>
 </div>

@@ -1,5 +1,5 @@
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
     <p>Auto-resizing sidenav</p>
     <p>Lorem, ipsum dolor sit amet consectetur.</p>
     <button mat-mini-fab color="primary" (click)="openAddJobDialog()">
@@ -31,11 +31,11 @@
 
   </mat-drawer>
 
-  <div class="example-sidenav-content">
-    <button type="button" mat-raised-button [disabled]="contractor === null" (click)="drawer.toggle()">
+  <mat-drawer-content class="example-sidenav-content">
+    <!--<button type="button" mat-raised-button [disabled]="contractor === null" (click)="drawer.toggle()">
       Toggle Jobs
     </button>
-    <mat-divider></mat-divider>
+    <mat-divider></mat-divider>-->
 
     <form (ngSubmit)="modify()" class="modify_form" *ngIf="contractor">
       <mat-horizontal-stepper linear #stepper>
@@ -125,6 +125,6 @@
       <button type="submit" mat-raised-button color="primary" [disabled]="contractor === null">Confirm</button>
     </form>
 
-  </div>
+  </mat-drawer-content>
 
 </mat-drawer-container>

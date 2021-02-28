@@ -2,6 +2,7 @@ package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.Job;
 import bachelor.thesis.job_recruitment.core.model.Preference;
+import bachelor.thesis.job_recruitment.core.model.PreferenceKey;
 import bachelor.thesis.job_recruitment.core.repository.JobRepository;
 import bachelor.thesis.job_recruitment.core.repository.PreferenceRepository;
 import org.slf4j.Logger;
@@ -11,7 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,13 +31,25 @@ public class JobServiceImpl implements JobService{
     private PreferenceRepository preferenceRepository;
 
     @Override
-    public List<Job> findAll(Integer pageIndex, Integer pageSize) {
+    public List<Job> findAll(Integer pageIndex, Integer pageSize, String value) {
+        //saveJobsToFile();
+
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
         logger.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
-        Page<Job> jobs = jobRepository.findAll(pageRequest);
-        logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
 
-        return jobs.getContent();
+        if(value.equals("")) {
+            Page<Job> jobs = jobRepository.findAll(pageRequest);
+            return jobs.getContent();
+        }
+        else{
+            return jobRepository.findAll(pageRequest).stream()
+                    .filter(job -> job.getTitle().contains(value)
+                    || job.getTechs().contains(value))
+                    .collect(Collectors.toList());
+        }
+        //logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
+
+        //return jobs.getContent();
     }
 
     @Override
@@ -58,6 +75,10 @@ public class JobServiceImpl implements JobService{
     public void remove(Long id) {
         //TODO handle preference delete
         logger.trace("In JobServiceImpl - method: remove() - id={}", id);
+        List<Preference> preferences = preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getJob().getId().equals(id))
+                .collect(Collectors.toList());
+        preferenceRepository.deleteInBatch(preferences);
 
         jobRepository.deleteById(id);
     }
@@ -72,5 +93,44 @@ public class JobServiceImpl implements JobService{
         return jobRepository.findAll().stream()
                 .filter(job -> job.getContractor().getId().equals(id))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findJobsTitles() {
+        return jobRepository.findAll().stream()
+                .map(Job::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Job> findJobByTitle(String title) {
+        return jobRepository.findAll().stream()
+                .filter(job -> job.getTitle().equals(title))
+                .findAny();
+    }
+
+    @Override
+    @Transactional
+    public Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId) {
+        return preferenceRepository.findByKey(new PreferenceKey(userId, jobId));
+    }
+
+    @Override
+    public void saveJobsToFile() {
+        List<Job> jobs = jobRepository.findAll();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("E:\\FACULTATE\\AN 3\\SEMESTRU 5\\Licenta\\BachelorThesis\\jobs.txt"));
+            writer.write("id"+"|"+"title"+"|"+"dev_type"+"|"+"job_type"+"|"+"min_experience"+"|"+"remote"+
+                    "|"+"techs");
+            writer.write("\n");
+            for(Job job : jobs){
+                writer.write(job.getId() + "|" +job.getTitle() + "|" + job.getDevType() + "|" +job.getJobType() +
+                        "|"+ job.getMinExperience()+ "|" + job.getRemote() + "|"+job.getTechs());
+                writer.write("\n");
+            }
+            writer.close();
+        }catch (IOException runtimeException){
+            System.out.println(runtimeException.getMessage());
+        }
     }
 }

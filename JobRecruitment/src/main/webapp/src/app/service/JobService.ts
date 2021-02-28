@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Job} from "../model/Job";
 import {Preference} from "../model/Preference";
 import {environment} from "../../environments/environment";
@@ -9,16 +9,25 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class JobService{
   private jobURL = environment.apiBaseUrl + '/job';
+  private searchValue = new BehaviorSubject<string>("");
 
   constructor(
     private httpClient: HttpClient,
     private router: Router
   ) {}
 
-  getAllJobs(pageIndex: number, pageSize: number): Observable<HttpResponse<Job[]>>
+  sendSearchValue(value: string){
+    this.searchValue.next(value);
+  }
+
+  receiveSearchValue(): Observable<string>{
+    return this.searchValue.asObservable();
+  }
+
+  getAllJobs(pageIndex: number, pageSize: number, value: string): Observable<HttpResponse<Job[]>>
   {
-    return this.httpClient.get<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize,
-      {observe: "response"});
+    return this.httpClient.get<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize
+      +"&value="+value, {observe: "response"});
   }
 
   saveJob(job: Job): Observable<HttpResponse<Job>>{
@@ -48,6 +57,24 @@ export class JobService{
   {
     return this.httpClient.get<Job[]>(this.jobURL + "/findJobsForContractor/" + id,
       {observe: "response"});
+  }
+
+  findJobsTitles(): Observable<HttpResponse<string[]>>
+  {
+    return this.httpClient.get<string[]>(this.jobURL + "/findJobsTitles",
+      {observe: "response"});
+  }
+
+  findJobByTitle(title: string): Observable<HttpResponse<Job>>
+  {
+    return this.httpClient.get<Job>(this.jobURL + "/findJobByTitle?title=" + title,
+      {observe: "response"})
+  }
+
+  getJobPreferenceForUser(userId: number, jobId: number): Observable<HttpResponse<Preference>>
+  {
+    return this.httpClient.get<Preference>(this.jobURL + "/getJobPreferenceForUser?userId="+userId+
+    "&jobId="+jobId, {observe: "response"});
   }
 
 }

@@ -40,6 +40,7 @@ import {MatListModule} from "@angular/material/list";
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobModifyComponent } from './job-modify/job-modify.component';
 import { JobRemoveComponent } from './job-remove/job-remove.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { JobRemoveComponent } from './job-remove/job-remove.component';
     MatCheckboxModule,
     MatSelectModule,
     MatSliderModule,
-    MatListModule
+    MatListModule,
+    MatAutocompleteModule
   ],
   providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent],
