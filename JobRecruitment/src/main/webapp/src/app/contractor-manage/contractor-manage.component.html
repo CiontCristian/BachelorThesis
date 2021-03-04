@@ -1,130 +1,131 @@
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
-    <p>Auto-resizing sidenav</p>
-    <p>Lorem, ipsum dolor sit amet consectetur.</p>
-    <button mat-mini-fab color="primary" (click)="openAddJobDialog()">
-      <mat-icon>add</mat-icon>
-    </button>
+<mat-drawer-container class="mat-drawer-container" autosize>
+  <mat-drawer class="mat-drawer-sidenav" mode="side" opened>
+    <div class="test">
+      <button mat-mini-fab class="contractor-manage-button" (click)="openAddJobDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
 
-    <mat-list *ngIf="contractor">
-      <mat-list-item *ngFor="let job of jobs">
-        <table>
-          <tr>
-            <td><p><b>{{job.title}}</b></p></td>
-            <td>
-              <button mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
-                <mat-icon>edit</mat-icon>
-              </button>
-            </td>
-            <td>
-              <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </table>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
-
-
-
+      <mat-list *ngIf="contractor">
+        <mat-list-item *ngFor="let job of jobs">
+          <table>
+            <tr>
+              <td><p><b>{{job.title}}</b></p></td>
+              <td>
+                <button mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+              <td>
+                <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </mat-drawer>
 
-  <mat-drawer-content class="example-sidenav-content">
+  <mat-drawer-content class="mat-drawer-content">
     <!--<button type="button" mat-raised-button [disabled]="contractor === null" (click)="drawer.toggle()">
       Toggle Jobs
     </button>
     <mat-divider></mat-divider>-->
+    <div>
+      <button mat-mini-fab class="contractor-manage-button" (click)="openAddContractorDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
 
-    <form (ngSubmit)="modify()" class="modify_form" *ngIf="contractor">
-      <mat-horizontal-stepper linear #stepper>
+      <form (ngSubmit)="modify()" class="modify_form" *ngIf="contractor">
+        <mat-horizontal-stepper linear #stepper class="contractor-manage-stepper">
 
-        <mat-step [stepControl]="generalFormGroup" [optional]=true>
-          <form [formGroup]="generalFormGroup">
-            <ng-template matStepLabel>General Info</ng-template>
+          <mat-step [stepControl]="generalFormGroup" style="background-color: rgba(241,255,1,0.71);">
+            <form [formGroup]="generalFormGroup">
+              <ng-template matStepLabel>General Info</ng-template>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>Name</mat-label>
-              <label>
-                <input type="text" matInput formControlName="nameForm"
-                       placeholder="Ex. Delgado">
-              </label>
-            </mat-form-field>
-            <br>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Name</mat-label>
+                <label>
+                  <input type="text" matInput formControlName="nameForm"
+                         placeholder="Ex. Delgado">
+                </label>
+              </mat-form-field>
+              <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>Description</mat-label>
-              <label>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Description</mat-label>
+                <label>
               <textarea cols="100" rows="15" type="text" matInput formControlName="descriptionForm" required
                         placeholder="Ex. Desc" cdkTextareaAutosize></textarea>
-              </label>
-            </mat-form-field>
-            <br>
+                </label>
+              </mat-form-field>
+              <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>Number of Employees</mat-label>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Number of Employees</mat-label>
+                <label>
+                  <input type="text" matInput formControlName="nrOfEmployeesForm" required
+                         placeholder="Ex. Delgado">
+                </label>
+              </mat-form-field>
+              <br>
+
+              <mat-label>Logo</mat-label>
               <label>
-                <input type="text" matInput formControlName="nrOfEmployeesForm" required
-                       placeholder="Ex. Delgado">
+                <input  type="file" (change)="onFileChanged($event)" formControlName="logoForm">
               </label>
-            </mat-form-field>
-            <br>
 
-            <mat-label>Logo</mat-label>
-            <label>
-              <input type="file" (change)="onFileChanged($event)" formControlName="logoForm">
-            </label>
-
-            <div>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
+              <div>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
 
 
-        <mat-step [stepControl]="locationFormGroup" [optional]=true>
-          <form [formGroup]="locationFormGroup">
-            <ng-template matStepLabel>Address Info</ng-template>
+          <mat-step [stepControl]="locationFormGroup" [optional]=true>
+            <form [formGroup]="locationFormGroup">
+              <ng-template matStepLabel>Address Info</ng-template>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>Address</mat-label>
-              <label>
-                <input type="text" matInput formControlName="addressForm"
-                       placeholder="Ex. Example Street Nr. 3">
-              </label>
-            </mat-form-field>
-            <br>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Address</mat-label>
+                <label>
+                  <input type="text" matInput formControlName="addressForm"
+                         placeholder="Ex. Example Street Nr. 3">
+                </label>
+              </mat-form-field>
+              <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>City</mat-label>
-              <label>
-                <input type="text" matInput formControlName="cityForm"
-                       placeholder="Ex. Cluj-Napoca">
-              </label>
-            </mat-form-field>
-            <br>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>City</mat-label>
+                <label>
+                  <input type="text" matInput formControlName="cityForm"
+                         placeholder="Ex. Cluj-Napoca">
+                </label>
+              </mat-form-field>
+              <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
-              <mat-label>Country</mat-label>
-              <label>
-                <input type="text" matInput formControlName="countryForm"
-                       placeholder="Ex. Romania">
-              </label>
-            </mat-form-field>
-            <br>
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Country</mat-label>
+                <label>
+                  <input type="text" matInput formControlName="countryForm"
+                         placeholder="Ex. Romania">
+                </label>
+              </mat-form-field>
+              <br>
 
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
-            </div>
-          </form>
-        </mat-step>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </form>
+          </mat-step>
 
-      </mat-horizontal-stepper>
-      <button type="submit" mat-raised-button color="primary" [disabled]="contractor === null">Confirm</button>
-    </form>
+        </mat-horizontal-stepper>
+        <button type="submit" mat-raised-button class="contractor-manage-button" [disabled]="contractor === null">Confirm</button>
+      </form>
+    </div>
 
   </mat-drawer-content>
-
 </mat-drawer-container>

@@ -1,21 +1,33 @@
-.example-container {
+.mat-drawer-container {
   width: 100%;
-  height: 100vh;
+  height: 91.9vh;
   align-items: center;
   justify-content: center;
   text-align: center;
+
 }
 
-.example-sidenav-content{
-  top: 0;
-
-  height: inherit;
+.mat-drawer-content{
+  background-color: rgba(0, 0, 0, 0.10);
   width: 70%;
-  align-items: center;
-  justify-content: center;
 }
 
-.example-sidenav {
+.mat-drawer-sidenav {
+  background-color: rgba(0, 0, 0, 0.10);
   padding: 20px;
   width: 30%;
+}
+
+.contractor-manage-stepper{
+  background-color: inherit;
+  width: 60%;
+  margin-left: 20%;
+}
+
+.contractor-manage-button{
+  background-color: rgba(241,255,1,0.71);
+  margin-right: 15px;
+  margin-left: 30px;
+  text-align: center;
+  font-size: large;
 }

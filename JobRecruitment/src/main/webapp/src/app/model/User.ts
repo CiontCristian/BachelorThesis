@@ -5,28 +5,24 @@ import {Location} from "./Location";
 import {Contractor} from "./Contractor";
 
 export class User extends BaseEntity{
-  username : string;
   password : string;
   email : string;
   firstName : string;
   lastName : string;
   dateOfBirth : Date;
-  phoneNumber : string;
   gender : string;
   background: Background;
   permission : Permission;
   location: Location;
 
 
-  constructor(id: number, username: string, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, phoneNumber: string, gender: string, background: Background, permission: Permission, location: Location) {
+  constructor(id: number, password: string, email: string, firstName: string, lastName: string, dateOfBirth: Date, gender: string, background: Background, permission: Permission, location: Location) {
     super(id);
-    this.username = username;
     this.password = password;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
     this.dateOfBirth = dateOfBirth;
-    this.phoneNumber = phoneNumber;
     this.gender = gender;
     this.background = background;
     this.permission = permission;

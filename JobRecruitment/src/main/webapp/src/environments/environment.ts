@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8080'
+  apiBaseUrl: 'http://localhost:8080',
+  recommenderBaseUrl: 'http://127.0.0.1:5000'
 };
 
 /*

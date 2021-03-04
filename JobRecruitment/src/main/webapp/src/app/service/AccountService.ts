@@ -6,12 +6,12 @@ import {Injectable} from "@angular/core";
 import {map} from "rxjs/operators";
 import {Book} from "../model/Book";
 import {Contractor} from "../model/Contractor";
+import {environment} from "../../environments/environment";
 
 
 @Injectable()
 export class AccountService{
-  private accountURL = 'http://localhost:8080/user';
-  private pythonURL = 'http://127.0.0.1:5000/python/books';
+  private accountURL = environment.apiBaseUrl + '/user';
   public currentUser: Observable<User>;
 
   constructor(
@@ -36,14 +36,5 @@ export class AccountService{
 
   modifyUserContractor(id: number, contractor: Contractor) : Observable<HttpResponse<User>>{
     return this.httpClient.put<User>(this.accountURL + '/modifyCompany/' + id, contractor, {observe: "response"});
-  }
-
-  getAllFromPython() : Observable<Book[]>{
-    return this.httpClient.get<Book[]>(this.pythonURL + '/all');
-  }
-
-  sendAllToPython(books: Book[]) : Observable<Book[]>{
-
-    return this.httpClient.post<Book[]>(this.pythonURL + '/getData', books);
   }
 }

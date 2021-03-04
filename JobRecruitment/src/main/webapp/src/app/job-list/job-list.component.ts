@@ -14,7 +14,10 @@ import {FileProperties} from "../model/FileProperties";
   styleUrls: ['./job-list.component.css']
 })
 export class JobListComponent implements OnInit {
+
   //paginator: MatPaginator;
+  @Input()
+  fromHome: boolean = false;
   jobs: Job[] = null;
   pageEvent: PageEvent;
   pageIndex: number=0;
@@ -40,6 +43,8 @@ export class JobListComponent implements OnInit {
 
   getAllJobs(): void{
     console.log(this.searchValue);
+    if(this.fromHome)
+      this.searchValue = '';
     this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.searchValue)
       .subscribe(response => this.jobs = response.body);
   }

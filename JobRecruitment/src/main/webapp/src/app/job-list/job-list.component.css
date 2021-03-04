@@ -1,6 +1,17 @@
+.job-list-container{
+  background-color: rgba(0, 0, 0, 0.10);
+  height: 91.9vh;
+}
+
 ul {
   display: flex !important;
   flex-direction: row;
   flex-flow: wrap;
   padding: 20px 20px 20px 110px !important;
+  height: 84.1vh;
+}
+
+.paginator{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
 }

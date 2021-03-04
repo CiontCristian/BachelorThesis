@@ -1,18 +1,17 @@
-
-<div *ngIf="pageIndex === 0 || pageEvent">
-  <div *ngFor="let job of jobs">
-    <ul (click)="navigateToJobDetails(job.id)">
-      <app-job-card [job]="job"></app-job-card>
-    </ul>
+<div class="job-list-container">
+  <div *ngIf="pageIndex === 0 || pageEvent">
+    <div *ngFor="let job of jobs">
+      <ul>
+        <app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card>
+      </ul>
+    </div>
   </div>
+
+  <mat-paginator class="paginator" *ngIf="jobs && jobs.length > 0"
+                 [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]="pageSize"
+                 (page)="pageEvent = pageNavigations($event)"
+                 [length]="recordCount">
+
+  </mat-paginator>
 </div>
-
-<mat-paginator #paginator
-  [pageSizeOptions]="pageSizeOptions"
-  [pageSize]="pageSize"
-  (page)="pageEvent = pageNavigations($event)"
-  [length]="recordCount">
-</mat-paginator>
-
-
-<!--<img src="data:image/JPEG;base64,{{contractor.logo.data}}" alt="Company">-->

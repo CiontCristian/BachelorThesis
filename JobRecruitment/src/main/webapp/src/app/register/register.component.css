@@ -1,15 +1,33 @@
 .register_container{
   text-align: center;
   padding: 30px;
+  background-color: rgba(0, 0, 0, 0.10);
+  height: 91.9vh;
 }
 
-.telephone_form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+.register-stepper{
+  background-color: inherit;
 }
 
-.telephone_form_width {
-  width: 100%;
+.register_form_field{
+  margin-left: 10px;
+  margin-right: 10px;
 }
+
+.register-gender-div mat-radio-button{
+  margin-left: 10px;
+}
+
+.register-gender-div mat-label{
+  font-size: medium;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.register-button{
+  background-color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
+}
+
 

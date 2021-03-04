@@ -4,6 +4,7 @@ package bachelor.thesis.job_recruitment.core.service;
 import bachelor.thesis.job_recruitment.core.model.Contractor;
 import bachelor.thesis.job_recruitment.core.model.GenericUser;
 import bachelor.thesis.job_recruitment.core.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
-    public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -23,13 +24,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<GenericUser> findAll() {
         List<GenericUser> users = userRepository.findAll();
-        logger.trace("In UserServiceImpl - method: findAll() - users={}", users);
+        log.trace("In UserServiceImpl - method: findAll() - users={}", users);
         return users;
     }
 
     @Override
     public Optional<GenericUser> verifyUserCredentials(String email, String password) {
-        logger.trace("In UserServiceImpl - method: verifyUserCredentials() - credentials={}",email+ " " + password);
+        log.trace("In UserServiceImpl - method: verifyUserCredentials() - credentials={}",email+ " " + password);
 
         return findAll().stream().filter(genericUser -> genericUser.getEmail().equals(email)
                 && genericUser.getPassword().equals(password)).findFirst();
@@ -37,10 +38,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Optional<GenericUser> save(GenericUser user) {
-        logger.trace("In UserServiceImpl - method: save() - user={}", user);
+        log.trace("In UserServiceImpl - method: save() - user={}", user);
         Optional<GenericUser> alreadyUsed = findAll().stream()
-                .filter(genericUser -> genericUser.getEmail().equals(user.getEmail())
-                || genericUser.getUsername().equals(user.getUsername()))
+                .filter(genericUser -> genericUser.getEmail().equals(user.getEmail()))
                 .findFirst();
         if(alreadyUsed.isPresent())
             return Optional.empty();

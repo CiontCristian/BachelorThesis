@@ -2,6 +2,7 @@ package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.Contractor;
 import bachelor.thesis.job_recruitment.core.repository.ContractorRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ContractorServiceImpl implements ContractorService{
-    public static final Logger logger = LoggerFactory.getLogger(ContractorService.class);
 
     @Autowired
     private ContractorRepository contractorRepository;
 
     @Override
     public Optional<Contractor> save(Contractor contractor) {
-        logger.trace("In ContractorServiceImpl - method: saveContractor() - contractor={}", contractor);
+        log.trace("In ContractorServiceImpl - method: saveContractor() - contractor={}", contractor);
         Optional<Contractor> alreadyUsed = findAll().stream()
                 .filter(contractor1 -> contractor1.getName().equals(contractor.getName()))
                 .findFirst();
@@ -34,7 +35,7 @@ public class ContractorServiceImpl implements ContractorService{
 
     @Override
     public List<Contractor> findAll() {
-        logger.trace("In ContractorServiceImpl - method: findAll()");
+        log.trace("In ContractorServiceImpl - method: findAll()");
         return contractorRepository.findAll();
     }
 
@@ -48,7 +49,7 @@ public class ContractorServiceImpl implements ContractorService{
     @Override
     @Transactional
     public Optional<Contractor> modifyContractor(Contractor modifiedContractor) {
-        logger.trace("In ContractorServiceImpl - method: modifyContractor() - contractor={}", modifiedContractor);
+        log.trace("In ContractorServiceImpl - method: modifyContractor() - contractor={}", modifiedContractor);
 
         Optional<Contractor> contractorOptional = findAll().stream()
                 .filter(contractor1 -> contractor1.getId().equals(modifiedContractor.getId()))

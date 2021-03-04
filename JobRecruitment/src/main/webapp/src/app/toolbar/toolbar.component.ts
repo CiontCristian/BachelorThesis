@@ -7,6 +7,8 @@ import {map, startWith} from "rxjs/operators";
 import {JobService} from "../service/JobService";
 import {Router} from "@angular/router";
 import {Job} from "../model/Job";
+import {HomeComponent} from "../home/home.component";
+import {JobListComponent} from "../job-list/job-list.component";
 
 @Component({
   selector: 'app-toolbar',
@@ -58,12 +60,15 @@ export class ToolbarComponent implements OnInit {
       },
       error => console.log(error.error)
     );
-    /*if(this.job)
-      this.router.navigate(["job-list/details/", this.job.id]);*/
   }
 
   search(value: string) {
     this.jobService.sendSearchValue(value);
-    this.router.navigate(["job-list"]);
+    console.log(this.router.url);
+    if(this.router.url === "/job-list") {
+      window.location.reload();
+    }
+    else
+      this.router.navigate(["job-list"]);
   }
 }

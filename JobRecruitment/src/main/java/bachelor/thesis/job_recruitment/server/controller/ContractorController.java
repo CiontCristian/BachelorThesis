@@ -6,6 +6,7 @@ import bachelor.thesis.job_recruitment.core.service.ContractorService;
 
 import bachelor.thesis.job_recruitment.server.exception.BadRequestException;
 import bachelor.thesis.job_recruitment.server.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/contractor")
+@Slf4j
 public class ContractorController {
-    public static final Logger logger = LoggerFactory.getLogger(ContractorController.class);
     @Autowired
     private ContractorService contractorService;
 
@@ -53,7 +54,7 @@ public class ContractorController {
         if(savedContractor.isEmpty())
             throw new BadRequestException("Contractor name already taken!");
 
-        logger.trace("In ContractorController - method: saveContractor - savedContractor={}", savedContractor);
+        log.trace("In ContractorController - method: saveContractor - savedContractor={}", savedContractor);
         return new ResponseEntity<>(savedContractor.get(), HttpStatus.OK);
     }
 
@@ -81,7 +82,7 @@ public class ContractorController {
         if(modifiedContractor.isEmpty())
             throw new ResourceNotFoundException("Contractor with the name: " + contractor.getName() + " was not found");
 
-        logger.trace("In ContractorController - method: modifyContractor - modifiedContractor={}", modifiedContractor);
+        log.trace("In ContractorController - method: modifyContractor - modifiedContractor={}", modifiedContractor);
         return new ResponseEntity<>(modifiedContractor.get(), HttpStatus.OK);
     }
 

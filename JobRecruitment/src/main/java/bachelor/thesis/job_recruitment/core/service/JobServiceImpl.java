@@ -5,6 +5,7 @@ import bachelor.thesis.job_recruitment.core.model.Preference;
 import bachelor.thesis.job_recruitment.core.model.PreferenceKey;
 import bachelor.thesis.job_recruitment.core.repository.JobRepository;
 import bachelor.thesis.job_recruitment.core.repository.PreferenceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class JobServiceImpl implements JobService{
-    public static final Logger logger = LoggerFactory.getLogger(JobService.class);
+    //public static final Logger logger = LoggerFactory.getLogger(JobService.class);
 
     @Autowired
     private JobRepository jobRepository;
@@ -35,7 +37,7 @@ public class JobServiceImpl implements JobService{
         //saveJobsToFile();
 
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
-        logger.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
+        log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
 
         if(value.equals("")) {
             Page<Job> jobs = jobRepository.findAll(pageRequest);
@@ -59,14 +61,14 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Job save(Job job) {
-        logger.trace("In JobServiceImpl - method: save() - job={}", job);
+        log.trace("In JobServiceImpl - method: save() - job={}", job);
 
         return jobRepository.save(job);
     }
 
     @Override
     public Job modify(Job modifiedJob) {
-        logger.trace("In JobServiceImpl - method: modify() - job={}", modifiedJob);
+        log.trace("In JobServiceImpl - method: modify() - job={}", modifiedJob);
 
         return jobRepository.saveAndFlush(modifiedJob);
     }
@@ -74,7 +76,7 @@ public class JobServiceImpl implements JobService{
     @Override
     public void remove(Long id) {
         //TODO handle preference delete
-        logger.trace("In JobServiceImpl - method: remove() - id={}", id);
+        log.trace("In JobServiceImpl - method: remove() - id={}", id);
         List<Preference> preferences = preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
                 .collect(Collectors.toList());

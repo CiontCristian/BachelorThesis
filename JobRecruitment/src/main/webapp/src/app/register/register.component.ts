@@ -32,10 +32,9 @@ export class RegisterComponent implements OnInit {
       emailForm : new FormControl('', [
         Validators.required,
         Validators.email
-      ]), passwordForm: new FormControl('', [Validators.required]),usernameForm: new FormControl('', [Validators.required]),
+      ]), passwordForm: new FormControl('', [Validators.required]),
       firstNameForm: new FormControl('', [Validators.required]), lastNameForm: new FormControl('', [Validators.required]),
-      birthDateForm: new FormControl('', [Validators.required]),telephoneForm: new FormControl('', [Validators.required]),
-      genderForm : new FormControl('', [Validators.required])
+      birthDateForm: new FormControl('', [Validators.required]), genderForm : new FormControl('', [Validators.required])
     });
     this.locationFormGroup = this.formBuilder.group({
       addressForm: new FormControl(''), cityForm: new FormControl(''),
@@ -63,9 +62,9 @@ export class RegisterComponent implements OnInit {
     let location: Location = new Location(null, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
       this.locationFormGroup.get('countryForm').value);
 
-    let newUser : User = new User(null, this.generalFormGroup.get('usernameForm').value, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
+    let newUser : User = new User(null, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
       this.generalFormGroup.get('firstNameForm').value, this.generalFormGroup.get('lastNameForm').value,
-      new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('telephoneForm').value, this.generalFormGroup.get('genderForm').value,
+      new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('genderForm').value,
       background, permission, location);
 
     console.log(newUser)

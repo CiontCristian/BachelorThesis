@@ -26,9 +26,6 @@
     </mat-form-field>
     <br>
 
-    <button type="submit" mat-raised-button color="primary" [disabled]="emailForm.invalid || passwordForm.invalid">Log In</button>
+    <button type="submit" mat-raised-button class="login-button" [disabled]="emailForm.invalid || passwordForm.invalid">Log In</button>
   </form>
-    <button (click)="getPythonBooks()">DATA FROM PYTHON</button>
-    <button (click)="sendPythonBooks()">DATA TO PYTHON</button>
-
 </div>

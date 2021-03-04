@@ -6,6 +6,7 @@ import bachelor.thesis.job_recruitment.core.model.PreferenceKey;
 import bachelor.thesis.job_recruitment.core.service.JobService;
 
 import bachelor.thesis.job_recruitment.server.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/job")
+@Slf4j
 public class JobController {
-    public static final Logger logger = LoggerFactory.getLogger(JobController.class);
-
     @Autowired
     private JobService jobService;
 
@@ -33,19 +33,19 @@ public class JobController {
     @GetMapping(value = "/findAllJobs")
     ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize
         , @RequestParam String value){
-        logger.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
+        log.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
         List<Job> jobs = jobService.findAll(pageIndex, pageSize, value);
-        logger.trace("In JobController - method: findAllJobs - jobs={}", jobs);
+        log.trace("In JobController - method: findAllJobs - jobs={}", jobs);
 
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
     @PostMapping(value = "/saveJob")
     ResponseEntity<Job> saveJob(@RequestBody Job job){
-        logger.trace("In JobController - method: saveJob - jobDTO={}", job);
+        log.trace("In JobController - method: saveJob - jobDTO={}", job);
 
         Job savedJob = jobService.save(job);
-        logger.trace("In JobController - method: saveJob - savedJob={}", savedJob);
+        log.trace("In JobController - method: saveJob - savedJob={}", savedJob);
 
 
         return new ResponseEntity<>(savedJob, HttpStatus.OK);
@@ -53,10 +53,10 @@ public class JobController {
 
     @PutMapping(value = "/modifyJob")
     ResponseEntity<Job> modifyJob(@RequestBody Job job){
-        logger.trace("In JobController - method: saveJob - jobDTO={}", job);
+        log.trace("In JobController - method: saveJob - jobDTO={}", job);
 
         Job modifiedJob = jobService.modify(job);
-        logger.trace("In JobController - method: saveJob - savedJob={}", modifiedJob);
+        log.trace("In JobController - method: saveJob - savedJob={}", modifiedJob);
 
 
         return new ResponseEntity<>(modifiedJob, HttpStatus.OK);
@@ -106,7 +106,7 @@ public class JobController {
 
     @GetMapping(value = "/getJobPreferenceForUser")
     ResponseEntity<Preference> getJobPreferenceForUser(@RequestParam Long userId, @RequestParam Long jobId){
-        logger.debug("In JobController - method: getJobPreferenceForUser - userId={}, jobId={}",userId, jobId);
+        log.debug("In JobController - method: getJobPreferenceForUser - userId={}, jobId={}",userId, jobId);
         Optional<Preference> preference = jobService.findJobPreferenceForUser(userId, jobId);
         if(preference.isEmpty())
             throw new ResourceNotFoundException("Preference not found!");

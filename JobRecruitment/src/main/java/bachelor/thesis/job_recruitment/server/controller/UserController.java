@@ -7,6 +7,7 @@ import bachelor.thesis.job_recruitment.core.service.UserService;
 
 import bachelor.thesis.job_recruitment.server.exception.BadRequestException;
 import bachelor.thesis.job_recruitment.server.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/user")
+@Slf4j
 public class UserController {
-
-    public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -44,7 +44,7 @@ public class UserController {
     ResponseEntity<List<GenericUser>> findAll(){
         List<GenericUser> users = userService.findAll();
 
-        logger.trace("In UserController - method: findAll - users={}", users);
+        log.trace("In UserController - method: findAll - users={}", users);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -52,11 +52,11 @@ public class UserController {
     @GetMapping(value = "/login")
     ResponseEntity<GenericUser> login(@RequestParam String email, @RequestParam String password) throws HttpClientErrorException{
 
-        logger.trace("In UserController - method: login - credentials={}",email+ " " + password);
+        log.trace("In UserController - method: login - credentials={}",email+ " " + password);
         Optional<GenericUser> genericUser = userService.verifyUserCredentials(email, password);
 
         if (genericUser.isPresent()) {
-            logger.trace("In UserController - method: login - retrievedUser={}", genericUser);
+            log.trace("In UserController - method: login - retrievedUser={}", genericUser);
             //return new ResponseEntity<>(userConverter.convertModelToDto(genericUser.get()), HttpStatus.OK);
             return new ResponseEntity<>(genericUser.get(), HttpStatus.OK);
         }
@@ -68,11 +68,11 @@ public class UserController {
 
     @PostMapping(value = "/register")
     ResponseEntity<GenericUser> register(@RequestBody GenericUser receivedUser){
-        logger.trace("In UserController - method: register - user={}", receivedUser);
+        log.trace("In UserController - method: register - user={}", receivedUser);
         Optional<GenericUser> savedUser = userService.save(receivedUser);
 
         if(savedUser.isPresent()) {
-            logger.trace("In UserController - method: register - savedUser={}", savedUser);
+            log.trace("In UserController - method: register - savedUser={}", savedUser);
             return new ResponseEntity<>(savedUser.get(), HttpStatus.CREATED);
         }
 

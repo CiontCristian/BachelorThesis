@@ -1,4 +1,9 @@
-.register_container{
+
+.contractor-save-mat-dialog-content{
   text-align: center;
   padding: 30px;
+}
+
+.contractor-save-mat-dialog-actions{
+  text-align: center;
 }

@@ -12,6 +12,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../model/Location";
 import {JobModifyComponent} from "../job-modify/job-modify.component";
 import {JobRemoveComponent} from "../job-remove/job-remove.component";
+import {ContractorSaveComponent} from "../contractor-save/contractor-save.component";
 
 @Component({
   selector: 'app-contractor-manage',
@@ -66,6 +67,23 @@ export class ContractorManageComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open(JobSaveComponent,{
+      width: '50%',
+      height: '80vh',
+      data: dialogConfig.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      window.location.reload();
+    });
+  }
+
+  openAddContractorDialog(): void{
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+
+    }
+
+    const dialogRef = this.dialog.open(ContractorSaveComponent,{
       width: '50%',
       height: '80vh',
       data: dialogConfig.data

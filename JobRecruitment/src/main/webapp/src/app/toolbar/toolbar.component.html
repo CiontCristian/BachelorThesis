@@ -1,16 +1,14 @@
 <div class="toolbar_menu">
-  <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <a routerLink=""><span>Job Recruitment</span></a>
-    <p *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</p>
+  <mat-toolbar class="toolbar">
+    <button mat-raised-button class="toolbar-button" routerLink="">Job Recruitment</button>
+    <span style="color: rgba(241,255,1,0.71)" *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</span>
     <span class="example-spacer"></span>
-    <form>
+    <form class="search-form">
       <mat-form-field>
         <input type="text"
                placeholder="Search"
                matInput
+               class="search-input"
                [formControl]="searchForm"
                [matAutocomplete]="auto">
         <button mat-button *ngIf="searchForm.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchForm.setValue('')">
@@ -22,25 +20,16 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="search(searchForm.value)">
+      <button mat-mini-fab (click)="search(searchForm.value)">
         <mat-icon>search</mat-icon>
       </button>
     </form>
     <span class="example-spacer"></span>
-    <a routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</a>
-    <a routerLink="job-list">Jobs</a>
-    <button mat-mini-fab color="primary" routerLink="contractor-save" *ngIf="currentUser && currentUser.permission.isCompany">
-      <mat-icon>add</mat-icon>
-    </button>
-    <a routerLink="login" *ngIf="currentUser === null">Login</a>
-    <a routerLink="register" *ngIf="currentUser === null">Register</a>
-    <a routerLink="" *ngIf="currentUser" (click)="logout()">Logout</a>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+    <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</button>
+
+    <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser === null">Login</button>
+    <button mat-raised-button class="toolbar-button" routerLink="register" *ngIf="currentUser === null">Register</button>
+    <button mat-raised-button class="toolbar-button" routerLink="" *ngIf="currentUser" (click)="logout()">Logout</button>
   </mat-toolbar>
 </div>
 <div class="toolbar_body">

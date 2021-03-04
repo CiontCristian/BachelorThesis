@@ -1,9 +1,17 @@
 .login_container{
   text-align: center;
   padding: 30px;
+  background-color: rgba(0, 0, 0, 0.10);
+  height: 91.9vh;
 }
 
 .login_form_field{
   width: 200px;
   padding-bottom: 20px;
+}
+
+.login-button{
+  background-color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
 }

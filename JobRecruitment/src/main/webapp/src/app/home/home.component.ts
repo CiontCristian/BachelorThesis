@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Job} from "../model/Job";
+import {PageEvent} from "@angular/material/paginator";
+import {JobService} from "../service/JobService";
+import {ContractorService} from "../service/ContractorService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
-  currentRate = 8;
-  //images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+
   ngOnInit(): void {
   }
 

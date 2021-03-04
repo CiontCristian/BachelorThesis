@@ -1,3 +1,40 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+
+.toolbar_menu{
+  top: 0;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.toolbar{
+  background-color: rgba(0,0,0,0.71);
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.toolbar-button{
+  background-color: rgba(241,255,1,0.71);
+  margin-right: 15px;
+  margin-left: 30px;
+  text-align: center;
+  font-size: large;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(241,255,1,0.71);
+}
+
+.search-input{
+  color: rgba(241,255,1,0.71);
+}
+
+
+.search-form button{
+  background-color: rgba(241,255,1,0.71);
+}

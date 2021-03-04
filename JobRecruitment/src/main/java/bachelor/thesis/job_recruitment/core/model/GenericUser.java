@@ -12,9 +12,6 @@ import java.util.Date;
 @Entity
 @Builder
 public class GenericUser extends BaseEntity<Long>{
-
-    @Column(length = 20)
-    private String username;
     @Column(length = 30)
     private String password;
     @Column(length = 40)
@@ -24,8 +21,6 @@ public class GenericUser extends BaseEntity<Long>{
     @Column(length = 15)
     private String lastName;
     private Date dateOfBirth;
-    @Column(length = 10)
-    private String phoneNumber;
     private Character gender;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Background background;

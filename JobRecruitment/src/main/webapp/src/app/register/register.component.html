@@ -1,23 +1,10 @@
 <div class="register_container">
   <h1>Register</h1>
-  <form (ngSubmit)="register()" class="telephone_form">
-    <mat-horizontal-stepper linear #stepper>
+  <form (ngSubmit)="register()">
+    <mat-horizontal-stepper linear #stepper class="register-stepper">
       <mat-step [stepControl]="generalFormGroup">
         <form [formGroup]="generalFormGroup">
           <ng-template matStepLabel>General Info</ng-template>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>User</mat-label>
-            <label>
-              <input type="text" matInput formControlName="usernameForm" required
-                     placeholder="Ex. cristi1234">
-            </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
-            <mat-error *ngIf="this.generalFormGroup.get('usernameForm').hasError('required')">
-              Username is required
-            </mat-error>
-          </mat-form-field>
-          <br>
 
           <mat-form-field appearance="fill" class="register_form_field">
             <mat-label>Email</mat-label>
@@ -71,13 +58,12 @@
 
           <mat-form-field appearance="fill" class="register_form_field">
             <mat-label>Date of Birth</mat-label>
-            <label>
-              <!--<input type="date" matInput formControlName="birthDateForm" required
-                     placeholder="Ex. 01/01/1990">-->
-              <input matInput [matDatepicker]="picker" formControlName="birthDateForm" required>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </label>
+
+
+            <input matInput [matDatepicker]="picker" formControlName="birthDateForm" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
             <mat-hint>Errors appear instantly!</mat-hint>
             <mat-error *ngIf="this.generalFormGroup.get('birthDateForm').hasError('required')">
               Date of Birth is required
@@ -85,27 +71,13 @@
           </mat-form-field>
           <br>
 
-          <mat-form-field appearance="fill" class="telephone_form_width">
-            <mat-label>Telephone</mat-label>
+          <div class="register-gender-div">
 
-              <span matPrefix>+40 &nbsp;</span>
-              <input type="tel" matInput placeholder="123-456-789" formControlName="telephoneForm" required>
-              <mat-icon matSuffix>mode_edit</mat-icon>
-
-            <mat-error *ngIf="this.generalFormGroup.get('telephoneForm').hasError('required')">
-              Telephone is required
-            </mat-error>
-          </mat-form-field>
-          <br>
-
-          <mat-label>Gender:  </mat-label>
-          <br>
             <mat-radio-group aria-label="Select an option" formControlName="genderForm" required>
               <mat-radio-button value="M">Male</mat-radio-button>
-              <br/>
               <mat-radio-button value="F">Female</mat-radio-button>
             </mat-radio-group>
-
+          </div>
           <mat-error *ngIf="this.generalFormGroup.get('genderForm').hasError('required')">
             Gender is required
           </mat-error>
@@ -213,97 +185,8 @@
 
     </mat-horizontal-stepper>
 
-   <!-- <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>User</mat-label>
-      <label>
-        <input type="text" matInput [formControl]="usernameForm" required
-               placeholder="Ex. cristi1234">
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="usernameForm.hasError('required')">
-        Username is required
-      </mat-error>
-    </mat-form-field>
-    <br>
 
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>Email</mat-label>
-      <label>
-        <input type="email" matInput [formControl]="emailForm" required
-               placeholder="Ex. pat@example.com">
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="emailForm.invalid">{{getEmailErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <br>
-
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>Enter your password</mat-label>
-      <label>
-        <input matInput [formControl]="passwordForm" [type]="hidePassword ? 'password' : 'text'" required>
-      </label>
-      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-error *ngIf="passwordForm.hasError('required')">
-        Password is required
-      </mat-error>
-    </mat-form-field>
-    <br>
-
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>First Name</mat-label>
-      <label>
-        <input type="text" matInput [formControl]="firstNameForm" required
-               placeholder="Ex. Chris">
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="firstNameForm.hasError('required')">
-        First Name is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>Last Name</mat-label>
-      <label>
-        <input type="text" matInput [formControl]="lastNameForm" required
-               placeholder="Ex. Delgado">
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="lastNameForm.hasError('required')">
-        Last Name is required
-      </mat-error>
-    </mat-form-field>
-    <br>
-
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>Date of Birth</mat-label>
-      <label>
-        <input type="date" matInput [formControl]="birthDateForm" required
-               placeholder="Ex. 01/01/1990">
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="birthDateForm.hasError('required')">
-        Date of Birth is required
-      </mat-error>
-    </mat-form-field>
-    <br>
-
-    <mat-form-field appearance="fill" class="register_form_field">
-      <mat-label>Telephone</mat-label>
-      <label>
-        <span matPrefix>+40 &nbsp;</span>
-        <input type="tel" matInput placeholder="123-456-789" [formControl]="telephoneForm">
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <mat-error *ngIf="telephoneForm.hasError('required')">
-        Telephone is required
-      </mat-error>
-    </mat-form-field>
-    <br>-->
-
-    <button type="submit" mat-raised-button color="primary" [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
+    <button type="submit" mat-raised-button class="register-button" [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
       || this.generalFormGroup.get('usernameForm').invalid || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
        this.generalFormGroup.get('birthDateForm').invalid || this.generalFormGroup.get('telephoneForm').invalid ||
       this.backgroundFormGroup.get('permissionForm').invalid || (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('formalEducationForm').invalid) ||

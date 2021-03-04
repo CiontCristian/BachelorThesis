@@ -1,109 +1,114 @@
+<h1 mat-dialog-title style="text-align: center">Register Your Company</h1>
+<div mat-dialog-content class="contractor-save-mat-dialog-content">
+  <div>
 
-<div class="register_container">
-  <h1>Upload</h1>
-  <p *ngIf="contractor !== null"><b>You already registered a company!</b></p>
-  <form (ngSubmit)="register()" class="register_form">
-    <mat-horizontal-stepper linear #stepper>
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="generalFormGroup">
+          <form [formGroup]="generalFormGroup">
 
-      <mat-step [stepControl]="generalFormGroup">
-        <form [formGroup]="generalFormGroup">
+            <ng-template matStepLabel>General Info</ng-template>
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Name</mat-label>
+              <label>
+                <input type="text" matInput formControlName="nameForm" required
+                       placeholder="Ex. Delgado">
+              </label>
+              <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="this.generalFormGroup.get('nameForm').hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
+            <br>
 
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Name</mat-label>
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Description</mat-label>
+              <label>
+              <textarea type="text" matInput formControlName="descriptionForm" required
+                        placeholder="Ex. Desc"></textarea>
+              </label>
+              <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="this.generalFormGroup.get('descriptionForm').hasError('required')">
+                Desc is required
+              </mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Number of Employees</mat-label>
+              <label>
+                <input type="text" matInput formControlName="nrOfEmployeesForm" required
+                       placeholder="Ex. Delgado">
+              </label>
+              <mat-hint>Errors appear instantly!</mat-hint>
+              <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
+                nrOfEmployees is required
+              </mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-label>Logo</mat-label>
             <label>
-              <input type="text" matInput formControlName="nameForm" required
-                     placeholder="Ex. Delgado">
+              <input type="file" (change)="onFileChanged($event)" formControlName="logoForm" required>
             </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
-            <mat-error *ngIf="this.generalFormGroup.get('nameForm').hasError('required')">
-              Name is required
+            <mat-error *ngIf="this.generalFormGroup.get('logoForm').hasError('required')">
+              Logo is required
             </mat-error>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Description</mat-label>
-            <label>
-              <textarea cols="100" rows="15" type="text" matInput formControlName="descriptionForm" required
-                        placeholder="Ex. Desc" cdkTextareaAutosize></textarea>
-            </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
-            <mat-error *ngIf="this.generalFormGroup.get('descriptionForm').hasError('required')">
-              Desc is required
-            </mat-error>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Number of Employees</mat-label>
-            <label>
-              <input type="text" matInput formControlName="nrOfEmployeesForm" required
-                     placeholder="Ex. Delgado">
-            </label>
-            <mat-hint>Errors appear instantly!</mat-hint>
-            <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
-              nrOfEmployees is required
-            </mat-error>
-          </mat-form-field>
-          <br>
-
-          <mat-label>Logo</mat-label>
-          <label>
-            <input type="file" (change)="onFileChanged($event)" formControlName="logoForm" required>
-          </label>
-          <mat-error *ngIf="this.generalFormGroup.get('logoForm').hasError('required')">
-            Logo is required
-          </mat-error>
 
 
-          <div>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
 
 
-      <mat-step [stepControl]="locationFormGroup" [optional]=true>
-        <form [formGroup]="locationFormGroup">
-          <ng-template matStepLabel>Address Info</ng-template>
+        <mat-step [stepControl]="locationFormGroup" [optional]=true>
+          <form [formGroup]="locationFormGroup">
+            <ng-template matStepLabel>Address Info</ng-template>
 
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Address</mat-label>
-            <label>
-              <input type="text" matInput formControlName="addressForm"
-                     placeholder="Ex. Example Street Nr. 3">
-            </label>
-          </mat-form-field>
-          <br>
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Address</mat-label>
+              <label>
+                <input type="text" matInput formControlName="addressForm"
+                       placeholder="Ex. Example Street Nr. 3">
+              </label>
+            </mat-form-field>
+            <br>
 
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>City</mat-label>
-            <label>
-              <input type="text" matInput formControlName="cityForm"
-                     placeholder="Ex. Cluj-Napoca">
-            </label>
-          </mat-form-field>
-          <br>
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>City</mat-label>
+              <label>
+                <input type="text" matInput formControlName="cityForm"
+                       placeholder="Ex. Cluj-Napoca">
+              </label>
+            </mat-form-field>
+            <br>
 
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Country</mat-label>
-            <label>
-              <input type="text" matInput formControlName="countryForm"
-                     placeholder="Ex. Romania">
-            </label>
-          </mat-form-field>
-          <br>
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Country</mat-label>
+              <label>
+                <input type="text" matInput formControlName="countryForm"
+                       placeholder="Ex. Romania">
+              </label>
+            </mat-form-field>
+            <br>
 
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-          </div>
-        </form>
-      </mat-step>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </form>
+        </mat-step>
 
-    </mat-horizontal-stepper>
-    <button type="submit" mat-raised-button color="primary" [disabled]="this.generalFormGroup.get('nameForm').invalid ||
+      </mat-horizontal-stepper>
+  </div>
+</div>
+
+<div mat-dialog-actions class="contractor-save-mat-dialog-actions">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button mat-dialog-close="" color="primary" [disabled]="this.generalFormGroup.get('nameForm').invalid ||
      this.generalFormGroup.get('descriptionForm').invalid || this.generalFormGroup.get('nrOfEmployeesForm').invalid ||
       this.generalFormGroup.get('logoForm').invalid || contractor !== null">Confirm</button>
-  </form>
 </div>
+
+

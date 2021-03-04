@@ -10,6 +10,7 @@ import {environment} from "../../environments/environment";
 export class JobService{
   private jobURL = environment.apiBaseUrl + '/job';
   private searchValue = new BehaviorSubject<string>("");
+  private recommenderURL = environment.recommenderBaseUrl + '/recommender';
 
   constructor(
     private httpClient: HttpClient,

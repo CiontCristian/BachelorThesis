@@ -3,11 +3,12 @@ import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Contractor} from "../model/Contractor";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class ContractorService{
 
-  private contractorURL = 'http://localhost:8080/contractor';
+  private contractorURL = environment.apiBaseUrl + '/contractor';
 
   constructor(
     private httpClient: HttpClient,

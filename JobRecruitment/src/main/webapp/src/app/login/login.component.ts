@@ -69,19 +69,4 @@ export class LoginComponent implements OnInit {
             this.currentUser = null;
           })
   }
-
-  getPythonBooks() {
-    this.accountService.getAllFromPython().subscribe(
-      data => console.log(data)
-    )
-  }
-
-  sendPythonBooks(){
-    let book : Book = new Book(1, "Cal", "Sal", "calut cal", 120);
-    console.log(book);
-
-    this.arr.push(book);
-
-    this.accountService.sendAllToPython(this.arr).subscribe();
-  }
 }
