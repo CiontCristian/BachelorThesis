@@ -30,7 +30,6 @@ export class JobSaveComponent implements OnInit {
   minExpForm = new FormControl('', [Validators.required]);
   experienceLevels: string[] = ["entry", "junior", "middle", "senior", "lead", "manager"];
   techsForm = new FormControl('', [Validators.required]);
-  visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -54,8 +53,6 @@ export class JobSaveComponent implements OnInit {
     console.log(job);
     this.jobService.saveJob(job).subscribe(
       response => {
-        //this.contractor.offers.push(response.body);
-        sessionStorage.setItem("contractor", JSON.stringify(this.contractor));
       },
       error => console.log(error)
     );

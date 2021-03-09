@@ -131,14 +131,15 @@
         <form [formGroup]="backgroundFormGroup">
           <ng-template matStepLabel>Background Info</ng-template>
 
-          <mat-label>Hunting/Recruiting:  </mat-label>
-          <label>
-            <mat-radio-group aria-label="Select an option" formControlName="permissionForm" required>
-              <mat-radio-button value="client">Client</mat-radio-button>
-              <br/>
-              <mat-radio-button value="company">Company</mat-radio-button>
-            </mat-radio-group>
-          </label>
+          <div class="register-permission-div">
+            <mat-label>Hunting/Recruiting:  </mat-label>
+            <label>
+              <mat-radio-group aria-label="Select an option" formControlName="permissionForm" required>
+                <mat-radio-button value="client">Client</mat-radio-button>
+                <mat-radio-button value="company">Company</mat-radio-button>
+              </mat-radio-group>
+            </label>
+          </div>
           <mat-error *ngIf="this.backgroundFormGroup.get('permissionForm').hasError('required')">
             Please specify what you are interested in!
           </mat-error>
@@ -187,8 +188,8 @@
 
 
     <button type="submit" mat-raised-button class="register-button" [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
-      || this.generalFormGroup.get('usernameForm').invalid || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
-       this.generalFormGroup.get('birthDateForm').invalid || this.generalFormGroup.get('telephoneForm').invalid ||
+      || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
+       this.generalFormGroup.get('birthDateForm').invalid ||
       this.backgroundFormGroup.get('permissionForm').invalid || (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('formalEducationForm').invalid) ||
       (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('experienceForm').invalid ) ">Register</button>
   </form>

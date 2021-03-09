@@ -3,7 +3,8 @@
   width: 300px;
   border: 1px solid rgba(0,0,0,0.71);
   box-shadow: 3px 3px rgba(0,0,0,0.71);
-  background-color: whitesmoke;
+  background-color: inherit;
+  border-radius: 5px;
 }
 
 .card-img{

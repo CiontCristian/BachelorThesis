@@ -12,4 +12,6 @@ public interface UserService {
     Optional<GenericUser> verifyUserCredentials(String email, String password);
     Optional<GenericUser> save(GenericUser user);
     Optional<GenericUser> modifyCompany(Long id, Contractor contractor);
+    void saveUsersToFile();
+    void generateUsers();
 }

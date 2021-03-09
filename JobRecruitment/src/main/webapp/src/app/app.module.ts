@@ -41,6 +41,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobModifyComponent } from './job-modify/job-modify.component';
 import { JobRemoveComponent } from './job-remove/job-remove.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     JobSaveComponent,
     JobDetailsComponent,
     JobModifyComponent,
-    JobRemoveComponent
+    JobRemoveComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

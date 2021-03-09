@@ -18,6 +18,10 @@
   margin-left: 10px;
 }
 
+.register-permission-div mat-radio-button{
+  margin-left: 10px;
+}
+
 .register-gender-div mat-label{
   font-size: medium;
   margin-bottom: 10px;

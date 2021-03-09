@@ -18,4 +18,8 @@ public interface JobService {
     Optional<Job> findJobByTitle(String title);
     Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId);
     void saveJobsToFile();
+    void generateJobs();
+    String selectRandomItems(List<String> items);
+    void savePreferencesToFile();
+    void generatePreferences();
 }

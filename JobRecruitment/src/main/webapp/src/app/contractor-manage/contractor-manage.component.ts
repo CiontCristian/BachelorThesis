@@ -22,7 +22,7 @@ import {ContractorSaveComponent} from "../contractor-save/contractor-save.compon
 export class ContractorManageComponent implements OnInit {
 
   jobs: Job[] = [];
-  currentUser: User = null;
+  currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
   contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
 
   generalFormGroup: FormGroup;
@@ -39,9 +39,10 @@ export class ContractorManageComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+
     console.log(this.currentUser);
     console.log(this.contractor);
+
     if(this.contractor) {
       this.jobService.findJobsForContractor(this.contractor.id).subscribe(
         response => {this.jobs = response.body},
@@ -73,7 +74,12 @@ export class ContractorManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      window.location.reload();
+      this.contractorService.findContractorForUser(this.currentUser.id)
+        .subscribe(response => {this.contractor = response.body;
+        console.log(this.contractor);
+        window.location.reload();
+        })
+      //window.location.reload();
     });
   }
 

@@ -113,6 +113,16 @@ public class JobController {
         return new ResponseEntity<>(preference.get(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/saveJobsToFile")
+    ResponseEntity<?> saveJobsToFile(){
+        jobService.saveJobsToFile();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/generateJobs")
+    ResponseEntity<?> generateJobs(){
+        jobService.generateJobs();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

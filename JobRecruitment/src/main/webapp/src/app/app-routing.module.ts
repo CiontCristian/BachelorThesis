@@ -7,6 +7,7 @@ import {JobListComponent} from "./job-list/job-list.component";
 import {ContractorSaveComponent} from "./contractor-save/contractor-save.component";
 import {ContractorManageComponent} from "./contractor-manage/contractor-manage.component";
 import {JobDetailsComponent} from "./job-details/job-details.component";
+import {AdminComponent} from "./admin/admin.component";
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: "job-list", component: JobListComponent},
   {path: "job-list/details/:jobID", component: JobDetailsComponent},
   {path: "contractor-save", component: ContractorSaveComponent},
-  {path: "contractor-manage", component: ContractorManageComponent}
+  {path: "contractor-manage", component: ContractorManageComponent},
+  {path: "admin", component: AdminComponent}
 ];
 
 @NgModule({

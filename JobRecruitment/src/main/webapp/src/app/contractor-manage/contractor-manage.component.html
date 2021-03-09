@@ -1,7 +1,7 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer class="mat-drawer-sidenav" mode="side" opened>
-    <div class="test">
-      <button mat-mini-fab class="contractor-manage-button" (click)="openAddJobDialog()">
+      <h1 *ngIf="contractor === null">Register your company before adding jobs!</h1>
+      <button mat-mini-fab class="contractor-manage-button" *ngIf="contractor !== null" (click)="openAddJobDialog()">
         <mat-icon>add</mat-icon>
       </button>
 
@@ -9,7 +9,7 @@
         <mat-list-item *ngFor="let job of jobs">
           <table>
             <tr>
-              <td><p><b>{{job.title}}</b></p></td>
+              <td><b>{{job.title}}</b></td>
               <td>
                 <button mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
                   <mat-icon>edit</mat-icon>
@@ -25,7 +25,6 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-    </div>
   </mat-drawer>
 
   <mat-drawer-content class="mat-drawer-content">
@@ -34,7 +33,8 @@
     </button>
     <mat-divider></mat-divider>-->
     <div>
-      <button mat-mini-fab class="contractor-manage-button" (click)="openAddContractorDialog()">
+      <h1 *ngIf="contractor === null">Register your company!</h1>
+      <button mat-mini-fab class="contractor-manage-button" *ngIf="contractor === null" (click)="openAddContractorDialog()">
         <mat-icon>add</mat-icon>
       </button>
 

@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Job} from "../model/Job";
 import {Preference} from "../model/Preference";
 import {environment} from "../../environments/environment";
+import {RecommenderInfo} from "../model/RecommenderInfo";
 
 @Injectable()
 export class JobService{
@@ -76,6 +77,17 @@ export class JobService{
   {
     return this.httpClient.get<Preference>(this.jobURL + "/getJobPreferenceForUser?userId="+userId+
     "&jobId="+jobId, {observe: "response"});
+  }
+
+  saveRecommenderInfo(recommenderInfo: RecommenderInfo): Observable<HttpResponse<RecommenderInfo>>
+  {
+    return this.httpClient.post<RecommenderInfo>(this.recommenderURL + "/saveRecommenderInfo", recommenderInfo,
+      {observe: "response"});
+  }
+
+  getRecommendedJobsIds(): Observable<HttpResponse<number[]>>
+  {
+    return this.httpClient.get<number[]>(this.recommenderURL + "/getRecommendedJobsIds", {observe: "response"});
   }
 
 }
