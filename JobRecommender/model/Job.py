@@ -9,3 +9,6 @@ class Job:
         self.remote = remote
         self.techs = techs
 
+    def __str__(self):
+        return str(self.id) + " " + str(self.title) + " " + str(self.dev_type) + " "+ str(self.job_type) + " " + str(self.min_experience) +" " + str(self.remote) +" " + str(self.techs)
+

@@ -1,9 +1,17 @@
+import math
+
 import numpy as np
 from collections import Counter
 
 
-def euclidean_distance(x1, x2):
-        return np.sqrt(np.sum((x1 - x2)**2))
+#def euclidean_distance(x1, x2):
+#    return np.sqrt(np.sum((x1 - x2) ** 2))
+
+def euclidean_distance(point1, point2):
+    sum_squared_distance = 0
+    for i in range(len(point1)):
+        sum_squared_distance += math.pow(point1[i] - point2[i], 2)
+    return math.sqrt(sum_squared_distance)
 
 
 class KNN:
@@ -11,21 +19,38 @@ class KNN:
     def __init__(self, k=3):
         self.k = k
 
-    def fit(self, X, y):
-        self.X_train = X
-        self.y_train = y
+    def fit(self, data, query):
+        self.data = data
+        self.query = query
 
-    def predict(self, X):
-        y_pred = [self._predict(x) for x in X]
-        return np.array(y_pred)
+    def predict(self, distance_fn):
+        neighbor_distances_and_indices = []
 
-    def _predict(self, x):
-        # Compute distances between x and all examples in the training set
-        distances = [euclidean_distance(x, x_train) for x_train in self.X_train]
-        # Sort by distance and return indices of the first k neighbors
-        k_idx = np.argsort(distances)[:self.k]
-        # Extract the labels of the k nearest neighbor training samples
-        k_neighbor_labels = [self.y_train[i] for i in k_idx]
-        # return the most common class label
-        most_common = Counter(k_neighbor_labels).most_common(1)
-        return most_common[0][0]
+        # 3. For each example in the data
+        for index, example in enumerate(self.data):
+            # 3.1 Calculate the distance between the query example and the current
+            # example from the data.
+            distance = distance_fn(example[:-1], self.query)
+
+            # 3.2 Add the distance and the index of the example to an ordered collection
+            neighbor_distances_and_indices.append((distance, index))
+
+        # 4. Sort the ordered collection of distances and indices from
+        # smallest to largest (in ascending order) by the distances
+        sorted_neighbor_distances_and_indices = sorted(neighbor_distances_and_indices)
+
+        # 5. Pick the first K entries from the sorted collection
+        k_nearest_distances_and_indices = sorted_neighbor_distances_and_indices[:self.k]
+
+        return k_nearest_distances_and_indices
+
+    def recommend(self, rawData):
+        recommendation_indices = self.predict(
+            distance_fn=euclidean_distance
+        )
+
+        recommended = []
+        for _, index in recommendation_indices:
+            recommended.append(rawData[index])
+
+        return recommended
