@@ -57,12 +57,13 @@ def cleanDataset():
     jobs = []
 
     for index, row in df.iterrows():
-        job = Job(index, str(row['Job Title']), str(row['Role']),
-                  random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
-                                 k=1)[0],
-                  classifyJobExperience(row['Job Experience Required']),
-                  bool(random.choices([True, False], [0.6, 0.4], k=1)),
-                  remodelTechs(row['Key Skills']))
+        job = Job(index, str(row['Job Title']), "Desc1", random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
+                                 k=1)[0], bool(random.choices([True, False], [0.6, 0.4], k=1)),
+
+                  classifyJobExperience(row['Job Experience Required']), 1000,
+                  str(row['Role']),
+
+                  remodelTechs(row['Key Skills']), 1, None)
         jobs.append(job)
     return jobs
 
@@ -70,7 +71,7 @@ def cleanDataset():
 def getFeatureVectorHeaders(jobs):
     vectorString = ""
     for job in jobs:
-        vectorString += job.min_experience.strip() + "," + job.job_type.strip() + "," + job.dev_type.strip() + "," + str(
+        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
             job.remote).strip() + "," + job.techs.strip()
 
     vectorString = vectorString.lower()
@@ -85,7 +86,7 @@ def transformJobsToFeatureVectors(headers, jobs):
     vectorString = ""
     for job in jobs:
         empty = [0 for _ in range(len(headers))]
-        vectorString += job.min_experience + ", " + job.job_type + ", " + job.dev_type + ", " + str(
+        vectorString += job.minExperience + ", " + job.jobType + ", " + job.devType + ", " + str(
             job.remote) + ", " + job.techs
         vector = vectorString.split(',')
         vector = set(vector)

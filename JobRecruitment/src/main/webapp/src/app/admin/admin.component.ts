@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from "../model/User";
 import {JobService} from "../service/JobService";
 import {RecommenderInfo} from "../model/RecommenderInfo";
+import {Job} from "../model/Job";
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +13,7 @@ export class AdminComponent implements OnInit {
 
   currentUser: User;
   jobsIds: number[] = [];
+  jobs: Job[] = [];
   info: RecommenderInfo;
   constructor( private jobService: JobService) { }
 
@@ -31,6 +33,13 @@ export class AdminComponent implements OnInit {
 
     this.jobService.saveRecommenderInfo(info)
       .subscribe(response => {this.info = response.body},
+        error => console.log(error.error))
+  }
+
+  getDatasetJobs() {
+    this.jobService.getJobsFromDataset()
+      .subscribe(response => {this.jobs = response.body;
+          console.log(this.jobs)},
         error => console.log(error.error))
   }
 }

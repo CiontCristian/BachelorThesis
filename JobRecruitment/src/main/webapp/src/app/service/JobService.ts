@@ -90,4 +90,9 @@ export class JobService{
     return this.httpClient.get<number[]>(this.recommenderURL + "/getRecommendedJobsIds", {observe: "response"});
   }
 
+  getJobsFromDataset(): Observable<HttpResponse<Job[]>>
+  {
+    return this.httpClient.get<Job[]>(this.recommenderURL + "/getJobs", {observe: "response"});
+  }
+
 }
