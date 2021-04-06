@@ -1,0 +1,50 @@
+26959| Software Test Engineer|Desc1|Full-time|True|junior,middle|1000|Testing Engineer|test engineering,java,automation testing,API Testing,Software Testing,Selenium|1
+24235| ASP.Net & Sharepoint Developer|Desc1|Internship|True|junior,middle,senior|1000|Software Developer|javascript,blackberry,html,c#,server,documentation,telerik,sharepoint,sql,t sql,sql server 2008,web,design,oops,programming|1
+14068| PHP Developer|Desc1|Part-time|True|entry,junior|1000|Software Developer|PHP,Javascript,HTML,Ajax,jQuery,Wordpress,CMS,Open source,Debugging,Analytical|1
+2864| LEAD SECURITY RESEARCHER - CONTENT DEVELOPMENT|Desc1|Full-time|True|junior,middle|1000|Team Lead/Technical Lead|TCP,Automation,Linux,Networking,Perl,Windows,Troubleshooting,Content development,SQL,Python|1
+7866| Lumira Developer for mobile and desktop|Desc1|Full-time|True|junior|1000|Software Developer|Sap Lumira|1
+10799| VB Programmer|Desc1|Full-time|True|entry,junior|1000|Software Developer|mca,vb,sql server,com,projects,com dcom,sql,written communication,programming,communication skills|1
+355| Senior .NET Developer|Desc1|Full-time|True|entry,junior,middle|1000|Software Developer|javascript,html,sql server,ajax,jquery,soa,oop,english,proactive,asp net c|1
+16651| Lead Backend Engineer|Desc1|Full-time|True|middle,senior,lead|1000|Team Lead/Technical Lead|Spring,Web Servers,Database,GIT,Maven,Sonar,Jenkins,React.JS,Ember.JS,RDBMS|1
+4065| Module Lead - Java - Kafka - Hibernate - 5 to 8 Years|Desc1|Full-time|True|middle|1000|Team Lead/Technical Lead|Hibernate,Spring,Core Java,Rest,Elastic Search|1
+3726| Application Developer: Oracle eBS|Desc1|Internship|True|entry,junior|1000|Software Developer|SQL,XML,Performance tuning,Middleware,Consulting,Bpel,Cash management,OSB,Business process management,Fixed assets|1
+24321| Looking For Liferay Developer @ Ahmedabad.|Desc1|Full-time|True|entry,junior|1000|Software Developer|Liferay|1
+2416| .Net Solution Architect|Desc1|Full-time|True|senior,lead|1000|Technical Architect|CSS,MVC,Javascript,MVVM,HTML,Web Services,C#.Net,C#,.Net,Postgresql|1
+26551| Python Developer|Desc1|Full-time|True|junior|1000|Software Developer|HTTP,Ajax,Python,SIDE,CSS,Web technologies,technical,web,Programming,Box,Business Executive|1
+13736| Developer- Ui/wf|Desc1|Full-time|True|entry|1000|Software Developer|algorithms,c++,c,SAP,pascal,OLAP,data integrity,Jasper,java,cobol,fortran,oops,PLSQL,Oracle BI,data structures,perl,Oracle Sql Developer,Crystal Report,basic,Salesforce|1
+8946| PHP Developers|Desc1|Full-time|True|entry,junior|1000|Software Developer|Mysql,Javascript,PHP|1
+28216| PHP Developer|Desc1|Full-time|True|junior,middle|1000|Software Developer|development,apache,linux,rest,cakephp,php mysql,rdbms,software,object oriented design,subversion,design,zend,mysql,api|1
+10336| Technical Project Manager, Navi Mumbai|Desc1|Full-time|True|entry,junior|1000|Software Developer|PHP,Oracle,SQL,com,analytical,software,scala,methods,HTML,tools,pmp,ui,MySQL,Javascript,perl,Ajax,Hibernate,development,c,specification,it,quality,rf,XML,Struts,scrum,agile,pl,sdlc,support|1
+15135| Consultant / Senior Professional , S & IT|Desc1|Full-time|True|middle|1000|Software Developer|GIS,Computer science,Performance tuning,Core Java,Linux,Coding,Javascript,Application development,J2Ee,Network planning|1
+4804| Senior Java Developer|Desc1|Internship|True|junior|1000|Software Developer|JAX,Software Development Life Cycle,Hibernate,Core Java,Tomcat,Rest,Design Patterns,MySQL,Apache,Application Server|1
+7547| Immediate Need - Lead Engineer|Desc1|Full-time|True|middle,senior|1000|Software Developer|Java,Algorithms,Spring Boot,SOAP,Web Services,Javascript,Postgresql,NoSQL,Spark,Software Development,AWS|1
+4| Software Test Engineer -hyderabad|Desc1|Part-time|True|entry,junior|1000|Testing Engineer|manual testing,test engineering,test cases,web testing,web technologies|1
+3409| C++ QT - Pune|Desc1|Full-time|True|junior|1000|Software Developer|QT,C,C++|1
+10167| Developer/senior Developer/lead Developer - UI - Contract|Desc1|Part-time|True|junior,middle|1000|Team Lead/Technical Lead|C#,UI,OOPS,OOAD,.Net,JSON,WCF,WPF|1
+23070| SSRS DEV|Desc1|Full-time|True|junior|1000|Software Developer|SSRS,data governance,SSIS,Data warehousing|1
+9563| Quality Analyst - Selenium|Desc1|Full-time|True|junior|1000|Testing Engineer|Testing,Quality,Test Automation,Jira,Scripting,SQL,QTP,JUnit,ETL,Datawarehouse Testing,Data Integration,Selenium|1
+4232| Consultant FRC Analytics|Desc1|Full-time|True|middle|1000|Team Lead/Technical Lead|Oracle,Consulting,Analytics,Financial services,Data warehousing,Business Executive|1
+13004| Java with Struts for Bangalore Location.|Desc1|Full-time|True|entry,junior,middle|1000|Software Developer|Java,Struts|1
+5657| Azure Cloud Architect - Architecture & Implementation|Desc1|Full-time|True|middle,senior,lead|1000|Technical Architect|Azure,Cloud,System Implementation,Continuous Delivery,Solution Architect,Solution Design,SOA,Design Patterns|1
+12674| Opening for VDI Citrix|Desc1|Full-time|True|junior,middle|1000|Software Developer|VDI,Citrix|1
+11997| Project Leader|Desc1|Full-time|True|junior,middle|1000|Project Lead|Blackberry,Coding,Technical,Agile,Problem,Marketing Executive,Business Executive|1
+10439| junior software engineer|Desc1|Full-time|True|entry,junior|1000|Software Developer|Automation,Information technology,CV,Socket programming,software,JBoss,mobile,mca,jdbc,it,Business Executive,sql,eclipse,MS SQL,Core Java,java,Facebook,programming|1
+22283| Sr. Front End Engineer|Desc1|Part-time|True|middle|1000|Software Developer|AngularJS,HTML5,Ember.js,Bootstrap|1
+25126| Team Lead/technical Engineer- Mdg_8to 10 Yrs(3+in Mdg)_pune|Desc1|Full-time|True|senior,lead|1000|Software Developer|IDOCS,Communication Skills,Data Quality,Web Technologies,Brf,Master Data Management,Sap Data Services,Ale,Data Modeling,Stakeholder Management|1
+8825| PHP Programmer|Desc1|Full-time|True|entry,junior|1000|Software Developer|javascript,php,mysql,development,software development,wordpress,joomla,ajax,jquery,web,design,html,mvc,support,magento,applications|1
+24796| Immediate Openings For Automation Qa|Desc1|Full-time|True|middle,senior|1000|Testing Engineer|Software Development Life Cycle,Writing Test Cases,Software Engineering,Selenium,Test Design,Software Quality,Cucumber,SDLC,SQL|1
+11291| Junior Software Developer|Desc1|Internship|True||1000|Software Developer|xml,javascript,php,software,wordpress,ajax,jquery,coding,web,optimization,design patterns,design,debugging,html,data structures,programming,development,interfaces,testing,mobile,xhtml,quality,application,service,developer,support|1
+16867| Senior Software Engineer|Desc1|Full-time|True|junior|1000|Software Developer|SQL,Javascript,XML,HTML,Ajax,JSP,ASP,CRM,SOA,Agile|1
+33| Strong Partner Ecosystem|Desc1|Full-time|True|entry,junior,middle|1000|Project Lead|GIS,ISO 27001,HR,information system,process,ISO 9001,Information security management,GIS software,Management,Edge|1
+24227| Cloud Engineer|Desc1|Part-time|True|middle,senior,lead|1000|Software Developer|ERP,NETWORK,Operations Improvement,Design Development,Network Services,Cloud,Managed Services,Business Continuity|1
+10773| Solution / Technical Architect (,net Technology) Part Time/ Freelance|Desc1|Full-time|True||1000|Technical Architect|c#,.net technical architect,css,database,.net,bootstrap,sql server,Solution Architecture|1
+10816| Applications Developer II - Java|Desc1|Internship|True|junior|1000|Software Developer|Java,J2EE,Spring,MVC,JMS,Unit testing,Maven,Junit,Mysql,Java J2EE|1
+12526| Intern - Software Engineering|Desc1|Internship|True||1000|Software Developer|Automation,Javascript,Python,algorithms,Semiconductor,c,technical,software,Debugging,Programming,Troubleshooting,tools,Intellectual property,design,Hardware,applications|1
+12467| Unity Developer - AR &amp; VR Designer|Desc1|Full-time|True|junior,middle,senior|1000|Software Developer|TCP,Graphics,C++,Bluetooth,Networking,Opengl,HTTP,SDK,Gaming,Android|1
+2855| Sr. Test Engineer (Automation) |Desc1|Full-time|True|middle,senior|1000|Testing Engineer|coordination,assets,bca,mca,test management,sdlc,test,test automation,pre sales s,port|1
+22879| Siemens Teamcenter Unified Architecture|Desc1|Internship|True|lead,manager|1000|Team Lead/Technical Lead|Business process,Outsourcing,Operations,Teamcenter unified,Time management,Architecture,Siemens,C,Usage|1
+185| Technical Lead -(VoIP,Cisco Call Manager)|Desc1|Full-time|True|entry,junior,middle|1000|Team Lead/Technical Lead|java,cisco call manager,visa,j2ee,sip,offshore,communication skills|1
+1801| Dot Net Developer|Desc1|Internship|True|middle|1000|Software Developer|SQL Server,Javascript,Silverlight,MVC,WPF,.Net,C,Asp Net,OOPS,Web Technologies|1
+9966| Urgent Requirement for SAP Success Factor|Desc1|Full-time|True|junior,middle|1000|Software Developer|Onboarding|1
+93| Java Developer|Desc1|Full-time|True|entry|1000|Software Developer|CSS,Singleton,XML,Javascript,JDBC,Struts,JSON,HTML,Spring Boot,JQuery|1
+7942| Full Stack PHP Developer - Mvc/oops|Desc1|Full-time|True|junior|1000|Software Developer|PHP,MVC,OOPS,Javascript,React.js,RDBMS|1

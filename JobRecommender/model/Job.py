@@ -1,6 +1,6 @@
-
 class Job:
-    def __init__(self, id, title, description, jobType, remote, minExperience, minCompensation, devType, techs, availablePos, contractor):
+    def __init__(self, id, title, description, jobType, remote, minExperience, minCompensation, devType, techs,
+                 availablePos, contractor):
         self.id = id
         self.title = title
         self.description = description
@@ -29,5 +29,7 @@ class Job:
         }
 
     def __str__(self):
-        return str(self.id) + " " + str(self.title) + " " + str(self.devType) + " " + str(self.jobType) + " " + str(self.minExperience) + " " + str(self.remote) + " " + str(self.techs)
-
+        return str(self.id) + "|" + str(self.title) + "|" + str(self.description) + "|" + str(self.jobType) + "|" + str(
+            self.remote) + "|" + str(self.minExperience) + "|" + \
+               str(self.minCompensation) + "|" + str(self.devType) + "|" + str(self.techs) + "|" + str(
+            self.availablePos)

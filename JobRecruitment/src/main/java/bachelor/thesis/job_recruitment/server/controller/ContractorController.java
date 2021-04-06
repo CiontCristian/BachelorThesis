@@ -43,7 +43,8 @@ public class ContractorController {
 
     @PostMapping(value = "/saveContractor", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    ResponseEntity<Contractor> saveContractor(@RequestPart("file") MultipartFile file, @RequestPart("contractorDTO") Contractor contractor) throws IOException {
+    ResponseEntity<Contractor> saveContractor(@RequestPart("file") MultipartFile file,
+                                              @RequestPart("contractor") Contractor contractor) throws IOException {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         File fileObject = new File(fileName, file.getContentType(), file.getBytes());

@@ -51,6 +51,6 @@ class KNN:
 
         recommended = []
         for _, index in recommendation_indices:
-            recommended.append(rawData[index])
+            recommended.append(rawData[index].id)
 
         return recommended

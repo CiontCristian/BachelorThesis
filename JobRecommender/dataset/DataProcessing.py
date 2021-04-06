@@ -57,7 +57,8 @@ def cleanDataset():
     jobs = []
 
     for index, row in df.iterrows():
-        job = Job(index, str(row['Job Title']), "Desc1", random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
+        job = Job(index, str(row['Job Title']), "Desc1",
+                  random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
                                  k=1)[0], bool(random.choices([True, False], [0.6, 0.4], k=1)),
 
                   classifyJobExperience(row['Job Experience Required']), 1000,
@@ -65,34 +66,76 @@ def cleanDataset():
 
                   remodelTechs(row['Key Skills']), 1, None)
         jobs.append(job)
+    return saveToFile("../jobs.txt", jobs)
+
+
+def saveToFile(fileName, jobs):
+    with open(fileName, 'w') as f:
+        for job in jobs:
+            f.write(str(job))
+            f.write('\n')
+
+    f.close()
     return jobs
 
 
-def getFeatureVectorHeaders(jobs):
-    vectorString = ""
+def readFromFile(fileName):
+    jobs = []
+    with open(fileName, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip().split('|')
+            jobs.append(
+                Job(int(line[0]), line[1], line[2], line[3], bool(line[4]), line[5], int(line[6]), line[7], line[8],
+                    int(line[9]), None))
+    f.close()
     for job in jobs:
-        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-            job.remote).strip() + "," + job.techs.strip()
+        print(job)
+    return jobs
+
+
+def getFeatureVectorHeaders(jobs, input_id):
+    vectorString = ""
+    input_query = []
+    for job in jobs:
+        if job.id != input_id:
+            vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
+                job.remote).strip() + "," + job.techs.strip()
+        else:
+            input_query.append(job)
 
     vectorString = vectorString.lower()
     vector = vectorString.strip().split(",")
     vector = set(vector)
+    vector = set(elem.strip() for elem in vector)
 
-    return transformJobsToFeatureVectors(vector, jobs)
+    return transformJobsToFeatureVectors(vector, jobs), transformJobsToFeatureVectors(vector, input_query)
 
 
 def transformJobsToFeatureVectors(headers, jobs):
     vectors = []
     vectorString = ""
+    check = []
+
     for job in jobs:
         empty = [0 for _ in range(len(headers))]
-        vectorString += job.minExperience + ", " + job.jobType + ", " + job.devType + ", " + str(
-            job.remote) + ", " + job.techs
+        vectorString += job.minExperience.strip() + ", " + job.jobType.strip() + ", " + job.devType.strip() + ", " + str(
+            job.remote).strip() + ", " + job.techs.strip() + ", "
+
+        vectorString = vectorString.lower()
         vector = vectorString.split(',')
         vector = set(vector)
+        vector = set(elem.strip() for elem in vector)
+        vector.remove('')
+        cnt1 = 0
         for index, label in enumerate(headers):
             for feature in vector:
                 if feature == label:
                     empty[index] = 1
+                    cnt1 += 1
+
+        check.append((len(vector), cnt1))
+        vectorString = ""
         vectors.append(empty)
+    print(check)
     return vectors

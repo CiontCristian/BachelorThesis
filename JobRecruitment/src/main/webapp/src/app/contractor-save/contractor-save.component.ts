@@ -58,7 +58,7 @@ export class ContractorSaveComponent implements OnInit {
       null, location,  this.currentUser);
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
-    this.formData.append("contractorDTO", contractorBlob);
+    this.formData.append("contractor", contractorBlob);
     this.contractorService.saveContractor(this.formData).subscribe(
       response => {
       },

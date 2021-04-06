@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from dataset.DataProcessing import *
+from knn.KNN_test import getKNNRecommendations
 
 app = Flask(__name__)
 cors = CORS(app)
-
-jobs = []
 
 
 @app.route('/')
@@ -21,9 +20,10 @@ def saveRecommenderInfo():
     return jsonify(info), 200
 
 
-@app.route('/recommender/getRecommendedJobsIds', methods=["GET"], strict_slashes=False)
+@app.route('/recommender/getRecommendedJobsIds', methods=["POST"], strict_slashes=False)
 def getRecommendedJobsIds():
-    jobs_ids = [1, 2, 3]
+    input_id = request.get_json(force=True)
+    jobs_ids = getKNNRecommendations(int(input_id))
     response = jsonify(jobs_ids)
     response.headers.add("Access-Control-Allow-Origin", "*")
 
@@ -32,7 +32,6 @@ def getRecommendedJobsIds():
 
 @app.route('/recommender/getJobs', methods=["GET"], strict_slashes=False)
 def getJobs():
-    global jobs
     jobs = cleanDataset()
     response = jsonify([job.serialize() for job in jobs])
     response.headers.add("Access-Control-Allow-Origin", "*")
