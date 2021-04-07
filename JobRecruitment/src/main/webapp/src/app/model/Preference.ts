@@ -5,15 +5,15 @@ import {Job} from "./Job";
 export class Preference extends BaseEntity{
   user: User;
   job: Job;
-  isInterested: boolean;
-  rating: number;
+  interested: boolean;
+  applied: boolean;
 
 
-  constructor(id: number, user: User, job: Job, isInterested: boolean, rating: number) {
+  constructor(id: number, user: User, job: Job, interested: boolean, applied: boolean) {
     super(id);
     this.user = user;
     this.job = job;
-    this.isInterested = isInterested;
-    this.rating = rating;
+    this.interested = interested;
+    this.applied = applied;
   }
 }

@@ -1,3 +1,0 @@
-id|title|dev_type|job_type|min_experience|remote|techs
-193|Please|Backend Developer,QA/Tester|full-time|junior,middle|true|javra,cal
-196|Spring/Angular Full-Stack|Full Stack Developer,Backend Developer,Frontend Developer,QA/Tester|full-time|junior,middle,senior|true|java,spring,angular,ts

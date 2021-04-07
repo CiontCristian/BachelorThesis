@@ -10,6 +10,7 @@ public interface JobService {
     List<Job> findAll(Integer pageIndex, Integer pageSize, String value);
     Optional<Job> findJobById(Long id);
     Job save(Job job);
+    List<Job> saveJobs(List<Job> jobs);
     Job modify(Job modifiedJob);
     void remove(Long id);
     void savePreference(Preference preference);
@@ -17,9 +18,4 @@ public interface JobService {
     List<String> findJobsTitles();
     Optional<Job> findJobByTitle(String title);
     Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId);
-    void saveJobsToFile();
-    void generateJobs();
-    String selectRandomItems(List<String> items);
-    void savePreferencesToFile();
-    void generatePreferences();
 }

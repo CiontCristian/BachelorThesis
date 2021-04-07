@@ -3,7 +3,6 @@ package bachelor.thesis.job_recruitment.core.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @EqualsAndHashCode
 @Data
@@ -21,11 +20,11 @@ public class Preference{
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapsId("jobId")
     private Job job;
-    private Boolean isInterested;
-    private Integer rating;
+    private Boolean interested;
+    private Boolean applied;
 
     public String toFileString(){
-        return key.getUserId() + "|" +key.getJobId() + "|" + isInterested + "|" + rating;
+        return key.getUserId() + "|" +key.getJobId() + "|" + interested + "|" + applied;
     }
 
     public static String headersString(){

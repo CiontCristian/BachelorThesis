@@ -36,6 +36,10 @@ export class JobService{
     return this.httpClient.post<Job>(this.jobURL + "/saveJob", job, {observe: "response"});
   }
 
+  saveJobs(jobs: Job[]): Observable<HttpResponse<Job[]>>{
+    return this.httpClient.post<Job[]>(this.jobURL + "/saveJobs", jobs, {observe: "response"});
+  }
+
   modifyJob(job: Job): Observable<HttpResponse<Job>>{
     return this.httpClient.put<Job>(this.jobURL + "/modifyJob", job, {observe: "response"});
   }
@@ -85,9 +89,9 @@ export class JobService{
       {observe: "response"});
   }
 
-  getRecommendedJobsIds(): Observable<HttpResponse<number[]>>
+  getRecommendedJobsIds(id: number): Observable<HttpResponse<number[]>>
   {
-    return this.httpClient.get<number[]>(this.recommenderURL + "/getRecommendedJobsIds", {observe: "response"});
+    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIds", id, {observe: "response"});
   }
 
   getJobsFromDataset(): Observable<HttpResponse<Job[]>>

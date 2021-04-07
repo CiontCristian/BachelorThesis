@@ -48,6 +48,7 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   register() {
+    //todo fix contractor save no reload
     let location: Location = new Location(null, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
       this.locationFormGroup.get('countryForm').value);
 

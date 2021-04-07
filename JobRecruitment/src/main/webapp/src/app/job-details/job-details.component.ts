@@ -37,16 +37,18 @@ export class JobDetailsComponent implements OnInit {
   }
 
   vote(isInterested: boolean) {
-    let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, -1);
+    let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, false);
     this.jobService.savePreference(preference).subscribe();
     this.refresh();
   }
 
-  rate(){
-    this.jobService.savePreference(this.preference).subscribe();
-  }
-
   refresh(): void{
     window.location.reload();
+  }
+
+  moreLikeThis(id: number) {
+    this.jobService.getRecommendedJobsIds(id).subscribe(
+      response => console.log(response)
+    )
   }
 }

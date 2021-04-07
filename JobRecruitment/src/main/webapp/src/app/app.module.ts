@@ -42,6 +42,7 @@ import { JobModifyComponent } from './job-modify/job-modify.component';
 import { JobRemoveComponent } from './job-remove/job-remove.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { AdminComponent } from './admin/admin.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -60,34 +61,35 @@ import { AdminComponent } from './admin/admin.component';
     JobRemoveComponent,
     AdminComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatRadioModule,
-    MatPaginatorModule,
-    MatCardModule,
-    NgbModule,
-    MatStepperModule,
-    MatSidenavModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatListModule,
-    MatAutocompleteModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatRadioModule,
+        MatPaginatorModule,
+        MatCardModule,
+        NgbModule,
+        MatStepperModule,
+        MatSidenavModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatListModule,
+        MatAutocompleteModule,
+        MatGridListModule
+    ],
   providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent],
   entryComponents: [JobSaveComponent]

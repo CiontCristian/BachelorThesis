@@ -21,9 +21,9 @@ export class JobListComponent implements OnInit {
   jobs: Job[] = null;
   pageEvent: PageEvent;
   pageIndex: number=0;
-  pageSize: number=5;
+  pageSize: number=9;
   recordCount: number;
-  pageSizeOptions: number[] = [5,10,50,100];
+  pageSizeOptions: number[] = [9,27,100];
   searchValue: string = "";
 
   constructor(private jobService: JobService,
@@ -58,7 +58,8 @@ export class JobListComponent implements OnInit {
       .subscribe(response => this.jobs = response.body);
 
     //this.recordCount = this.testData.length
-    this.recordCount = this.jobs.length;
+    //todo fix job record count
+    this.recordCount = 50;
 
     return event
   }

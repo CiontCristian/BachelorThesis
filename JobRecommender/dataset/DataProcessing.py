@@ -22,7 +22,7 @@ def processJobDataset():
     return jobs
 
 
-def classifyJobExperience(experience):
+def classifyJobExperience(experience, cnt):
     dict = {2: "entry", 4: "junior", 7: "middle", 9: "senior", 11: "lead", 14: "manager"}
     try:
         experience = experience.strip('yrs').replace(" ", "").split('-')
@@ -32,12 +32,18 @@ def classifyJobExperience(experience):
         for key in dict.keys():
             if experience[0] <= key <= experience[1]:
                 result += dict[key] + ","
+            elif experience[0] > 14:
+                result += dict[key] + ","
+            elif experience[1] < 2:
+                result = dict[2] + ","
 
         result = result[0:len(result) - 1]
+        print(str(experience) +" "+ result + str(cnt))
         return result
     except Exception as e:
         print(e)
-        result = "Any"
+        result = "entry,junior,middle,senior,lead,manager"
+        print("Exception "+result)
         return result
 
 
@@ -55,42 +61,21 @@ def remodelTechs(techs):
 def cleanDataset():
     df = processJobDataset()
     jobs = []
-
+    cnt = 1
     for index, row in df.iterrows():
         job = Job(index, str(row['Job Title']), "Desc1",
                   random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
-                                 k=1)[0], bool(random.choices([True, False], [0.6, 0.4], k=1)),
+                                 k=1)[0], random.choice([True, False]),
 
-                  classifyJobExperience(row['Job Experience Required']), 1000,
+                  classifyJobExperience(row['Job Experience Required'], cnt), 1000,
                   str(row['Role']),
 
                   remodelTechs(row['Key Skills']), 1, None)
+        cnt+=1
+        print(job.remote)
+        #if job.minExperience == "":
+        #    job.minExperience = "entry,junior,middle,senior,lead,manager"
         jobs.append(job)
-    return saveToFile("../jobs.txt", jobs)
-
-
-def saveToFile(fileName, jobs):
-    with open(fileName, 'w') as f:
-        for job in jobs:
-            f.write(str(job))
-            f.write('\n')
-
-    f.close()
-    return jobs
-
-
-def readFromFile(fileName):
-    jobs = []
-    with open(fileName, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            line = line.strip().split('|')
-            jobs.append(
-                Job(int(line[0]), line[1], line[2], line[3], bool(line[4]), line[5], int(line[6]), line[7], line[8],
-                    int(line[9]), None))
-    f.close()
-    for job in jobs:
-        print(job)
     return jobs
 
 
@@ -98,10 +83,9 @@ def getFeatureVectorHeaders(jobs, input_id):
     vectorString = ""
     input_query = []
     for job in jobs:
-        if job.id != input_id:
-            vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-                job.remote).strip() + "," + job.techs.strip()
-        else:
+        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
+            job.remote).strip() + "," + job.techs.strip()
+        if job.id == input_id:
             input_query.append(job)
 
     vectorString = vectorString.lower()
@@ -123,6 +107,7 @@ def transformJobsToFeatureVectors(headers, jobs):
             job.remote).strip() + ", " + job.techs.strip() + ", "
 
         vectorString = vectorString.lower()
+        vectorString = vectorString[0:len(vectorString)-2]
         vector = vectorString.split(',')
         vector = set(vector)
         vector = set(elem.strip() for elem in vector)
@@ -139,3 +124,5 @@ def transformJobsToFeatureVectors(headers, jobs):
         vectors.append(empty)
     print(check)
     return vectors
+
+cleanDataset()

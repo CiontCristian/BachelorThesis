@@ -13,6 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BaseEntity<ID extends Serializable> implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private ID id;
 }

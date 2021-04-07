@@ -51,6 +51,18 @@ public class JobController {
         return new ResponseEntity<>(savedJob, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/saveJobs")
+    ResponseEntity<List<Job>> saveJobs(@RequestBody List<Job> jobs){
+        //log.trace("In JobController - method: saveJob - jobDTO={}", job);
+
+        jobs.forEach(job -> System.out.println(job.getId()));
+        List<Job> savedJobs = jobService.saveJobs(jobs);
+        //log.trace("In JobController - method: saveJob - savedJob={}", savedJob);
+
+
+        return new ResponseEntity<>(savedJobs, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/modifyJob")
     ResponseEntity<Job> modifyJob(@RequestBody Job job){
         log.trace("In JobController - method: saveJob - jobDTO={}", job);
@@ -112,17 +124,4 @@ public class JobController {
             throw new ResourceNotFoundException("Preference not found!");
         return new ResponseEntity<>(preference.get(), HttpStatus.OK);
     }
-
-    @GetMapping(value = "/saveJobsToFile")
-    ResponseEntity<?> saveJobsToFile(){
-        jobService.saveJobsToFile();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/generateJobs")
-    ResponseEntity<?> generateJobs(){
-        jobService.generateJobs();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
 }

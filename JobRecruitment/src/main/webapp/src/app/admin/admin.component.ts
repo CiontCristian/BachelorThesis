@@ -39,7 +39,9 @@ export class AdminComponent implements OnInit {
   getDatasetJobs() {
     this.jobService.getJobsFromDataset()
       .subscribe(response => {this.jobs = response.body;
-          console.log(this.jobs)},
+          console.log(this.jobs);
+          this.jobService.saveJobs(this.jobs).subscribe()
+        },
         error => console.log(error.error))
   }
 }

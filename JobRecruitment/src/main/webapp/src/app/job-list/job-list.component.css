@@ -1,14 +1,14 @@
 .job-list-container{
-  background-color: rgba(0, 0, 0, 0.10);
   height: 91.9vh;
 }
 
-ul {
-  display: flex !important;
-  flex-direction: row;
-  flex-flow: wrap;
+.grid-list {
   padding: 20px 20px 20px 110px !important;
   height: 84.1vh;
+}
+
+.grid-tile{
+  padding: 20px 20px 20px 110px
 }
 
 .paginator{
