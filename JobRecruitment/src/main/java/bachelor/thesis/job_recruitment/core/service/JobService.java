@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface JobService {
     List<Job> findAll(Integer pageIndex, Integer pageSize, String value);
     Optional<Job> findJobById(Long id);
+    List<Job> findJobsByIds(List<Long> ids);
     Job save(Job job);
     List<Job> saveJobs(List<Job> jobs);
     Job modify(Job modifiedJob);

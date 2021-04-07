@@ -21,9 +21,9 @@ export class JobListComponent implements OnInit {
   jobs: Job[] = null;
   pageEvent: PageEvent;
   pageIndex: number=0;
-  pageSize: number=9;
-  recordCount: number;
-  pageSizeOptions: number[] = [9,27,100];
+  pageSize: number=10;
+  recordCount: number = 50;
+  pageSizeOptions: number[] = [10,20,100];
   searchValue: string = "";
 
   constructor(private jobService: JobService,

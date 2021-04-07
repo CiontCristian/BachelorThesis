@@ -43,6 +43,8 @@ import { JobRemoveComponent } from './job-remove/job-remove.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { AdminComponent } from './admin/admin.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -61,35 +63,37 @@ import {MatGridListModule} from "@angular/material/grid-list";
     JobRemoveComponent,
     AdminComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        FormsModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatSnackBarModule,
-        MatRadioModule,
-        MatPaginatorModule,
-        MatCardModule,
-        NgbModule,
-        MatStepperModule,
-        MatSidenavModule,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatChipsModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatListModule,
-        MatAutocompleteModule,
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatCardModule,
+    NgbModule,
+    MatStepperModule,
+    MatSidenavModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatListModule,
+    MatAutocompleteModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatTableModule
+  ],
   providers: [AccountService, JobService, ContractorService],
   bootstrap: [AppComponent],
   entryComponents: [JobSaveComponent]

@@ -40,6 +40,13 @@ public class JobController {
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/findJobsByIds")
+    ResponseEntity<List<Job>> findJobsByIds(@RequestParam List<Long> ids){
+        List<Job> jobs = jobService.findJobsByIds(ids);
+
+        return new ResponseEntity<>(jobs, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/saveJob")
     ResponseEntity<Job> saveJob(@RequestBody Job job){
         log.trace("In JobController - method: saveJob - jobDTO={}", job);

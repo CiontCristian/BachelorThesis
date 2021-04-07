@@ -7,6 +7,7 @@ from dataset.DataProcessing import *
 app = Flask(__name__)
 cors = CORS(app)
 
+ctr = Controller()
 
 @app.route('/')
 def hello_world():
@@ -25,6 +26,7 @@ def saveRecommenderInfo():
 def getRecommendedJobsIds():
     input_id = request.get_json(force=True)
     print(input_id)
+    global ctr
     jobs_ids = ctr.recommendKNN(int(input_id))
     response = jsonify(jobs_ids)
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -42,5 +44,4 @@ def getJobs():
 
 
 if __name__ == '__main__':
-    ctr = Controller()
     app.run()

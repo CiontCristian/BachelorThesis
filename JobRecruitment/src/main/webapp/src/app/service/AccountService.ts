@@ -37,4 +37,9 @@ export class AccountService{
   modifyUserContractor(id: number, contractor: Contractor) : Observable<HttpResponse<User>>{
     return this.httpClient.put<User>(this.accountURL + '/modifyCompany/' + id, contractor, {observe: "response"});
   }
+
+  getJobCandidates(jobId: number): Observable<HttpResponse<User[]>>
+  {
+    return this.httpClient.get<User[]>(this.accountURL + '/findJobCandidates/'+jobId, {observe: "response"});
+  }
 }

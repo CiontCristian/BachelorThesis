@@ -19,6 +19,7 @@ export class JobDetailsComponent implements OnInit {
   job: Job = null;
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
   preference: Preference = null;
+  similarJobs: Job[] = null;
 
   constructor(private jobService: JobService,
               private route: ActivatedRoute,
@@ -33,13 +34,21 @@ export class JobDetailsComponent implements OnInit {
         this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
           .subscribe(response => {this.preference = response.body},
             error => console.log(error.error))});
+    this.similarJobs = null;
 
   }
 
   vote(isInterested: boolean) {
-    let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, false);
-    this.jobService.savePreference(preference).subscribe();
-    this.refresh();
+    if(this.preference === null) {
+      let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, false);
+      this.jobService.savePreference(preference).subscribe();
+      this.refresh();
+    }
+    else{
+      this.preference.interested = isInterested;
+      this.jobService.savePreference(this.preference).subscribe();
+      this.refresh();
+    }
   }
 
   refresh(): void{
@@ -48,7 +57,31 @@ export class JobDetailsComponent implements OnInit {
 
   moreLikeThis(id: number) {
     this.jobService.getRecommendedJobsIds(id).subscribe(
-      response => console.log(response)
+      response => {
+        this.jobService.getJobsByIds(response.body).subscribe(
+          response => { this.similarJobs = response.body},
+          error => console.log(error.error)
+        )
+      },
+      error => console.log(error.error)
     )
+  }
+
+  navigateToJobDetails(id: number) {
+    this.router.navigate(["job-list/details/", id]);
+    this.refresh();
+  }
+
+  apply() {
+    if(this.preference === null){
+      let preference: Preference = new Preference(0, this.currentUser, this.job, null, true);
+      this.jobService.savePreference(preference).subscribe();
+      this.refresh();
+    }
+    else{
+      this.preference.applied = true;
+      this.jobService.savePreference(this.preference).subscribe();
+      this.refresh();
+    }
   }
 }

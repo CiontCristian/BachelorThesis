@@ -1,7 +1,20 @@
 .job-details-container{
-  background-color: rgba(0, 0, 0, 0.10);
-  height: 91.9vh;
+  width: 50%;
+  text-align: left;
+  margin-top: 20px;
+  position: absolute;
+  left:25%;
+}
+
+.job-details-button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  margin: 20px;
   text-align: center;
-  width: 100%;
+  font-size: large;
+}
+
+.job-details-buttons{
+  text-align: center;
 }
 

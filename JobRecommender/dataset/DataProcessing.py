@@ -111,10 +111,11 @@ def transformJobsToFeatureVectors(headers, jobs):
         vector = vectorString.split(',')
         vector = set(vector)
         vector = set(elem.strip() for elem in vector)
-        vector.remove('')
+        #vector.remove('')
         cnt1 = 0
         for index, label in enumerate(headers):
             for feature in vector:
+                #print(feature + " " + label)
                 if feature == label:
                     empty[index] = 1
                     cnt1 += 1
@@ -124,5 +125,3 @@ def transformJobsToFeatureVectors(headers, jobs):
         vectors.append(empty)
     print(check)
     return vectors
-
-cleanDataset()

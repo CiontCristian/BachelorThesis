@@ -2,6 +2,7 @@ package bachelor.thesis.job_recruitment.core.service;
 
 
 import bachelor.thesis.job_recruitment.core.model.*;
+import bachelor.thesis.job_recruitment.core.repository.PreferenceRepository;
 import bachelor.thesis.job_recruitment.core.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PreferenceRepository preferenceRepository;
 
     @Override
     public List<GenericUser> findAll() {
@@ -62,5 +66,13 @@ public class UserServiceImpl implements UserService{
 
         //current.get().setCompany(contractor);
         return current;
+    }
+
+    @Override
+    public List<GenericUser> findJobCandidates(Long jobId) {
+        return preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getJob().getId().equals(jobId))
+                .map(Preference::getUser)
+                .collect(Collectors.toList());
     }
 }

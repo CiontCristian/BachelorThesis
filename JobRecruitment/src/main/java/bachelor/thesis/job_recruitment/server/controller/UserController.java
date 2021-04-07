@@ -79,5 +79,13 @@ public class UserController {
         throw new BadRequestException("Email or username already taken!");
     }
 
+    @GetMapping(value = "/findJobCandidates/{jobId}")
+    ResponseEntity<List<GenericUser>> findJobCandidates(@PathVariable Long jobId){
+        log.trace("In UserController - method: findJobCandidates - jobId={}", jobId);
+        List<GenericUser> users = userService.findJobCandidates(jobId);
+        log.trace("In UserController - method: findJobCandidates - users={}", users);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
 }
 

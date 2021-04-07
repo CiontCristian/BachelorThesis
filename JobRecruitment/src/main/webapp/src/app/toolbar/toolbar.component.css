@@ -20,6 +20,7 @@
 
 .toolbar-button{
   background-color: rgba(241,255,1,0.71);
+  color: rgba(0,0,0,0.71);
   margin-right: 15px;
   margin-left: 30px;
   text-align: center;

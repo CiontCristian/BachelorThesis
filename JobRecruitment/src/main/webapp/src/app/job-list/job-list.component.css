@@ -1,14 +1,12 @@
 .job-list-container{
-  height: 91.9vh;
+  margin: 30px;
 }
 
 .grid-list {
-  padding: 20px 20px 20px 110px !important;
-  height: 84.1vh;
+  /*height: 84.1vh;*/
 }
 
 .grid-tile{
-  padding: 20px 20px 20px 110px
 }
 
 .paginator{

@@ -7,7 +7,6 @@
         <input type="email" matInput [formControl]="emailForm" required
                placeholder="Ex. pat@example.com">
       </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="emailForm.invalid">{{getEmailErrorMessage()}}</mat-error>
     </mat-form-field>
     <br>

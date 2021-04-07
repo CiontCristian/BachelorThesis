@@ -1,28 +1,42 @@
-
 <div *ngIf="job" class="job-details-container">
-  <h1>{{job.title}}</h1>
-  <h3>-posted by {{job.contractor.name}} averaging around {{job.contractor.nrOfEmployees}} employees</h3>
-  <p><b>Available posts: {{job.availablePos}} !</b></p>
-  <p>Requirements: </p>
+    <h1 style="text-align: center">{{job.title}}</h1>
+    <h3>-posted by {{job.contractor.name}} averaging around {{job.contractor.nrOfEmployees}} employees</h3>
+    <p><b>Available posts: {{job.availablePos}} !</b></p>
+    <p>Requirements: </p>
 
-  <p>1.{{job.devType}}</p>
-  <p>2.{{job.minExperience}}</p>
-  <p>3.{{job.jobType}}</p>
+    <p>1.{{job.devType}}</p>
+    <p>2.{{job.minExperience}}</p>
+    <p>3.{{job.jobType}}</p>
 
-  <p *ngIf="job.remote"><b>Attention: job is available remote only! </b></p>
-  <mat-divider></mat-divider>
-  <p>Necessary languages: {{job.techs}}</p>
-  <p *ngIf="job.minCompensation !== -1">Monthly salary: {{job.minCompensation}} $</p>
-  <p><b> Description: </b></p>
-  <span>{{job.description}}</span>
-  <mat-divider></mat-divider>
-  <button mat-raised-button [disabled]="preference && preference.interested" (click)="vote(true)">
-    <mat-icon>thumb_up</mat-icon> Interested
-  </button>
-  <button mat-raised-button [disabled]="preference && !preference.interested" (click)="vote(false)">
-    <mat-icon>thumb_down</mat-icon> Not Interested
-  </button>
-  <button mat-raised-button [disabled]="currentUser === null" (click)="moreLikeThis(job.id)">
-    More Like This
-  </button>
+    <p *ngIf="job.remote"><b>Attention: job is available remote only! </b></p>
+    <mat-divider></mat-divider>
+    <p>Necessary languages: {{job.techs}}</p>
+    <p *ngIf="job.minCompensation !== -1">Monthly salary: {{job.minCompensation}} $</p>
+    <p><b> Description: </b></p>
+    <span>{{job.description}}</span>
+    <mat-divider></mat-divider>
+    <div class="job-details-buttons">
+      <button mat-raised-button class="job-details-button" [disabled]="preference && preference.interested" (click)="vote(true)">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+      <button mat-raised-button class="job-details-button" [disabled]="preference && preference.interested === false" (click)="vote(false)">
+        <mat-icon>thumb_down</mat-icon>
+      </button>
+      <br>
+      <button mat-raised-button class="job-details-button" [disabled]="currentUser === null || (preference && preference.applied)" (click)="apply()">
+        Apply
+      </button>
+      <br>
+      <button mat-raised-button class="job-details-button" [disabled]="currentUser === null" (click)="moreLikeThis(job.id)">
+        More Like This
+      </button>
+    </div>
+    <div *ngIf="similarJobs">
+      <mat-grid-list class="grid-list" cols="3" rowHeight="300px" gutterSize="50px">
+
+        <mat-grid-tile class="grid-tile" *ngFor="let job of similarJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+
+      </mat-grid-list>
+    </div>
 </div>
+

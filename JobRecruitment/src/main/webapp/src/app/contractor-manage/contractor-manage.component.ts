@@ -13,6 +13,8 @@ import {Location} from "../model/Location";
 import {JobModifyComponent} from "../job-modify/job-modify.component";
 import {JobRemoveComponent} from "../job-remove/job-remove.component";
 import {ContractorSaveComponent} from "../contractor-save/contractor-save.component";
+import {MatTableDataSource} from "@angular/material/table";
+import {AccountService} from "../service/AccountService";
 
 @Component({
   selector: 'app-contractor-manage',
@@ -31,8 +33,12 @@ export class ContractorManageComponent implements OnInit {
   image: File = null;
   formData = new FormData();
 
+  dataSource: MatTableDataSource<User>;
+  columnsToDisplay = ['name', 'dob', 'email', 'education'];
+
   constructor(private contractorService: ContractorService,
               private jobService: JobService,
+              private accountService: AccountService,
               private router: Router,
               private snackBar: MatSnackBar,
               private dialog: MatDialog,
@@ -44,6 +50,7 @@ export class ContractorManageComponent implements OnInit {
     console.log(this.contractor);
 
     if(this.contractor) {
+      this.dataSource = new MatTableDataSource<User>();
       this.jobService.findJobsForContractor(this.contractor.id).subscribe(
         response => {this.jobs = response.body},
         error => {console.log(error)}
@@ -74,12 +81,8 @@ export class ContractorManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.contractorService.findContractorForUser(this.currentUser.id)
-        .subscribe(response => {this.contractor = response.body;
-        console.log(this.contractor);
+      if(result !== "cancel")
         window.location.reload();
-        })
-      //window.location.reload();
     });
   }
 
@@ -96,7 +99,14 @@ export class ContractorManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      window.location.reload();
+      if(result !== "cancel")
+        this.contractorService.findContractorForUser(this.currentUser.id)
+          .subscribe(response => {this.contractor = response.body;
+            console.log(this.contractor);
+            sessionStorage.setItem("contractor", JSON.stringify(this.contractor));
+            window.location.reload();
+          })
+      //window.location.reload();
     });
   }
 
@@ -137,8 +147,8 @@ export class ContractorManageComponent implements OnInit {
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      window.location.reload();
+      if(result !== "cancel")
+        window.location.reload();
     });
   }
 
@@ -154,8 +164,16 @@ export class ContractorManageComponent implements OnInit {
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      window.location.reload();
+      if(result !== "cancel")
+        window.location.reload();
     });
+  }
+
+  getJobsCandidates(id: number) {
+    this.accountService.getJobCandidates(id)
+      .subscribe(
+        response => {this.dataSource.data = response.body},
+        error => console.log(error.error)
+      )
   }
 }

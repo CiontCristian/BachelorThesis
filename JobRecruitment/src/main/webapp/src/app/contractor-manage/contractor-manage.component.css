@@ -7,27 +7,30 @@
 
 }
 
+.mat-table{
+  width: 100%;
+  text-align: left;
+}
+
 .mat-drawer-content{
-  background-color: rgba(0, 0, 0, 0.10);
-  width: 70%;
+  background-color: white;
+  width: 60%;
 }
 
 .mat-drawer-sidenav {
-  background-color: rgba(0, 0, 0, 0.10);
   padding: 20px;
-  width: 30%;
+  width: 40%;
 }
 
 .contractor-manage-stepper{
-  background-color: inherit;
   width: 60%;
   margin-left: 20%;
 }
 
 .contractor-manage-button{
-  background-color: rgba(239,255,89,0.70);
-  margin-right: 15px;
-  margin-left: 30px;
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  margin: 20px;
   text-align: center;
   font-size: large;
 }

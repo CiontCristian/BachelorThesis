@@ -64,6 +64,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
+    public List<Job> findJobsByIds(List<Long> ids) {
+        return jobRepository.findAllById(ids);
+    }
+
+    @Override
     public Job save(Job job) {
         log.trace("In JobServiceImpl - method: save() - job={}", job);
 

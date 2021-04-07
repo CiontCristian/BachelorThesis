@@ -105,7 +105,7 @@
 </div>
 
 <div mat-dialog-actions class="contractor-save-mat-dialog-actions">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close="cancel">Cancel</button>
   <button mat-raised-button mat-dialog-close="Contractor saved!" color="primary" (click)="register()" [disabled]="this.generalFormGroup.get('nameForm').invalid ||
      this.generalFormGroup.get('descriptionForm').invalid || this.generalFormGroup.get('nrOfEmployeesForm').invalid ||
       this.generalFormGroup.get('logoForm').invalid">Confirm</button>
