@@ -4,7 +4,7 @@ import {JobService} from "../service/JobService";
 import {FormControl, Validators} from "@angular/forms";
 import {Job} from "../model/Job";
 import {User} from "../model/User";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {Contractor} from "../model/Contractor";
 
@@ -23,8 +23,7 @@ export class JobSaveComponent implements OnInit {
   jobTypeForm = new FormControl('', [Validators.required]);
   jobTypes: string[] = ["part-time", "full-time", "internship"];
   devTypeForm = new FormControl('', [Validators.required]);
-  devTypes: string[] = ["Full Stack Developer", "Backend Developer", "Frontend Developer", "QA/Tester", "Designer",
-    "Mobile Developer"];
+  devTypes: string[] = [];
   remoteForm = new FormControl('');
   remote: boolean = false;
   minExpForm = new FormControl('', [Validators.required]);
@@ -32,7 +31,7 @@ export class JobSaveComponent implements OnInit {
   techsForm = new FormControl('', [Validators.required]);
   selectable = true;
   removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
+  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
   techs: string[] = [];
 
   minCompForm = new FormControl('');
@@ -58,27 +57,49 @@ export class JobSaveComponent implements OnInit {
     );
   }
 
-  remove(tech: string) {
-    const index = this.techs.indexOf(tech);
+  remove(item: string, type: string) {
+    if(type === "tech"){
+      const index = this.techs.indexOf(item);
 
-    if (index >= 0) {
-      this.techs.splice(index, 1);
+      if (index >= 0) {
+        this.techs.splice(index, 1);
+      }
+    }
+    else{
+      const index = this.devTypes.indexOf(item);
+
+      if (index >= 0) {
+        this.devTypes.splice(index, 1);
+      }
     }
   }
 
-  add(event: MatChipInputEvent) {
+  add(event: MatChipInputEvent, type: string) {
     const input = event.input;
     const value = event.value;
 
-    if ((value || '').trim()) {
-      this.techs.push(value);
-    }
+    if(type === "tech"){
+      if ((value || '').trim()) {
+        this.techs.push(value);
+      }
 
-    if (input) {
-      input.value = '';
-    }
+      if (input) {
+        input.value = '';
+      }
 
-    this.techsForm.setValue(null);
+      this.techsForm.setValue(null);
+    }
+    else{
+      if ((value || '').trim()) {
+        this.devTypes.push(value);
+      }
+
+      if (input) {
+        input.value = '';
+      }
+
+      this.devTypeForm.setValue(null);
+    }
   }
 
   setRemote(checked: boolean) {

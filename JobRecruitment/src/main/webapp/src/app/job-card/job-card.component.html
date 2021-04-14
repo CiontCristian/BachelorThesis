@@ -9,8 +9,9 @@
       <p>-Posted by {{job.contractor.name}}</p>
     </mat-card-subtitle>
   </mat-card-header>
+  <img  class="card-img" src="data:image/JPEG;base64,{{job.contractor.logo.data}}" alt="Company">
   <mat-card-content>
-    <img class="card-img" src="data:image/JPEG;base64,{{job.contractor.logo.data}}" alt="Company">
+
     <p>{{job.description}}</p>
   </mat-card-content>
 </mat-card>

@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 @Entity
 @Builder
 public class Location extends BaseEntity<Long>{
-    private String address;
-    private String city;
-    private String country;
+    private Double latitude;
+    private Double longitude;
 }

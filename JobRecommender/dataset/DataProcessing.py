@@ -1,6 +1,6 @@
 import math
-from collections import Counter
-
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 import pandas
 from model.Job import Job
 import random
@@ -22,7 +22,7 @@ def processJobDataset():
     return jobs
 
 
-def classifyJobExperience(experience, cnt):
+def classifyJobExperience(experience):
     dict = {2: "entry", 4: "junior", 7: "middle", 9: "senior", 11: "lead", 14: "manager"}
     try:
         experience = experience.strip('yrs').replace(" ", "").split('-')
@@ -38,12 +38,12 @@ def classifyJobExperience(experience, cnt):
                 result = dict[2] + ","
 
         result = result[0:len(result) - 1]
-        print(str(experience) +" "+ result + str(cnt))
+
         return result
     except Exception as e:
         print(e)
         result = "entry,junior,middle,senior,lead,manager"
-        print("Exception "+result)
+        print("Exception " + result)
         return result
 
 
@@ -61,22 +61,34 @@ def remodelTechs(techs):
 def cleanDataset():
     df = processJobDataset()
     jobs = []
-    cnt = 1
     for index, row in df.iterrows():
         job = Job(index, str(row['Job Title']), "Desc1",
-                  random.choices(["Full-time", "Internship", "Part-time"], [0.8, 0.1, 0.1],
+                  random.choices(["full-time", "internship", "part-time"], [0.8, 0.1, 0.1],
                                  k=1)[0], random.choice([True, False]),
 
-                  classifyJobExperience(row['Job Experience Required'], cnt), 1000,
+                  classifyJobExperience(row['Job Experience Required']), 1000,
                   str(row['Role']),
 
                   remodelTechs(row['Key Skills']), 1, None)
-        cnt+=1
-        print(job.remote)
-        #if job.minExperience == "":
-        #    job.minExperience = "entry,junior,middle,senior,lead,manager"
         jobs.append(job)
     return jobs
+
+
+def testCountVectorizer():
+    jobs = cleanDataset()
+    headers = []
+    vectorString = ""
+    for job in jobs:
+        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
+            job.remote).strip() + "," + job.techs.strip()
+        headers.append(vectorString)
+        vectorString = ""
+    count = CountVectorizer()
+    count_matrix = count.fit_transform(headers)
+    print(count.get_feature_names())
+    print(count_matrix.toarray())
+    sim = cosine_similarity(count_matrix, count_matrix)
+    print(sim)
 
 
 def getFeatureVectorHeaders(jobs, input_id):
@@ -107,15 +119,15 @@ def transformJobsToFeatureVectors(headers, jobs):
             job.remote).strip() + ", " + job.techs.strip() + ", "
 
         vectorString = vectorString.lower()
-        vectorString = vectorString[0:len(vectorString)-2]
+        vectorString = vectorString[0:len(vectorString) - 2]
         vector = vectorString.split(',')
         vector = set(vector)
         vector = set(elem.strip() for elem in vector)
-        #vector.remove('')
+        # vector.remove('')
         cnt1 = 0
         for index, label in enumerate(headers):
             for feature in vector:
-                #print(feature + " " + label)
+                # print(feature + " " + label)
                 if feature == label:
                     empty[index] = 1
                     cnt1 += 1
@@ -125,3 +137,6 @@ def transformJobsToFeatureVectors(headers, jobs):
         vectors.append(empty)
     print(check)
     return vectors
+
+
+testCountVectorizer()

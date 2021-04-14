@@ -6,6 +6,7 @@ import bachelor.thesis.job_recruitment.core.model.GenericUser;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserService {
     List<GenericUser> findAll();

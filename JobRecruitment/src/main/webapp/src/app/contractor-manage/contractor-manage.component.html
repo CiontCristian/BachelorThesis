@@ -114,11 +114,11 @@
           </mat-step>
 
 
-          <mat-step [stepControl]="locationFormGroup" [optional]=true>
-            <form [formGroup]="locationFormGroup">
+          <mat-step [stepControl]="" [optional]=true>
+            <form [formGroup]="">
               <ng-template matStepLabel>Address Info</ng-template>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <!--<mat-form-field appearance="fill" class="register_form_field">
                 <mat-label>Address</mat-label>
                 <label>
                   <input type="text" matInput formControlName="addressForm"
@@ -143,7 +143,7 @@
                          placeholder="Ex. Romania">
                 </label>
               </mat-form-field>
-              <br>
+              <br>-->
 
               <div>
                 <button mat-button matStepperPrevious>Back</button>

@@ -16,7 +16,8 @@ import {User} from "../model/User";
 export class ContractorSaveComponent implements OnInit {
 
   generalFormGroup: FormGroup;
-  locationFormGroup: FormGroup;
+  latitude: number;
+  longitude: number;
   currentUser: User = null;
 
   image: File;
@@ -36,10 +37,6 @@ export class ContractorSaveComponent implements OnInit {
       nrOfEmployeesForm: new FormControl(''), logoForm: new FormControl('')
     })
 
-    this.locationFormGroup = this.formBuilder.group({
-      addressForm: new FormControl(''), cityForm: new FormControl(''),
-      countryForm: new FormControl('')
-    });
   }
 
   onFileChanged(event) {
@@ -49,8 +46,7 @@ export class ContractorSaveComponent implements OnInit {
 
   register() {
     //todo fix contractor save no reload
-    let location: Location = new Location(null, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
-      this.locationFormGroup.get('countryForm').value);
+    let location: Location = new Location(null, this.latitude, this.longitude);
 
     this.formData.append("file", this.image, this.image.name);
     console.log(this.image);

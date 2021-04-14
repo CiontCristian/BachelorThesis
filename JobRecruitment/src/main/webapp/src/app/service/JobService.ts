@@ -97,4 +97,11 @@ export class JobService{
     return this.httpClient.get<Job[]>(this.recommenderURL + "/getJobs", {observe: "response"});
   }
 
+  getAvailableDevTypes(): Observable<HttpResponse<string[]>>{
+    return this.httpClient.get<string[]>(this.jobURL + "/getAvailableDevTypes", {observe: "response"});
+  }
+
+  getAvailableTechs(): Observable<HttpResponse<string[]>>{
+    return this.httpClient.get<string[]>(this.jobURL + "/getAvailableTechs", {observe: "response"});
+  }
 }

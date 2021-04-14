@@ -33,12 +33,9 @@ public class JobServiceImpl implements JobService{
     private PreferenceRepository preferenceRepository;
     @Autowired
     private ContractorRepository contractorRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public List<Job> findAll(Integer pageIndex, Integer pageSize, String value) {
-        //saveJobsToFile();
 
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
@@ -49,8 +46,7 @@ public class JobServiceImpl implements JobService{
         }
         else{
             return jobRepository.findAll(pageRequest).stream()
-                    .filter(job -> job.getTitle().contains(value)
-                    || job.getTechs().contains(value))
+                    .filter(job -> job.getTitle().toLowerCase().contains(value.toLowerCase()))
                     .collect(Collectors.toList());
         }
         //logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
@@ -132,6 +128,33 @@ public class JobServiceImpl implements JobService{
     @Transactional
     public Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId) {
         return preferenceRepository.findByKey(new PreferenceKey(userId, jobId));
+    }
+
+    @Override
+    public Set<String> getAvailableTechs() {
+        List<Job> jobs = jobRepository.findAll();
+
+        StringBuilder allTechs = new StringBuilder();
+        jobs.forEach(
+                job -> allTechs.append(job.getTechs())
+        );
+        allTechs.deleteCharAt(allTechs.length()-1);
+
+        return new HashSet<>(Arrays.asList(allTechs.toString().split(",")));
+
+    }
+
+    @Override
+    public Set<String> getAvailableDevTypes() {
+        List<Job> jobs = jobRepository.findAll();
+
+        StringBuilder allDevTypes = new StringBuilder();
+        jobs.forEach(
+                job -> allDevTypes.append(job.getDevType()).append(",")
+        );
+        allDevTypes.deleteCharAt(allDevTypes.length()-1);
+
+        return new HashSet<>(Arrays.asList(allDevTypes.toString().split(",")));
     }
 
 }

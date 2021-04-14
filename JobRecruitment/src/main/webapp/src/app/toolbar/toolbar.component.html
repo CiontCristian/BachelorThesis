@@ -26,6 +26,9 @@
     </form>
     <span class="example-spacer"></span>
     <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</button>
+    <button mat-raised-button class="toolbar-button" routerLink="maps" *ngIf="currentUser && currentUser.permission.isAdmin">GoogleMaps
+      <mat-icon>map</mat-icon>
+    </button>
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>

@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 @Entity
 @Builder
 public class Background extends BaseEntity<Long>{
-    private String formalEducation;
+    private String techs;
     private String experience;
+    private String jobType;
+    private String devType;
+    private Boolean remote;
 }

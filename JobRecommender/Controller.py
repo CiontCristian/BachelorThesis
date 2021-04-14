@@ -20,5 +20,5 @@ class Controller:
 
         return res
 
-    def recommendMF(self):
+    def recommendCBF(self):
         pass

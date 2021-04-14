@@ -65,9 +65,8 @@ public class ContractorServiceImpl implements ContractorService{
         contractor.getLogo().setName(modifiedContractor.getLogo().getName());
         contractor.getLogo().setType(modifiedContractor.getLogo().getType());
         contractor.getLogo().setData(modifiedContractor.getLogo().getData());
-        contractor.getLocation().setAddress(modifiedContractor.getLocation().getAddress());
-        contractor.getLocation().setCity(modifiedContractor.getLocation().getCity());
-        contractor.getLocation().setCountry(modifiedContractor.getLocation().getCountry());
+        contractor.getLocation().setLatitude(modifiedContractor.getLocation().getLatitude());
+        contractor.getLocation().setLongitude(modifiedContractor.getLocation().getLongitude());
         contractor.setNrOfEmployees(modifiedContractor.getNrOfEmployees());
 
         return Optional.of(contractor);

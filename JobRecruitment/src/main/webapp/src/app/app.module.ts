@@ -45,6 +45,10 @@ import { AdminComponent } from './admin/admin.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTableModule} from "@angular/material/table";
+import {AgmCoreModule} from "@agm/core";
+import { AgmComponent } from './agm/agm.component';
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -61,7 +65,8 @@ import {MatTableModule} from "@angular/material/table";
     JobDetailsComponent,
     JobModifyComponent,
     JobRemoveComponent,
-    AdminComponent
+    AdminComponent,
+    AgmComponent
   ],
   imports: [
     BrowserModule,
@@ -92,9 +97,16 @@ import {MatTableModule} from "@angular/material/table";
     MatAutocompleteModule,
     MatGridListModule,
     MatExpansionModule,
-    MatTableModule
+    MatTableModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCnQwM5bsv0_rr-akrFM5cfE0VFUSEoG7Q'
+    }),
+    MatSlideToggleModule
   ],
-  providers: [AccountService, JobService, ContractorService],
+  providers: [AccountService, JobService, ContractorService,{
+    provide: STEPPER_GLOBAL_OPTIONS,
+    useValue: { displayDefaultIndicatorType: false }
+  }],
   bootstrap: [AppComponent],
   entryComponents: [JobSaveComponent]
 })

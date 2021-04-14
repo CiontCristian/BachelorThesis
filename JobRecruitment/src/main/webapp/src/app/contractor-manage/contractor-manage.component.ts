@@ -28,7 +28,8 @@ export class ContractorManageComponent implements OnInit {
   contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
 
   generalFormGroup: FormGroup;
-  locationFormGroup: FormGroup;
+  latitude: number;
+  longitude: number;
 
   image: File = null;
   formData = new FormData();
@@ -61,10 +62,6 @@ export class ContractorManageComponent implements OnInit {
         nrOfEmployeesForm: new FormControl(this.contractor.nrOfEmployees), logoForm: new FormControl('')
       })
 
-      this.locationFormGroup = this.formBuilder.group({
-        addressForm: new FormControl(this.contractor.location.address), cityForm: new FormControl(this.contractor.location.city),
-        countryForm: new FormControl(this.contractor.location.country)
-      });
     }
   }
 
@@ -115,8 +112,7 @@ export class ContractorManageComponent implements OnInit {
   }
 
   modify() {
-    let location: Location = new Location(this.contractor.location.id, this.locationFormGroup.get('addressForm').value, this.locationFormGroup.get('cityForm').value,
-      this.locationFormGroup.get('countryForm').value);
+    let location: Location = new Location(this.contractor.location.id, this.latitude, this.longitude);
 
     this.formData.append("file", this.image, this.image.name);
     console.log(this.image);

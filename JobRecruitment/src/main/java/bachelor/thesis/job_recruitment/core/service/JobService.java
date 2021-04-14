@@ -5,6 +5,7 @@ import bachelor.thesis.job_recruitment.core.model.Preference;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface JobService {
     List<Job> findAll(Integer pageIndex, Integer pageSize, String value);
@@ -19,4 +20,6 @@ public interface JobService {
     List<String> findJobsTitles();
     Optional<Job> findJobByTitle(String title);
     Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId);
+    Set<String> getAvailableTechs();
+    Set<String> getAvailableDevTypes();
 }

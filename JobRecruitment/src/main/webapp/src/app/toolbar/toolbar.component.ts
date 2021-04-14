@@ -66,7 +66,7 @@ export class ToolbarComponent implements OnInit {
     this.jobService.sendSearchValue(value);
     console.log(this.router.url);
     if(this.router.url === "/job-list") {
-      window.location.reload();
+      //window.location.reload();
     }
     else
       this.router.navigate(["job-list"]);

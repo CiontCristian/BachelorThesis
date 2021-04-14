@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/job")
@@ -130,5 +131,17 @@ public class JobController {
         if(preference.isEmpty())
             throw new ResourceNotFoundException("Preference not found!");
         return new ResponseEntity<>(preference.get(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAvailableTechs")
+    ResponseEntity<Set<String>> getAvailableTechs(){
+        Set<String> techs = jobService.getAvailableTechs();
+        return new ResponseEntity<>(techs, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAvailableDevTypes")
+    ResponseEntity<Set<String>> getAvailableDevTypes(){
+        Set<String> devs = jobService.getAvailableDevTypes();
+        return new ResponseEntity<>(devs, HttpStatus.OK);
     }
 }

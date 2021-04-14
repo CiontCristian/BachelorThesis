@@ -1,6 +1,6 @@
 <div>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
-    <mat-grid-list class="grid-list" cols="5" rowHeight="300px" gutterSize="50px">
+    <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 
        <mat-grid-tile class="grid-tile" *ngFor="let job of jobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
 

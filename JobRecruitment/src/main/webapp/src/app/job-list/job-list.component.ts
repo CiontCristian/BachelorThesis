@@ -22,7 +22,7 @@ export class JobListComponent implements OnInit {
   pageEvent: PageEvent;
   pageIndex: number=0;
   pageSize: number=10;
-  recordCount: number = 50;
+  recordCount: number;
   pageSizeOptions: number[] = [10,20,100];
   searchValue: string = "";
 
@@ -33,11 +33,11 @@ export class JobListComponent implements OnInit {
   ngOnInit(): void {
     this.jobService.receiveSearchValue().subscribe(
       response => {this.searchValue = response;
-                //this.getAllJobs();
+                this.getAllJobs();
                 //this.jobService.sendSearchValue("");
       }
     );
-    this.getAllJobs();
+    //this.getAllJobs();
 
   }
 
@@ -57,9 +57,9 @@ export class JobListComponent implements OnInit {
     this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.searchValue)
       .subscribe(response => this.jobs = response.body);
 
-    //this.recordCount = this.testData.length
+    this.recordCount = this.jobs.length
     //todo fix job record count
-    this.recordCount = 50;
+    //this.recordCount = 50;
 
     return event
   }

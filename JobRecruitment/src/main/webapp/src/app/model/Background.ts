@@ -2,13 +2,19 @@ import {BaseEntity} from "./BaseEntity";
 import {User} from "./User";
 
 export class Background extends BaseEntity{
-  formalEducation: string;
+  techs: string;
   experience: string;
+  jobType: string;
+  devType: string;
+  remote: boolean;
 
 
-  constructor(id: number, formalEducation: string, experience: string) {
+  constructor(id: number, techs: string, experience: string, jobType: string, devType: string, remote: boolean) {
     super(id);
-    this.formalEducation = formalEducation;
+    this.techs = techs;
     this.experience = experience;
+    this.jobType = jobType;
+    this.devType = devType;
+    this.remote = remote;
   }
 }
