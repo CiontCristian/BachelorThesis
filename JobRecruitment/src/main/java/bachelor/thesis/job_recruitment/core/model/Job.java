@@ -39,13 +39,4 @@ public class Job extends BaseEntity<Long>{
                 '}';
     }
 
-    public String toFileString(){
-        return super.getId() + "|" +title + "|" + devType + "|" +jobType +
-                "|"+ minExperience+ "|" + remote + "|"+techs;
-    }
-
-    public static String headersString(){
-        return  "id"+"|"+"title"+"|"+"dev_type"+"|"+"job_type"+"|"+"min_experience"+"|"+"remote"+
-                "|"+"techs";
-    }
 }

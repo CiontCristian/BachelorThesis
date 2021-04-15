@@ -1,0 +1,23 @@
+<div class="job-list-filtering">
+  <mat-form-field appearance="fill" class="register_form_field">
+    <mat-label>Technologies</mat-label>
+    <mat-chip-list #chipList aria-label="Tech selection">
+      <mat-chip
+        *ngFor="let tech of techs"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(tech, 'tech')">
+        {{tech}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <label>
+        <input
+          placeholder="New tech..."
+          [formControl]="techsForm"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event, 'tech')" required>
+      </label>
+    </mat-chip-list>
+  </mat-form-field>
+</div>

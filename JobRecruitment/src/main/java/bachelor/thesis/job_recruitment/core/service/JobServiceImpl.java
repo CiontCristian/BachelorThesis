@@ -133,6 +133,8 @@ public class JobServiceImpl implements JobService{
     @Override
     public Set<String> getAvailableTechs() {
         List<Job> jobs = jobRepository.findAll();
+        if(jobs.isEmpty())
+            return new HashSet<>();
 
         StringBuilder allTechs = new StringBuilder();
         jobs.forEach(
@@ -147,6 +149,8 @@ public class JobServiceImpl implements JobService{
     @Override
     public Set<String> getAvailableDevTypes() {
         List<Job> jobs = jobRepository.findAll();
+        if(jobs.isEmpty())
+            return new HashSet<>();
 
         StringBuilder allDevTypes = new StringBuilder();
         jobs.forEach(

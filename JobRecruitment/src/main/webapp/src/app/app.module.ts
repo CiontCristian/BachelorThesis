@@ -49,6 +49,7 @@ import {AgmCoreModule} from "@agm/core";
 import { AgmComponent } from './agm/agm.component';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { JobFilteringComponent } from './job-filtering/job-filtering.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     JobModifyComponent,
     JobRemoveComponent,
     AdminComponent,
-    AgmComponent
+    AgmComponent,
+    JobFilteringComponent
   ],
   imports: [
     BrowserModule,

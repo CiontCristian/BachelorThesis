@@ -23,11 +23,4 @@ public class Preference{
     private Boolean interested;
     private Boolean applied;
 
-    public String toFileString(){
-        return key.getUserId() + "|" +key.getJobId() + "|" + interested + "|" + applied;
-    }
-
-    public static String headersString(){
-        return  "user_id"+"|"+"job_id"+"|"+"is_interested"+"|"+"rating";
-    }
 }

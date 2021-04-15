@@ -36,7 +36,7 @@
           *ngFor="let tech of techs"
           [selectable]="selectable"
           [removable]="removable"
-          (removed)="remove(tech)">
+          (removed)="remove(tech, 'tech')">
           {{tech}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
@@ -46,7 +46,7 @@
             [formControl]="techsForm"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event)" required>
+            (matChipInputTokenEnd)="add($event, 'tech')" required>
         </label>
       </mat-chip-list>
       <mat-hint>Errors appear instantly!</mat-hint>
@@ -92,10 +92,24 @@
 
     <mat-form-field appearance="fill" class="register_form_field">
       <mat-label>Dev Type</mat-label>
-      <mat-select [formControl]="devTypeForm" multiple required>
-        <mat-option *ngFor="let devType of devTypes" [value]="devType">{{devType}}</mat-option>
-      </mat-select>
-      <mat-hint>Errors appear instantly!</mat-hint>
+      <mat-chip-list #chipListDev aria-label="Dev selection">
+        <mat-chip
+          *ngFor="let dev of devTypes"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(dev, 'dev')">
+          {{dev}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <label>
+          <input
+            placeholder="New dev..."
+            [formControl]="devTypeForm"
+            [matChipInputFor]="chipListDev"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event, 'dev')" required>
+        </label>
+      </mat-chip-list>
       <mat-error *ngIf="devTypeForm.hasError('required')">
         Dev type is required
       </mat-error>

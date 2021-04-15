@@ -16,14 +16,14 @@
     <span>{{job.description}}</span>
     <mat-divider></mat-divider>
     <div class="job-details-buttons">
-      <button mat-raised-button class="job-details-button" [disabled]="preference && preference.interested" (click)="vote(true)">
+      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="preference && preference.interested" (click)="vote(true)">
         <mat-icon>thumb_up</mat-icon>
       </button>
-      <button mat-raised-button class="job-details-button" [disabled]="preference && preference.interested === false" (click)="vote(false)">
+      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="preference && preference.interested === false" (click)="vote(false)">
         <mat-icon>thumb_down</mat-icon>
       </button>
       <br>
-      <button mat-raised-button class="job-details-button" [disabled]="currentUser === null || (preference && preference.applied)" (click)="apply()">
+      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="currentUser === null || (preference && preference.applied)" (click)="apply()">
         Apply
       </button>
       <br>

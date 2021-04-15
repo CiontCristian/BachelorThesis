@@ -2,8 +2,11 @@ import math
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas
+
+from db.DB import DB
 from model.Job import Job
 import random
+import numpy as np
 
 
 def processJobDataset():
@@ -73,9 +76,7 @@ def cleanDataset():
         jobs.append(job)
     return jobs
 
-
-def testCountVectorizer():
-    jobs = cleanDataset()
+def getJobFeatures(jobs):
     headers = []
     vectorString = ""
     for job in jobs:
@@ -83,12 +84,61 @@ def testCountVectorizer():
             job.remote).strip() + "," + job.techs.strip()
         headers.append(vectorString)
         vectorString = ""
+    return headers
+
+def vectorizeUserPreferences(jobs, preferences):
+    vector = []
+    found = False
+    for job in jobs:
+        for preference in preferences:
+            if job.id == preference.job_id:
+                found = True
+                if preference.interested:
+                    vector.append(1)
+                else:
+                    vector.append(-1)
+                break
+        if not found:
+            vector.append(0)
+        found = False
+
+    return vector
+
+
+def testCountVectorizer():
+    db = DB()
+    jobs = db.getJobs()
+    preferences = db.getUserPreferences(428)
+    headers = getJobFeatures(jobs)
+
     count = CountVectorizer()
     count_matrix = count.fit_transform(headers)
-    print(count.get_feature_names())
-    print(count_matrix.toarray())
-    sim = cosine_similarity(count_matrix, count_matrix)
-    print(sim)
+    transpose_count_matrix = count_matrix.transpose()
+    print(len(count_matrix.toarray()[0]))
+    print(len(transpose_count_matrix.toarray()[0]))
+    similarity_matrix = cosine_similarity(count_matrix, count_matrix)
+    #transpose_sim_matrix = cosine_similarity(transpose_count_matrix, transpose_count_matrix)
+    transpose_sim_matrix = similarity_matrix.transpose()
+    print(len(transpose_sim_matrix[0]))
+
+
+    preference_vector = vectorizeUserPreferences(jobs, preferences)
+
+    dot_prod_1 = np.dot(transpose_count_matrix.toarray(), preference_vector)
+
+    preference_vector = np.array(preference_vector)
+    print(preference_vector)
+    print(dot_prod_1)
+    #todo instead of preference_vector we need the vectorized user background
+    preference_vector_updated = preference_vector + dot_prod_1
+
+    print(preference_vector_updated)
+
+    final = np.dot(similarity_matrix, preference_vector_updated)
+    print(final)
+
+
+
 
 
 def getFeatureVectorHeaders(jobs, input_id):
@@ -102,10 +152,37 @@ def getFeatureVectorHeaders(jobs, input_id):
 
     vectorString = vectorString.lower()
     vector = vectorString.strip().split(",")
+    print(len(vector))
     vector = set(vector)
     vector = set(elem.strip() for elem in vector)
-
+    print(len(vector))
     return transformJobsToFeatureVectors(vector, jobs), transformJobsToFeatureVectors(vector, input_query)
+
+def vectorizeJobs(jobs, input_id):
+    headers = []
+    input_vector_string = ""
+    vectorString = ""
+    for job in jobs:
+        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
+            job.remote).strip() + "," + job.techs.strip()
+        if job.id == input_id:
+            input_vector_string = vectorString
+        else:
+            headers.append(vectorString)
+        vectorString = ""
+    headers.append(input_vector_string)
+
+    vectorizer = CountVectorizer()
+    vectorized_matrix = vectorizer.fit_transform(headers)
+    print(vectorizer.get_feature_names())
+    #print(vectorized_matrix.toarray())
+    vectorized_matrix = vectorized_matrix.toarray()
+
+    vectorized_input = vectorized_matrix[-1]
+    print(vectorized_input)
+    vectorized_matrix = np.delete(vectorized_matrix, len(vectorized_matrix) - 1, 0)
+
+    return vectorized_matrix, vectorized_input
 
 
 def transformJobsToFeatureVectors(headers, jobs):
@@ -137,6 +214,3 @@ def transformJobsToFeatureVectors(headers, jobs):
         vectors.append(empty)
     print(check)
     return vectors
-
-
-testCountVectorizer()

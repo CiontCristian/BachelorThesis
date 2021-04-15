@@ -23,8 +23,7 @@ export class JobModifyComponent implements OnInit {
   jobTypeForm = new FormControl('', [Validators.required]);
   jobTypes: string[] = ["part-time", "full-time", "internship"];
   devTypeForm = new FormControl('', [Validators.required]);
-  devTypes: string[] = ["Full Stack Developer", "Backend Developer", "Frontend Developer", "QA/Tester", "Designer",
-    "Mobile Developer"];
+  devTypes: string[] = [];
   remoteForm = new FormControl('');
   remote: boolean;
   minExpForm = new FormControl('', [Validators.required]);
@@ -58,27 +57,49 @@ export class JobModifyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  remove(tech: string) {
-    const index = this.techs.indexOf(tech);
+  remove(item: string, type: string) {
+    if(type === "tech"){
+      const index = this.techs.indexOf(item);
 
-    if (index >= 0) {
-      this.techs.splice(index, 1);
+      if (index >= 0) {
+        this.techs.splice(index, 1);
+      }
+    }
+    else{
+      const index = this.devTypes.indexOf(item);
+
+      if (index >= 0) {
+        this.devTypes.splice(index, 1);
+      }
     }
   }
 
-  add(event: MatChipInputEvent) {
+  add(event: MatChipInputEvent, type: string) {
     const input = event.input;
     const value = event.value;
 
-    if ((value || '').trim()) {
-      this.techs.push(value);
-    }
+    if(type === "tech"){
+      if ((value || '').trim()) {
+        this.techs.push(value);
+      }
 
-    if (input) {
-      input.value = '';
-    }
+      if (input) {
+        input.value = '';
+      }
 
-    this.techsForm.setValue(null);
+      this.techsForm.setValue(null);
+    }
+    else{
+      if ((value || '').trim()) {
+        this.devTypes.push(value);
+      }
+
+      if (input) {
+        input.value = '';
+      }
+
+      this.devTypeForm.setValue(null);
+    }
   }
 
   setRemote(checked: boolean) {
@@ -90,7 +111,7 @@ export class JobModifyComponent implements OnInit {
   modify() {
     let job: Job = new Job(this.job.id, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
       this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
-        : this.minCompForm.value, this.devTypeForm.value.toString(),
+        : this.minCompForm.value, this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, this.job.contractor);
 
     this.jobService.modifyJob(job).subscribe();

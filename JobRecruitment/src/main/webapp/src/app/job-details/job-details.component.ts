@@ -31,9 +31,10 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.pipe(switchMap((params: Params) => this.jobService.getJob(+params['jobID'])))
       .subscribe(response => {this.job = response.body;
-        this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
-          .subscribe(response => {this.preference = response.body},
-            error => console.log(error.error))});
+        if(this.currentUser !== null)
+          this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
+            .subscribe(response => {this.preference = response.body},
+              error => console.log(error.error))});
     this.similarJobs = null;
 
   }
