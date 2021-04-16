@@ -1,23 +1,89 @@
-<div class="job-list-filtering">
-  <mat-form-field appearance="fill" class="register_form_field">
-    <mat-label>Technologies</mat-label>
-    <mat-chip-list #chipList aria-label="Tech selection">
-      <mat-chip
-        *ngFor="let tech of techs"
-        [selectable]="selectable"
-        [removable]="removable"
-        (removed)="remove(tech, 'tech')">
-        {{tech}}
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-      </mat-chip>
+<div class="job-filtering">
+  <form (ngSubmit)="filter()">
+    <mat-form-field appearance="fill" class="filter_form_field">
+      <mat-label>Technologies</mat-label>
+      <mat-chip-list #chipList aria-label="Tech selection">
+        <mat-chip
+          *ngFor="let tech of techs"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(tech, 'tech')">
+          {{tech}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <label>
+          <input
+            placeholder="New tech..."
+            [formControl]="techsForm"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event, 'tech')" required>
+        </label>
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="filter_form_field">
+      <mat-label>Dev Type</mat-label>
+      <mat-chip-list #chipListDev aria-label="Dev selection">
+        <mat-chip
+          *ngFor="let dev of devTypes"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(dev, 'dev')">
+          {{dev}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <label>
+          <input
+            placeholder="New dev..."
+            [formControl]="devTypeForm"
+            [matChipInputFor]="chipListDev"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event, 'dev')" required>
+        </label>
+      </mat-chip-list>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="filter_form_field">
+      <mat-label>Job Type</mat-label>
+      <mat-select [formControl]="jobTypeForm" multiple>
+        <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Experience</mat-label>
+      <mat-select [formControl]="minExpForm" multiple>
+        <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" class="filter-button">Filter</button>
+
+    <br>
+
+    <mat-label>Remote</mat-label>
+    <mat-slide-toggle [formControl]="remoteForm"></mat-slide-toggle>
+
+    <mat-form-field appearance="fill" class="filter_form_field">
+      <mat-label>Min Compensation</mat-label>
       <label>
-        <input
-          placeholder="New tech..."
-          [formControl]="techsForm"
-          [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event, 'tech')" required>
+        <input type="text" matInput [formControl]="minCompForm"
+               placeholder="Ex. 800$/month">
       </label>
-    </mat-chip-list>
-  </mat-form-field>
+    </mat-form-field>
+
+
+    <mat-label>Available Positions</mat-label>
+    <label>
+      <!--<input type="number" matInput [formControl]="availablePosForm" required
+             placeholder="Ex. 5">-->
+      <mat-slider
+        thumbLabel
+        min="1"
+        max="20" [formControl]="availablePosForm" required></mat-slider>
+    </label>
+
+  </form>
 </div>

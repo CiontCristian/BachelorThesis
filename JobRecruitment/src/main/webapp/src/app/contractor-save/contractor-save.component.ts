@@ -58,6 +58,8 @@ export class ContractorSaveComponent implements OnInit {
     this.formData.append("contractor", contractorBlob);
     this.contractorService.saveContractor(this.formData).subscribe(
       response => {
+        sessionStorage.setItem("contractor", JSON.stringify(response.body))
+        window.location.reload();
       },
       error => console.log(error)
     );

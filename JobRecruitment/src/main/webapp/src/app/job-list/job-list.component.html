@@ -1,7 +1,8 @@
 <div>
-  <div>
+  <div class="job-list-filtering">
     <app-job-filtering></app-job-filtering>
   </div>
+  <mat-divider></mat-divider>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
     <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 

@@ -1,0 +1,17 @@
+.job-filtering{
+  text-align: center;
+}
+
+.filter-button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
+  margin-left: 15px;
+}
+
+.filter_form_field{
+  padding-left: 15px;
+  padding-right: 15px;
+
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {FormControl, Validators} from "@angular/forms";
+import {Filter} from "../model/Filter";
 
 @Component({
   selector: 'app-job-filtering',
@@ -14,6 +15,11 @@ export class JobFilteringComponent implements OnInit {
   devTypeForm = new FormControl('');
   techsForm = new FormControl('');
   minExpForm = new FormControl('');
+  experienceLevels: string[] = ["entry", "junior", "middle", "senior", "lead", "manager"];
+  jobTypes: string[] = ["part-time", "full-time", "internship"];
+  minCompForm = new FormControl('');
+  availablePosForm = new FormControl('');
+  remoteForm = new FormControl(false);
 
   selectable = true;
   removable = true;
@@ -71,4 +77,9 @@ export class JobFilteringComponent implements OnInit {
     }
   }
 
+  filter() {
+    let filterObj: Filter = new Filter(this.jobTypeForm.value.toString(), this.remoteForm.value, this.minExpForm.value.toString(),
+      this.minCompForm.value, this.devTypeForm.value.toString(), this.techsForm.value.toString(), this.availablePosForm.value);
+    console.log(filterObj);
+  }
 }

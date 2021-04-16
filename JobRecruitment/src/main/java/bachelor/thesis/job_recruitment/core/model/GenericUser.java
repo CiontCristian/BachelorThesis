@@ -23,7 +23,6 @@ public class GenericUser extends BaseEntity<Long>{
     private Date dateOfBirth;
     private Character gender;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @PrimaryKeyJoinColumn
     private Background background;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Permission permission;

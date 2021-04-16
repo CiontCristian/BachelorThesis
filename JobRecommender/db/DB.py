@@ -38,12 +38,14 @@ class DB:
     def getUserBackground(self, id):
         if len(self.background) == 0:
             cursor = self.con.cursor()
-            cursor.execute("SELECT * from background where user_id=" + str(id))
+            cursor.execute("SELECT * from background b inner join generic_user gu on b.id = gu.background_id where gu.id =" + str(id))
 
             rows = cursor.fetchall()
 
             for row in rows:
-                self.background = [row[0], row[1], row[2], row[3], row[4]]
+                self.background = [row[1], row[2], row[3], row[4], row[5]]
 
         return self.background
 
+db = DB()
+print(db.getUserBackground(556))

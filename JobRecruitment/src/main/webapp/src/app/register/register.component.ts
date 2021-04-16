@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
     this.backgroundFormGroup = this.formBuilder.group({
       techsForm: new FormControl('', [Validators.required]), experienceForm: new FormControl('', [Validators.required]),
       permissionForm: new FormControl('', Validators.required), jobTypeForm: new FormControl('', Validators.required),
-      devTypeForm: new FormControl('', Validators.required),remoteForm: new FormControl('', Validators.required)
+      devTypeForm: new FormControl('', Validators.required),remoteForm: new FormControl(false, Validators.required)
     });
 
     this.jobService.getAvailableTechs()
@@ -75,15 +75,17 @@ export class RegisterComponent implements OnInit {
   register() {
     const value = this.backgroundFormGroup.get('permissionForm').value === 'client';
     let permission : Permission = new Permission(null, value === true, value !== true, false);
-    let background: Background = new Background(null, this.backgroundFormGroup.get('techsForm').value,
-      this.backgroundFormGroup.get('experienceForm').value, this.backgroundFormGroup.get('jobTypeForm').value,
-      this.backgroundFormGroup.get('devTypeForm').value, this.backgroundFormGroup.get('remoteForm').value);
     let location: Location = new Location(null, this.latitude, this.longitude);
+
+    let background: Background = new Background(null, this.backgroundFormGroup.get('techsForm').value.toString(),
+      this.backgroundFormGroup.get('experienceForm').value, this.backgroundFormGroup.get('jobTypeForm').value.toString(),
+      this.backgroundFormGroup.get('devTypeForm').value.toString(), this.backgroundFormGroup.get('remoteForm').value);
 
     let newUser : User = new User(null, this.generalFormGroup.get('passwordForm').value, this.generalFormGroup.get('emailForm').value,
       this.generalFormGroup.get('firstNameForm').value, this.generalFormGroup.get('lastNameForm').value,
-      new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('genderForm').value,
-      background, permission, location);
+      new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('genderForm').value, background,
+     permission, location);
+
 
     console.log(newUser)
     this.accountService.register(newUser).subscribe( response => {
