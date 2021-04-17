@@ -3,14 +3,25 @@
     <app-job-filtering (filterEvent)="viewFilter($event)"></app-job-filtering>
   </div>
   <mat-divider></mat-divider>
-  <h1 style="margin-left: 15%">Recommended:</h1>
-  <div class="job-list-recommended" *ngIf="currentUser !== null && currentUser.permission.isClient">
-    <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 
-      <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+  <mat-expansion-panel class="job-list-recommended" [disabled]="currentUser === null || !currentUser.permission.isClient" (opened)="getRecommendedJobsIdsCBF()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Recommended:</h2>
+      </mat-panel-title>
+      <mat-panel-description>
+        Click to expand
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngIf="currentUser !== null && currentUser.permission.isClient">
+      <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 
-    </mat-grid-list>
-  </div>
+        <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+
+      </mat-grid-list>
+    </div>
+  </mat-expansion-panel>
+
   <mat-divider></mat-divider>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
     <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">

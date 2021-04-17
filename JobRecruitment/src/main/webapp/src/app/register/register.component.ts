@@ -25,6 +25,9 @@ export class RegisterComponent implements OnInit {
   backgroundFormGroup: FormGroup;
   latitude: number;
   longitude: number;
+  latCluj = 46.74898191760513;
+  lngCluj = 23.629722860492784;
+  locationChosen: boolean = false;
 
   availableTechs: string[] = null;
   availableDevTypes: string[] = null;
@@ -97,5 +100,13 @@ export class RegisterComponent implements OnInit {
         console.log(error);
         this.snackBar.open("Email or username already taken", "Registration Failed!")
       });
+  }
+
+  onChosenLocation(event) {
+    console.log(event);
+
+    this.latitude = event.coords.lat;
+    this.longitude= event.coords.lng;
+    this.locationChosen = true;
   }
 }

@@ -19,6 +19,9 @@ export class ContractorSaveComponent implements OnInit {
   latitude: number;
   longitude: number;
   currentUser: User = null;
+  latCluj = 46.74898191760513;
+  lngCluj = 23.629722860492784;
+  locationChosen: boolean = false;
 
   image: File;
   formData = new FormData();
@@ -45,7 +48,6 @@ export class ContractorSaveComponent implements OnInit {
   }
 
   register() {
-    //todo fix contractor save no reload
     let location: Location = new Location(null, this.latitude, this.longitude);
 
     this.formData.append("file", this.image, this.image.name);
@@ -63,6 +65,13 @@ export class ContractorSaveComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
 
+  onChosenLocation(event) {
+    console.log(event);
+
+    this.latitude = event.coords.lat;
+    this.longitude= event.coords.lng;
+    this.locationChosen = true;
   }
 }

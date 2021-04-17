@@ -29,6 +29,7 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+
     this.jobService.findJobsTitles().subscribe(
       response => {this.jobTitles = response.body},
       error => console.log(error.error)
@@ -61,14 +62,4 @@ export class ToolbarComponent implements OnInit {
       error => console.log(error.error)
     );
   }
-
-  /*search(value: string) {
-    this.jobService.sendSearchValue(value);
-    console.log(this.router.url);
-    if(this.router.url === "/job-list") {
-      //window.location.reload();
-    }
-    else
-      this.router.navigate(["job-list"]);
-  }*/
 }

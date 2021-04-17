@@ -34,3 +34,9 @@
   text-align: center;
   font-size: large;
 }
+
+agm-map {
+  height: 300px;
+  width: 500px;
+  text-align: center;
+}

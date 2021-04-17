@@ -12,6 +12,6 @@ public interface UserService {
     List<GenericUser> findAll();
     Optional<GenericUser> verifyUserCredentials(String email, String password);
     Optional<GenericUser> save(GenericUser user);
-    Optional<GenericUser> modifyCompany(Long id, Contractor contractor);
+    GenericUser modify(GenericUser modifiedUser);
     List<GenericUser> findJobCandidates(Long jobId);
 }

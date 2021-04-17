@@ -34,6 +34,10 @@ export class AccountService{
     return this.httpClient.post<User>( this.accountURL + '/register', user, {observe: "response"});
   }
 
+  modify(modifiedUser: User) : Observable<HttpResponse<User>>{
+    return this.httpClient.put<User>( this.accountURL + '/modify', modifiedUser, {observe: "response"});
+  }
+
   modifyUserContractor(id: number, contractor: Contractor) : Observable<HttpResponse<User>>{
     return this.httpClient.put<User>(this.accountURL + '/modifyCompany/' + id, contractor, {observe: "response"});
   }

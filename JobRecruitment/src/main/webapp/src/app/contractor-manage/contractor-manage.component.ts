@@ -30,6 +30,9 @@ export class ContractorManageComponent implements OnInit {
   generalFormGroup: FormGroup;
   latitude: number;
   longitude: number;
+  latCluj = 46.74898191760513;
+  lngCluj = 23.629722860492784;
+  locationChosen: boolean = false;
 
   image: File = null;
   formData = new FormData();
@@ -52,6 +55,8 @@ export class ContractorManageComponent implements OnInit {
 
     if(this.contractor) {
       this.dataSource = new MatTableDataSource<User>();
+      this.latitude = this.contractor.location.latitude;
+      this.longitude = this.contractor.location.longitude;
       this.jobService.findJobsForContractor(this.contractor.id).subscribe(
         response => {this.jobs = response.body},
         error => {console.log(error)}
@@ -126,9 +131,14 @@ export class ContractorManageComponent implements OnInit {
     this.contractorService.modifyContractor(this.formData).subscribe(
       response => {this.contractor = response.body;
         sessionStorage.setItem("contractor", JSON.stringify(response.body));
+        this.refresh();
         },
       error => console.log(error)
     );
+  }
+
+  refresh(){
+    window.location.reload();
   }
 
   openModifyJobDialog(job: Job) {
@@ -171,5 +181,13 @@ export class ContractorManageComponent implements OnInit {
         response => {this.dataSource.data = response.body},
         error => console.log(error.error)
       )
+  }
+
+  onChosenLocation(event) {
+    console.log(event);
+
+    this.latitude = event.coords.lat;
+    this.longitude= event.coords.lng;
+    this.locationChosen = true;
   }
 }

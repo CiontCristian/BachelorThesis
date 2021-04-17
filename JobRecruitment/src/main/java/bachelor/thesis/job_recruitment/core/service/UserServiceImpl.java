@@ -55,17 +55,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
-    public Optional<GenericUser> modifyCompany(Long id, Contractor contractor) {
-        Optional<GenericUser> current = findAll().stream()
-                .filter(genericUser -> genericUser.getId().equals(id))
-                .findFirst();
-
-        if(current.isEmpty())
-            return Optional.empty();
-
-        //current.get().setCompany(contractor);
-        return current;
+    public GenericUser modify(GenericUser modifiedUser) {
+        return userRepository.save(modifiedUser);
     }
 
     @Override

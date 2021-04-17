@@ -46,7 +46,6 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTableModule} from "@angular/material/table";
 import {AgmCoreModule} from "@agm/core";
-import { AgmComponent } from './agm/agm.component';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { JobFilteringComponent } from './job-filtering/job-filtering.component';
@@ -67,7 +66,6 @@ import { JobFilteringComponent } from './job-filtering/job-filtering.component';
     JobModifyComponent,
     JobRemoveComponent,
     AdminComponent,
-    AgmComponent,
     JobFilteringComponent
   ],
   imports: [

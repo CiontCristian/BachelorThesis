@@ -1,6 +1,8 @@
 <div class="toolbar_menu">
   <mat-toolbar class="toolbar">
     <button mat-raised-button class="toolbar-button" routerLink="">Job Recruitment</button>
+    <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'M'" src="assets/male_avatar.png" alt="Generic Male Avatar">
+    <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'F'" src="assets/female_avatar.png" alt="Generic Female Avatar">
     <span style="color: rgba(241,255,1,0.71)" *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</span>
     <span class="example-spacer"></span>
     <form class="search-form">
@@ -23,16 +25,13 @@
     </form>
     <span class="example-spacer"></span>
     <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</button>
-    <button mat-raised-button class="toolbar-button" routerLink="maps" *ngIf="currentUser && currentUser.permission.isAdmin">GoogleMaps
-      <mat-icon>map</mat-icon>
-    </button>
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>
     <button mat-raised-button class="toolbar-button" routerLink="job-list">Offers
       <mat-icon>card_travel</mat-icon>
     </button>
-    <span class="example-spacer"></span>
+
     <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser === null">Login</button>
     <button mat-raised-button class="toolbar-button" routerLink="register" *ngIf="currentUser === null">Register</button>
     <button mat-raised-button class="toolbar-button" routerLink="" *ngIf="currentUser" (click)="logout()">Logout</button>

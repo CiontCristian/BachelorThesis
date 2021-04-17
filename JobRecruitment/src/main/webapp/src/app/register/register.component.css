@@ -1,7 +1,8 @@
 .register_container{
   text-align: center;
   padding: 30px;
-  height: 91.9vh;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .register-stepper{
@@ -31,6 +32,12 @@
   color: rgba(241,255,1,0.71);
   text-align: center;
   font-size: large;
+}
+
+.google-map {
+  height: 300px;
+  width: inherit;
+  text-align: center;
 }
 
 

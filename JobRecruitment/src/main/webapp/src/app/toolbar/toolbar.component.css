@@ -39,3 +39,15 @@
 .search-form button{
   background-color: rgba(241,255,1,0.71);
 }
+
+.search-form{
+  width: 300px;
+}
+
+.toolbar-img{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+}

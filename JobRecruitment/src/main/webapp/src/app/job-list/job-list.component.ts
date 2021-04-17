@@ -41,13 +41,21 @@ export class JobListComponent implements OnInit {
       response => this.recordCount = response.body
     )
     this.getAllJobs();
-    if(this.currentUser !== null && this.currentUser.permission.isClient){
+    /*if(this.currentUser !== null && this.currentUser.permission.isClient){
       this.jobService.getRecommendedJobsIdsCBF(this.currentUser.id).subscribe(
         response => this.jobService.getJobsByIds(8, response.body).subscribe(
           response => this.recommendedJobs = response.body
         )
       );
-    }
+    }*/
+  }
+
+  getRecommendedJobsIdsCBF(){
+    this.jobService.getRecommendedJobsIdsCBF(this.currentUser.id).subscribe(
+      response => this.jobService.getJobsByIds(8, response.body).subscribe(
+        response => this.recommendedJobs = response.body
+      )
+    );
   }
 
   getAllJobs(): void{

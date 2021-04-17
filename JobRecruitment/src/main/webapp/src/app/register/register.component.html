@@ -91,43 +91,19 @@
         </ng-template>
       </mat-step>
 
-      <!--<mat-step [stepControl]="locationFormGroup" [optional]=true>
-        <form [formGroup]="locationFormGroup">
-          <ng-template matStepLabel>Address Info</ng-template>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Address</mat-label>
-            <label>
-              <input type="text" matInput formControlName="addressForm"
-                     placeholder="Ex. Example Street Nr. 3">
-            </label>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>City</mat-label>
-            <label>
-              <input type="text" matInput formControlName="cityForm"
-                     placeholder="Ex. Cluj-Napoca">
-            </label>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field appearance="fill" class="register_form_field">
-            <mat-label>Country</mat-label>
-            <label>
-              <input type="text" matInput formControlName="countryForm"
-                     placeholder="Ex. Romania">
-            </label>
-          </mat-form-field>
-          <br>
+      <mat-step [optional]=true>
+        <form>
+          <ng-template matStepLabel>Location</ng-template>
+          <agm-map class="google-map" [latitude]="latCluj" [longitude]="lngCluj" (mapClick)="onChosenLocation($event)">
+            <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"></agm-marker>
+          </agm-map>
 
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
-      </mat-step>-->
+      </mat-step>
 
       <mat-step [stepControl]="backgroundFormGroup">
         <form [formGroup]="backgroundFormGroup">
@@ -208,6 +184,21 @@
           </div>
         </form>
       </mat-step>
+
+     <!-- <mat-step [optional]=true>
+        <form>
+          <ng-template matStepLabel>Location</ng-template>
+          <agm-map [latitude]="latCluj" [longitude]="lngCluj" (mapClick)="onChosenLocation($event)">
+            <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"></agm-marker>
+          </agm-map>
+
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </form>
+      </mat-step>-->
+
     </mat-horizontal-stepper>
 
 
