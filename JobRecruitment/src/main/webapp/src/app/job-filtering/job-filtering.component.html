@@ -4,7 +4,7 @@
     <mat-form-field appearance="fill" class="filter_form_field">
       <mat-label>Title</mat-label>
       <label>
-        <input type="text" matInput [formControl]="titleForm" required
+        <input type="text" matInput [formControl]="titleForm"
                placeholder="Ex. FullStack Dev Recruitment">
       </label>
     </mat-form-field>
@@ -61,7 +61,7 @@
       </mat-select>
     </mat-form-field>
 
-    <button mat-mini-fab (click)="filter()" class="filter-button">
+    <button type="submit" mat-raised-button class="filter-button"> Search
       <mat-icon>search</mat-icon>
     </button>
 

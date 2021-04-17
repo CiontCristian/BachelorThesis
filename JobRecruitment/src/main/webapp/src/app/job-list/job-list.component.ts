@@ -21,7 +21,8 @@ export class JobListComponent implements OnInit {
   /*@Input()
   fromHome: boolean = false;*/
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
-  currentFilter: Filter = new Filter("","",null,"",null,"","",null);
+  currentFilter: Filter = new Filter(null,null,null,null,null,
+    null,null,null);
   jobs: Job[] = null;
   recommendedJobs: Job[] = null;
   pageEvent: PageEvent;
@@ -40,7 +41,7 @@ export class JobListComponent implements OnInit {
       response => this.recordCount = response.body
     )
     this.getAllJobs();
-    if(this.currentUser !== null){
+    if(this.currentUser !== null && this.currentUser.permission.isClient){
       this.jobService.getRecommendedJobsIdsCBF(this.currentUser.id).subscribe(
         response => this.jobService.getJobsByIds(8, response.body).subscribe(
           response => this.recommendedJobs = response.body
@@ -69,8 +70,15 @@ export class JobListComponent implements OnInit {
     this.router.navigate(["job-list/details/", id]);
   }
 
-  viewFilter($event: Filter) {
-    console.log($event);
-    this.currentFilter = $event;
+  viewFilter(event: Filter) {
+    this.currentFilter = event;
+    console.log(this.currentFilter)
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.currentFilter)
+      .subscribe(response => this.jobs = response.body);
+    //this.refresh();
+  }
+
+  refresh(){
+    window.location.reload();
   }
 }

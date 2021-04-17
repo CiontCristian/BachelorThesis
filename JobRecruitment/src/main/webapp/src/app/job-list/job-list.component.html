@@ -4,7 +4,7 @@
   </div>
   <mat-divider></mat-divider>
   <h1 style="margin-left: 15%">Recommended:</h1>
-  <div class="job-list-recommended" *ngIf="currentUser !== null">
+  <div class="job-list-recommended" *ngIf="currentUser !== null && currentUser.permission.isClient">
     <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 
       <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>

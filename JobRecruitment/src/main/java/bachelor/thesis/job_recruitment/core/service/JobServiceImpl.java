@@ -41,9 +41,21 @@ public class JobServiceImpl implements JobService{
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - filter criteria={}", criteria);
 
-        Page<Job> jobs = jobRepository.findAll(pageRequest);
-        return jobs.getContent();
-
+        if(criteria.getTitle() == null || (criteria.getTitle().equals("") && criteria.getTechs().equals("")
+        && criteria.getJobType().equals("") && criteria.getDevType().equals("") && criteria.getMinExperience().equals("")
+        && criteria.getRemote().equals(false) && criteria.getMinCompensation().equals(0) && criteria.getAvailablePos().equals(0))){
+            return jobRepository.findAll(pageRequest).getContent();
+        }
+        return jobRepository.findAll().stream()
+                .filter(job -> criteria.getTitle().equals("") || job.getTitle().toLowerCase().contains(criteria.getTitle().toLowerCase()))
+                .filter(job -> criteria.getTechs().equals("") || job.getTechs().toLowerCase().contains(criteria.getTechs().toLowerCase()))
+                .filter(job -> criteria.getDevType().equals("") || job.getDevType().toLowerCase().contains(criteria.getDevType().toLowerCase()))
+                .filter(job -> criteria.getJobType().equals("") || job.getJobType().toLowerCase().contains(criteria.getJobType().toLowerCase()))
+                .filter(job -> job.getRemote().equals(criteria.getRemote()))
+                .filter(job -> criteria.getMinExperience().equals("") || job.getMinExperience().toLowerCase().contains(criteria.getMinExperience().toLowerCase()))
+                .filter(job -> job.getAvailablePos() >= criteria.getAvailablePos())
+                .filter(job -> job.getMinCompensation() >= criteria.getMinCompensation())
+                .collect(Collectors.toList());
 
         //logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
 
