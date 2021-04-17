@@ -1,17 +1,9 @@
-import math
 
 import numpy as np
-from collections import Counter
 
 
 def euclidean_distance(x1, x2):
     return np.sqrt(np.sum((x1 - x2) ** 2))
-
-#def euclidean_distance(point1, point2):
-#    sum_squared_distance = 0
-#    for i in range(len(point1)):
-#        sum_squared_distance += math.pow(point1[i] - point2[i], 2)
-#    return math.sqrt(sum_squared_distance)
 
 
 class KNN:
@@ -31,9 +23,7 @@ class KNN:
             print(str(index) + " " + str(distance) + " " + str(np.sum(example)) + " " + str(np.sum(self.query)))
             neighbor_distances_and_indices.append((distance, index))
 
-
         sorted_neighbor_distances_and_indices = sorted(neighbor_distances_and_indices)[:self.k]
-        #k_nearest_distances_and_indices = sorted_neighbor_distances_and_indices[:self.k]
 
         print(sorted_neighbor_distances_and_indices)
 

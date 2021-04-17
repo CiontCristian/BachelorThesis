@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class Filter {
+    private String title;
     private String jobType;
     private Boolean remote;
     private String minExperience;

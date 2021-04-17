@@ -1,6 +1,7 @@
 from algorithms.KNN import KNN
-from dataset.DataProcessing import *
+from algorithms.vectorization import *
 from db.DB import DB
+from algorithms.CBF import contentBasedFiltering
 
 
 class Controller:
@@ -11,23 +12,10 @@ class Controller:
     def recommendKNN(self, input_id):
         jobs = self.db.getJobs()
 
-        print(len(jobs))
-        #data = getFeatureVectorHeaders(jobs, input_id)
-        data = vectorizeJobs(jobs, input_id)
+        data = vectorizeJobsKNN(jobs, input_id)
         vectorizedJobs = data[0]
         query = data[1]
         print(query)
-        '''
-        435
-        437
-        448
-        478
-        442
-        450
-        480
-        '''
-        #vectorizedJobs = np.array(vectorizedJobs)
-        #query = np.array(query)
 
         self.knn.fit(vectorizedJobs, query)
         for job in jobs:
@@ -40,8 +28,25 @@ class Controller:
         return res
 
     def recommendCBF(self, input_id):
+        jobs = self.db.getJobs()
         preferences = self.db.getUserPreferences(input_id)
-        for a in preferences:
-            print(a)
+        background = self.db.getUserBackground(input_id)
+
+        data = vectorizeDataCBF(jobs, preferences, background)
+        vectorized_jobs = data[0]
+        vectorized_preferences = data[1]
+        vectorized_background = data[2]
+
+        similarity_values = contentBasedFiltering(vectorized_jobs, vectorized_preferences, vectorized_background)
+
+        ids_similiraty = []
+        for index, _ in enumerate(jobs):
+            ids_similiraty.append((jobs[index].id, similarity_values[index]))
+
+        ids_similiraty_desc = sorted(ids_similiraty, key=lambda x: x[1], reverse=True)
+        print(ids_similiraty_desc)
+        ids = [elem[0] for elem in ids_similiraty_desc]
+        print(ids)
+        return ids
 
 

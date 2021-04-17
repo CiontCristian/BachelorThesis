@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {FormControl, Validators} from "@angular/forms";
@@ -11,6 +11,7 @@ import {Filter} from "../model/Filter";
 })
 export class JobFilteringComponent implements OnInit {
 
+  titleForm = new FormControl('');
   jobTypeForm = new FormControl('');
   devTypeForm = new FormControl('');
   techsForm = new FormControl('');
@@ -26,6 +27,8 @@ export class JobFilteringComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
   techs: string[] = [];
   devTypes: string[] = [];
+
+  @Output() filterEvent = new EventEmitter<Filter>();
 
   constructor() { }
 
@@ -77,8 +80,12 @@ export class JobFilteringComponent implements OnInit {
     }
   }
 
+  addFilterEvent(value: Filter){
+    this.filterEvent.emit(value);
+  }
+
   filter() {
-    let filterObj: Filter = new Filter(this.jobTypeForm.value.toString(), this.remoteForm.value, this.minExpForm.value.toString(),
+    let filterObj: Filter = new Filter(this.titleForm.value, this.jobTypeForm.value.toString(), this.remoteForm.value, this.minExpForm.value.toString(),
       this.minCompForm.value, this.devTypeForm.value.toString(), this.techsForm.value.toString(), this.availablePosForm.value);
     console.log(filterObj);
   }

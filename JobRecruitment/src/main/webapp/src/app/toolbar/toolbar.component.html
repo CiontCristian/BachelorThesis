@@ -20,9 +20,6 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <button mat-mini-fab (click)="search(searchForm.value)">
-        <mat-icon>search</mat-icon>
-      </button>
     </form>
     <span class="example-spacer"></span>
     <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</button>
@@ -32,6 +29,10 @@
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>
+    <button mat-raised-button class="toolbar-button" routerLink="job-list">Offers
+      <mat-icon>card_travel</mat-icon>
+    </button>
+    <span class="example-spacer"></span>
     <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser === null">Login</button>
     <button mat-raised-button class="toolbar-button" routerLink="register" *ngIf="currentUser === null">Register</button>
     <button mat-raised-button class="toolbar-button" routerLink="" *ngIf="currentUser" (click)="logout()">Logout</button>

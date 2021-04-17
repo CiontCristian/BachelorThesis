@@ -1,5 +1,14 @@
 <div class="job-filtering">
   <form (ngSubmit)="filter()">
+
+    <mat-form-field appearance="fill" class="filter_form_field">
+      <mat-label>Title</mat-label>
+      <label>
+        <input type="text" matInput [formControl]="titleForm" required
+               placeholder="Ex. FullStack Dev Recruitment">
+      </label>
+    </mat-form-field>
+
     <mat-form-field appearance="fill" class="filter_form_field">
       <mat-label>Technologies</mat-label>
       <mat-chip-list #chipList aria-label="Tech selection">
@@ -52,16 +61,18 @@
       </mat-select>
     </mat-form-field>
 
+    <button mat-mini-fab (click)="filter()" class="filter-button">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <br>
+
     <mat-form-field appearance="fill">
       <mat-label>Experience</mat-label>
       <mat-select [formControl]="minExpForm" multiple>
         <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <button mat-raised-button type="submit" class="filter-button">Filter</button>
-
-    <br>
 
     <mat-label>Remote</mat-label>
     <mat-slide-toggle [formControl]="remoteForm"></mat-slide-toggle>

@@ -62,7 +62,7 @@ export class ToolbarComponent implements OnInit {
     );
   }
 
-  search(value: string) {
+  /*search(value: string) {
     this.jobService.sendSearchValue(value);
     console.log(this.router.url);
     if(this.router.url === "/job-list") {
@@ -70,5 +70,5 @@ export class ToolbarComponent implements OnInit {
     }
     else
       this.router.navigate(["job-list"]);
-  }
+  }*/
 }

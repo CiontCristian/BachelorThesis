@@ -1,8 +1,6 @@
 package bachelor.thesis.job_recruitment.server.controller;
 
-import bachelor.thesis.job_recruitment.core.model.Job;
-import bachelor.thesis.job_recruitment.core.model.Preference;
-import bachelor.thesis.job_recruitment.core.model.PreferenceKey;
+import bachelor.thesis.job_recruitment.core.model.*;
 import bachelor.thesis.job_recruitment.core.service.JobService;
 
 import bachelor.thesis.job_recruitment.server.exception.ResourceNotFoundException;
@@ -31,19 +29,26 @@ public class JobController {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/findAllJobs")
+    @PostMapping(value = "/findAllJobs")
     ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize
-        , @RequestParam String value){
+        , @RequestBody Filter criteria){
         log.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
-        List<Job> jobs = jobService.findAll(pageIndex, pageSize, value);
-        log.trace("In JobController - method: findAllJobs - jobs={}", jobs);
+        List<Job> jobs = jobService.findAll(pageIndex, pageSize, criteria);
+        log.trace("In JobController - method: findAllJobs - jobs={}", jobs.size());
 
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getJobRecordCount")
+    ResponseEntity<Integer> getJobRecordCount(){
+        Integer count = jobService.getJobRecordCount();
+
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/findJobsByIds")
-    ResponseEntity<List<Job>> findJobsByIds(@RequestParam List<Long> ids){
-        List<Job> jobs = jobService.findJobsByIds(ids);
+    ResponseEntity<List<Job>> findJobsByIds(@RequestParam Integer count, @RequestParam List<Long> ids){
+        List<Job> jobs = jobService.findJobsByIds(count, ids);
 
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }

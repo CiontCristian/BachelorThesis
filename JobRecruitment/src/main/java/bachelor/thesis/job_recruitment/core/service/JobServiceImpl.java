@@ -35,20 +35,16 @@ public class JobServiceImpl implements JobService{
     private ContractorRepository contractorRepository;
 
     @Override
-    public List<Job> findAll(Integer pageIndex, Integer pageSize, String value) {
+    public List<Job> findAll(Integer pageIndex, Integer pageSize, Filter criteria) {
 
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
+        log.trace("In JobServiceImpl - method: findAll() - filter criteria={}", criteria);
 
-        if(value.equals("")) {
-            Page<Job> jobs = jobRepository.findAll(pageRequest);
-            return jobs.getContent();
-        }
-        else{
-            return jobRepository.findAll(pageRequest).stream()
-                    .filter(job -> job.getTitle().toLowerCase().contains(value.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
+        Page<Job> jobs = jobRepository.findAll(pageRequest);
+        return jobs.getContent();
+
+
         //logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
 
         //return jobs.getContent();
@@ -60,8 +56,15 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public List<Job> findJobsByIds(List<Long> ids) {
-        return jobRepository.findAllById(ids);
+    public List<Job> findJobsByIds(Integer count, List<Long> ids) {
+        log.trace("In JobServiceImpl - method: findJobsByIds() - ids={}", ids);
+        List<Job> jobs = new ArrayList<>();
+        for(int i=0; i<count;i++){
+            jobs.add(jobRepository.findById(ids.get(i)).orElse(null));
+        }
+
+        return jobs;
+
     }
 
     @Override
@@ -88,7 +91,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void remove(Long id) {
-        //TODO handle preference delete
         log.trace("In JobServiceImpl - method: remove() - id={}", id);
         List<Preference> preferences = preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
@@ -159,6 +161,11 @@ public class JobServiceImpl implements JobService{
         allDevTypes.deleteCharAt(allDevTypes.length()-1);
 
         return new HashSet<>(Arrays.asList(allDevTypes.toString().split(",")));
+    }
+
+    @Override
+    public Integer getJobRecordCount() {
+        return jobRepository.findAll().size();
     }
 
 }

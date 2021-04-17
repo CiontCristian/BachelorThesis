@@ -57,9 +57,9 @@ export class JobDetailsComponent implements OnInit {
   }
 
   moreLikeThis(id: number) {
-    this.jobService.getRecommendedJobsIds(id).subscribe(
+    this.jobService.getRecommendedJobsIdsKNN(id).subscribe(
       response => {
-        this.jobService.getJobsByIds(response.body).subscribe(
+        this.jobService.getJobsByIds(7, response.body).subscribe(
           response => { this.similarJobs = response.body},
           error => console.log(error.error)
         )

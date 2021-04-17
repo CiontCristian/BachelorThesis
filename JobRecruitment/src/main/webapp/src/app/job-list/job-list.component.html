@@ -1,6 +1,15 @@
 <div>
   <div class="job-list-filtering">
-    <app-job-filtering></app-job-filtering>
+    <app-job-filtering (filterEvent)="viewFilter($event)"></app-job-filtering>
+  </div>
+  <mat-divider></mat-divider>
+  <h1 style="margin-left: 15%">Recommended:</h1>
+  <div class="job-list-recommended" *ngIf="currentUser !== null">
+    <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
+
+      <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+
+    </mat-grid-list>
   </div>
   <mat-divider></mat-divider>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
@@ -11,11 +20,14 @@
     </mat-grid-list>
   </div>
 
-  <mat-paginator class="paginator" *ngIf="jobs && jobs.length > 0"
-                 [pageSizeOptions]="pageSizeOptions"
-                 [pageSize]="pageSize"
-                 (page)="pageEvent = pageNavigations($event)"
-                 [length]="recordCount">
+  <div *ngIf="recordCount">
+    <mat-paginator class="paginator" *ngIf="jobs && jobs.length > 0"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   (page)="pageEvent = pageNavigations($event)"
+                   [length]="recordCount">
 
-  </mat-paginator>
+    </mat-paginator>
+  </div>
+
 </div>

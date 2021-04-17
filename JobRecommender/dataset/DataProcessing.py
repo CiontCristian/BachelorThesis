@@ -1,14 +1,7 @@
-import math
 
-from pandas.core.common import flatten
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import pandas
-
-from db.DB import DB
 from model.Job import Job
 import random
-import numpy as np
 
 
 def processJobDataset():
@@ -79,91 +72,6 @@ def cleanDataset():
     return jobs
 
 
-def getJobFeatures(jobs):
-    headers = []
-    vectorString = ""
-    for job in jobs:
-        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-            job.remote).strip() + "," + job.techs.strip()
-        headers.append(vectorString)
-        vectorString = ""
-    return headers
-
-
-def getUserBackgroundFeatures(background):
-    vectorString = ""
-    vectorString += background[1] + "," + background[2] + "," + background[0] + "," + str(
-        background[3]) + "," + background[4]
-    return vectorString
-
-
-def vectorizeUserPreferences(jobs, preferences):
-    vector = []
-    found = False
-    for job in jobs:
-        for preference in preferences:
-            if job.id == preference.job_id:
-                found = True
-                if preference.interested:
-                    vector.append(1)
-                else:
-                    vector.append(-1)
-                break
-        if not found:
-            vector.append(0)
-        found = False
-
-    return vector
-
-
-def testCountVectorizer():
-    db = DB()
-    jobs = db.getJobs()
-    preferences = db.getUserPreferences(556)
-    background = db.getUserBackground(556)
-    headers = getJobFeatures(jobs)
-    background_features = getUserBackgroundFeatures(background)
-    headers.append(background_features)
-
-    count = CountVectorizer()
-    count_matrix = count.fit_transform(headers).toarray()
-    vectorized_background = count_matrix[-1]
-    count_matrix = np.delete(count_matrix, len(count_matrix) - 1, 0)
-
-    transpose_count_matrix = count_matrix.transpose()
-    print(len(count_matrix[0]))
-
-    similarity_matrix = cosine_similarity(transpose_count_matrix, transpose_count_matrix)
-    print(len(similarity_matrix[0]))
-
-    preference_vector = vectorizeUserPreferences(jobs, preferences)
-
-    dot_prod_1 = np.dot(transpose_count_matrix, preference_vector)
-
-    preference_vector = np.array(preference_vector)
-    print(preference_vector)
-    print(dot_prod_1)
-    # todo instead of preference_vector we need the vectorized user background
-    preference_vector_updated = vectorized_background + dot_prod_1
-
-    print(preference_vector_updated)
-
-    final = cosine_similarity(count_matrix, preference_vector_updated.reshape(1,-1))
-    final = list(flatten(final))
-
-    ids = []
-    for index, _ in enumerate(jobs):
-        ids.append((jobs[index].id, final[index]))
-    print(final)
-    print(ids)
-    ids_desc = sorted(ids, key=lambda x: x[1], reverse= True)
-    print(ids_desc)
-
-    # vectorized_input = vectorized_matrix[-1]
-    # print(vectorized_input)
-    # vectorized_matrix = np.delete(vectorized_matrix, len(vectorized_matrix) - 1, 0)
-
-
 def getFeatureVectorHeaders(jobs, input_id):
     vectorString = ""
     input_query = []
@@ -180,33 +88,6 @@ def getFeatureVectorHeaders(jobs, input_id):
     vector = set(elem.strip() for elem in vector)
     print(len(vector))
     return transformJobsToFeatureVectors(vector, jobs), transformJobsToFeatureVectors(vector, input_query)
-
-
-def vectorizeJobs(jobs, input_id):
-    headers = []
-    input_vector_string = ""
-    vectorString = ""
-    for job in jobs:
-        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-            job.remote).strip() + "," + job.techs.strip()
-        if job.id == input_id:
-            input_vector_string = vectorString
-        else:
-            headers.append(vectorString)
-        vectorString = ""
-    headers.append(input_vector_string)
-
-    vectorizer = CountVectorizer()
-    vectorized_matrix = vectorizer.fit_transform(headers)
-    print(vectorizer.get_feature_names())
-    # print(vectorized_matrix.toarray())
-    vectorized_matrix = vectorized_matrix.toarray()
-
-    vectorized_input = vectorized_matrix[-1]
-    print(vectorized_input)
-    vectorized_matrix = np.delete(vectorized_matrix, len(vectorized_matrix) - 1, 0)
-
-    return vectorized_matrix, vectorized_input
 
 
 def transformJobsToFeatureVectors(headers, jobs):
@@ -238,5 +119,3 @@ def transformJobsToFeatureVectors(headers, jobs):
         vectors.append(empty)
     print(check)
     return vectors
-
-testCountVectorizer()

@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Job} from "../model/Job";
 import {Preference} from "../model/Preference";
 import {environment} from "../../environments/environment";
+import {Filter} from "../model/Filter";
 
 @Injectable()
 export class JobService{
@@ -25,15 +26,19 @@ export class JobService{
     return this.searchValue.asObservable();
   }
 
-  getAllJobs(pageIndex: number, pageSize: number, value: string): Observable<HttpResponse<Job[]>>
+  getAllJobs(pageIndex: number, pageSize: number, criteria: Filter): Observable<HttpResponse<Job[]>>
   {
-    return this.httpClient.get<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize
-      +"&value="+value, {observe: "response"});
+    return this.httpClient.post<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize, criteria, {observe: "response"});
   }
 
-  getJobsByIds(ids: number[]): Observable<HttpResponse<Job[]>>
+  getJobRecordCount(): Observable<HttpResponse<number>>
   {
-    return this.httpClient.get<Job[]>(this.jobURL + "/findJobsByIds?ids="+ids, {observe: "response"});
+    return this.httpClient.get<number>(this.jobURL + "/getJobRecordCount", {observe: "response"});
+  }
+
+  getJobsByIds(count:number, ids: number[]): Observable<HttpResponse<Job[]>>
+  {
+    return this.httpClient.get<Job[]>(this.jobURL + "/findJobsByIds?count="+count+"&ids="+ids, {observe: "response"});
   }
 
   saveJob(job: Job): Observable<HttpResponse<Job>>{
@@ -87,9 +92,14 @@ export class JobService{
     "&jobId="+jobId, {observe: "response"});
   }
 
-  getRecommendedJobsIds(id: number): Observable<HttpResponse<number[]>>
+  getRecommendedJobsIdsKNN(id: number): Observable<HttpResponse<number[]>>
   {
-    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIds", id, {observe: "response"});
+    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIdsKNN", id, {observe: "response"});
+  }
+
+  getRecommendedJobsIdsCBF(id: number): Observable<HttpResponse<number[]>>
+  {
+    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIdsCBF", id, {observe: "response"});
   }
 
   getJobsFromDataset(): Observable<HttpResponse<Job[]>>

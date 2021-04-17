@@ -9,25 +9,25 @@ cors = CORS(app)
 
 ctr = Controller()
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
 
-
-@app.route('/recommender/saveRecommenderInfo', methods=["POST"], strict_slashes=False)
-@cross_origin()
-def saveRecommenderInfo():
-    info = request.get_json(force=True)
-    print('In method: saveRecommenderInfo, info= ' + str(info))
-    return jsonify(info), 200
-
-
-@app.route('/recommender/getRecommendedJobsIds', methods=["POST"], strict_slashes=False)
-def getRecommendedJobsIds():
+@app.route('/recommender/getRecommendedJobsIdsKNN', methods=["POST"], strict_slashes=False)
+def getRecommendedJobsIdsKNN():
     input_id = request.get_json(force=True)
     print(input_id)
     global ctr
     jobs_ids = ctr.recommendKNN(int(input_id))
+    response = jsonify(jobs_ids)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response, 200
+
+
+@app.route('/recommender/getRecommendedJobsIdsCBF', methods=["POST"], strict_slashes=False)
+def getRecommendedJobsIdsCBF():
+    input_id = request.get_json(force=True)
+    print(input_id)
+    global ctr
+    jobs_ids = ctr.recommendCBF(int(input_id))
     response = jsonify(jobs_ids)
     response.headers.add("Access-Control-Allow-Origin", "*")
 
