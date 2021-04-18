@@ -38,7 +38,7 @@ export class ContractorManageComponent implements OnInit {
   formData = new FormData();
 
   dataSource: MatTableDataSource<User>;
-  columnsToDisplay = ['name', 'dob', 'email', 'education'];
+  columnsToDisplay = ['name', 'dob', 'email', 'experience'];
 
   constructor(private contractorService: ContractorService,
               private jobService: JobService,

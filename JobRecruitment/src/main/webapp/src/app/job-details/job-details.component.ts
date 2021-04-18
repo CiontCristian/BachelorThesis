@@ -20,6 +20,8 @@ export class JobDetailsComponent implements OnInit {
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
   preference: Preference = null;
   similarJobs: Job[] = null;
+  latitudeUser: number;
+  longitudeUser: number;
 
   constructor(private jobService: JobService,
               private route: ActivatedRoute,
@@ -35,6 +37,11 @@ export class JobDetailsComponent implements OnInit {
           this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
             .subscribe(response => {this.preference = response.body},
               error => console.log(error.error))});
+
+    if(this.currentUser){
+      this.latitudeUser = this.currentUser.location.latitude;
+      this.longitudeUser = this.currentUser.location.longitude;
+    }
     this.similarJobs = null;
 
   }
@@ -99,6 +106,7 @@ export class JobDetailsComponent implements OnInit {
       Math.cos(this.rad(lat1)) * Math.cos(this.rad(lat2)) *
       Math.sin(dLong / 2) * Math.sin(dLong / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // returns the distance in meter
+    var km = (R * c) / 1000; //distance in km
+    return Math.round((km + Number.EPSILON) * 100) / 100
   };
 }

@@ -26,6 +26,13 @@
   text-align: center;
   font-size: large;
 }
+.toolbar-settings-button{
+  background-color: rgba(241,255,1,0.71);
+  color: rgba(0,0,0,0.71);
+  margin-left: 20px;
+  text-align: center;
+  font-size: large;
+}
 
 ::-webkit-input-placeholder {
   color: rgba(241,255,1,0.71);

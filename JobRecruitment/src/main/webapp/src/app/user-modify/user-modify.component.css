@@ -1,0 +1,41 @@
+.register_container{
+  text-align: center;
+  padding: 30px;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.register-stepper{
+  background-color: inherit;
+}
+
+.register_form_field{
+  margin: 8px;
+}
+
+.register-gender-div mat-radio-button{
+  margin-left: 10px;
+}
+
+.register-permission-div mat-radio-button{
+  margin-left: 10px;
+}
+
+.register-gender-div mat-label{
+  font-size: medium;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.register-button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
+}
+
+.google-map {
+  height: 300px;
+  width: inherit;
+  text-align: center;
+}

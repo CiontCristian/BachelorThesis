@@ -1,6 +1,11 @@
 <div *ngIf="job" class="job-details-container">
     <h1 style="text-align: center">{{job.title}}</h1>
     <h3>-posted by {{job.contractor.name}} averaging around {{job.contractor.nrOfEmployees}} employees</h3>
+    <h3 *ngIf="currentUser !== null &&  currentUser.location.latitude !== null && currentUser.location.longitude !== null
+      && job.contractor.location.latitude !== null && job.contractor.location.longitude !== null" >
+      You are approximately {{getHaversineDistance(latitudeUser, job.contractor.location.latitude,
+      longitudeUser, job.contractor.location.longitude)}}
+    kilometers away from {{job.contractor.name}}</h3>
     <p><b>Available posts: {{job.availablePos}} !</b></p>
     <p>Requirements: </p>
 

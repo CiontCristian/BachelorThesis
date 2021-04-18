@@ -1,5 +1,8 @@
 <div class="toolbar_menu">
   <mat-toolbar class="toolbar">
+    <button mat-mini-fab class="toolbar-settings-button" *ngIf="currentUser !== null" (click)="openModifyUserDialog(this.currentUser)">
+      <mat-icon>settings</mat-icon>
+    </button>
     <button mat-raised-button class="toolbar-button" routerLink="">Job Recruitment</button>
     <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'M'" src="assets/male_avatar.png" alt="Generic Male Avatar">
     <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'F'" src="assets/female_avatar.png" alt="Generic Female Avatar">
@@ -24,7 +27,9 @@
       </mat-form-field>
     </form>
     <span class="example-spacer"></span>
-    <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage</button>
+    <button mat-raised-button class="toolbar-button" routerLink="contractor-manage" *ngIf="currentUser && currentUser.permission.isCompany">Manage
+      <mat-icon>business</mat-icon>
+    </button>
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>

@@ -9,6 +9,9 @@ import {Router} from "@angular/router";
 import {Job} from "../model/Job";
 import {HomeComponent} from "../home/home.component";
 import {JobListComponent} from "../job-list/job-list.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {JobModifyComponent} from "../job-modify/job-modify.component";
+import {UserModifyComponent} from "../user-modify/user-modify.component";
 
 @Component({
   selector: 'app-toolbar',
@@ -25,7 +28,8 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private jobService: JobService,
-              private router: Router) { }
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -61,5 +65,21 @@ export class ToolbarComponent implements OnInit {
       },
       error => console.log(error.error)
     );
+  }
+
+  openModifyUserDialog(currentUser: User) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      currentUser
+    }
+
+    const dialogRef = this.dialog.open(UserModifyComponent,{
+      width: '60%',
+      data: dialogConfig.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== "cancel")
+        window.location.reload();
+    });
   }
 }

@@ -48,10 +48,10 @@
               <th mat-header-cell *matHeaderCellDef> Email </th>
               <td mat-cell *matCellDef="let element"> {{element.email}} </td>
             </ng-container>
-            <!-- Education Column -->
-            <ng-container matColumnDef="education">
-              <th mat-header-cell *matHeaderCellDef> Formal Education </th>
-              <td mat-cell *matCellDef="let element"> {{element.background.formalEducation}} </td>
+            <!-- Experience Column -->
+            <ng-container matColumnDef="experience">
+              <th mat-header-cell *matHeaderCellDef> Experience </th>
+              <td mat-cell *matCellDef="let element"> {{element.background.experience}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

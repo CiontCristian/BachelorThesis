@@ -1,0 +1,203 @@
+
+<div class="register_container">
+  <h1 mat-dialog-title>Edit Profile Settings</h1>
+  <div mat-dialog-content>
+
+    <h1>Register</h1>
+      <mat-horizontal-stepper linear #stepper class="register-stepper">
+        <mat-step [stepControl]="generalFormGroup" label="General Info" state="general">
+          <ng-template matStepperIcon="general">
+            <mat-icon color="primary">info</mat-icon>
+          </ng-template>
+          <form [formGroup]="generalFormGroup">
+            <!--<ng-template matStepLabel>General Info</ng-template>-->
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Email</mat-label>
+              <label>
+                <input type="email" matInput formControlName="emailForm" required
+                       placeholder="Ex. pat@example.com">
+              </label>
+              <mat-error *ngIf="this.generalFormGroup.get('emailForm').invalid">{{getEmailErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Enter your password</mat-label>
+              <label>
+                <input matInput formControlName="passwordForm" [type]="hidePassword ? 'password' : 'text'" required>
+              </label>
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="this.generalFormGroup.get('passwordForm').hasError('required')">
+                Password is required
+              </mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>First Name</mat-label>
+              <label>
+                <input type="text" matInput formControlName="firstNameForm" required
+                       placeholder="Ex. Chris">
+              </label>
+              <mat-error *ngIf="this.generalFormGroup.get('firstNameForm').hasError('required')">
+                First Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Last Name</mat-label>
+              <label>
+                <input type="text" matInput formControlName="lastNameForm" required
+                       placeholder="Ex. Delgado">
+              </label>
+              <mat-error *ngIf="this.generalFormGroup.get('lastNameForm').hasError('required')">
+                Last Name is required
+              </mat-error>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field appearance="fill" class="register_form_field">
+              <mat-label>Date of Birth</mat-label>
+
+
+              <input matInput [matDatepicker]="picker" formControlName="birthDateForm" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-error *ngIf="this.generalFormGroup.get('birthDateForm').hasError('required')">
+                Date of Birth is required
+              </mat-error>
+            </mat-form-field>
+            <br>
+
+            <div class="register-gender-div">
+
+              <mat-radio-group aria-label="Select an option" formControlName="genderForm" required>
+                <mat-radio-button value="M">Male</mat-radio-button>
+                <mat-radio-button value="F">Female</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <mat-error *ngIf="this.generalFormGroup.get('genderForm').hasError('required')">
+              Gender is required
+            </mat-error>
+
+            <br>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+          <ng-template matStepperIcon="chat">
+            <mat-icon color="accent">forum</mat-icon>
+          </ng-template>
+        </mat-step>
+
+        <mat-step [optional]=true>
+          <form>
+            <ng-template matStepLabel>Location</ng-template>
+            <agm-map class="google-map" [latitude]="latCluj" [longitude]="lngCluj" (mapClick)="onChosenLocation($event)">
+              <agm-marker *ngIf="this.latitude !== null && this.longitude !== null" [latitude]="latitude" [longitude]="longitude"></agm-marker>
+            </agm-map>
+
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step *ngIf="this.currentUser.permission.isClient === true" [stepControl]="backgroundFormGroup">
+          <form [formGroup]="backgroundFormGroup">
+            <ng-template matStepLabel>Background Info</ng-template>
+
+            <div>
+
+              <mat-form-field appearance="fill">
+
+                <mat-label>Preferred Technologies</mat-label>
+                <mat-select formControlName="techsForm" multiple required *ngIf="availableTechs !== null">
+                  <mat-option *ngFor="let tech of availableTechs" [value]="tech">{{tech}}</mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="this.backgroundFormGroup.get('techsForm').hasError('required')">
+                  At least one tech is required
+                </mat-error>
+              </mat-form-field>
+
+              <br>
+
+              <mat-form-field appearance="fill">
+
+                <mat-label>Preferred Developer Domain</mat-label>
+                <mat-select formControlName="devTypeForm" multiple required *ngIf="availableDevTypes !== null">
+                  <mat-option *ngFor="let dev of availableDevTypes" [value]="dev">{{dev}}</mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="this.backgroundFormGroup.get('devTypeForm').hasError('required')">
+                  At least one tech is required
+                </mat-error>
+              </mat-form-field>
+
+              <br>
+
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Experience</mat-label>
+                <mat-select formControlName="experienceForm" required>
+                  <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="this.backgroundFormGroup.get('experienceForm').hasError('required')">
+                  Please specify your experience!
+                </mat-error>
+              </mat-form-field>
+              <br>
+              <mat-label>Remote</mat-label>
+              <mat-slide-toggle formControlName="remoteForm"></mat-slide-toggle>
+              <br>
+
+              <mat-form-field appearance="fill" class="register_form_field">
+                <mat-label>Job Type</mat-label>
+                <mat-select formControlName="jobTypeForm" multiple required>
+                  <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="this.backgroundFormGroup.get('jobTypeForm').hasError('required')">
+                  Please specify the job type!
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <!-- <mat-step [optional]=true>
+           <form>
+             <ng-template matStepLabel>Location</ng-template>
+             <agm-map [latitude]="latCluj" [longitude]="lngCluj" (mapClick)="onChosenLocation($event)">
+               <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"></agm-marker>
+             </agm-map>
+
+             <div>
+               <button mat-button matStepperPrevious>Back</button>
+               <button mat-button (click)="stepper.reset()">Reset</button>
+             </div>
+           </form>
+         </mat-step>-->
+
+      </mat-horizontal-stepper>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close = "cancel">Cancel</button>
+    <button type="submit" mat-raised-button class="register-button" mat-dialog-close="User modified!" (click)="modify()"
+            [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
+      || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
+       this.generalFormGroup.get('birthDateForm').invalid ||
+      (this.currentUser.permission.isClient && this.backgroundFormGroup.get('experienceForm').invalid ) ">Register</button>
+  </div>
+</div>
+
