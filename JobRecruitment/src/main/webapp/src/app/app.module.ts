@@ -50,6 +50,8 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { JobFilteringComponent } from './job-filtering/job-filtering.component';
 import { UserModifyComponent } from './user-modify/user-modify.component';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {StatisticsService} from "./service/StatisticsService";
 
 @NgModule({
   declarations: [
@@ -70,42 +72,43 @@ import { UserModifyComponent } from './user-modify/user-modify.component';
     JobFilteringComponent,
     UserModifyComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatRadioModule,
-    MatPaginatorModule,
-    MatCardModule,
-    NgbModule,
-    MatStepperModule,
-    MatSidenavModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatListModule,
-    MatAutocompleteModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MatTableModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCnQwM5bsv0_rr-akrFM5cfE0VFUSEoG7Q'
-    }),
-    MatSlideToggleModule
-  ],
-  providers: [AccountService, JobService, ContractorService,{
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatRadioModule,
+        MatPaginatorModule,
+        MatCardModule,
+        NgbModule,
+        MatStepperModule,
+        MatSidenavModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatListModule,
+        MatAutocompleteModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MatTableModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyCnQwM5bsv0_rr-akrFM5cfE0VFUSEoG7Q'
+        }),
+        MatSlideToggleModule,
+        NgxChartsModule
+    ],
+  providers: [AccountService, JobService, ContractorService, StatisticsService,{
     provide: STEPPER_GLOBAL_OPTIONS,
     useValue: { displayDefaultIndicatorType: false }
   }],

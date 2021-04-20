@@ -9,6 +9,7 @@ import {FileProperties} from "../model/FileProperties";
 import {User} from "../model/User";
 import {Filter} from "../model/Filter";
 import {$e} from "codelyzer/angular/styles/chars";
+import {StatisticsService} from "../service/StatisticsService";
 
 
 @Component({
@@ -31,9 +32,12 @@ export class JobListComponent implements OnInit {
   recordCount: number = null;
   pageSizeOptions: number[] = [12,24,100];
   searchValue: string = "";
+  verticalChart: any[] = [];
+  pieChart: any[] = [];
 
   constructor(private jobService: JobService,
               private contractorService: ContractorService,
+              private statisticsService: StatisticsService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -41,13 +45,18 @@ export class JobListComponent implements OnInit {
       response => this.recordCount = response.body
     )
     this.getAllJobs();
-    /*if(this.currentUser !== null && this.currentUser.permission.isClient){
-      this.jobService.getRecommendedJobsIdsCBF(this.currentUser.id).subscribe(
-        response => this.jobService.getJobsByIds(8, response.body).subscribe(
-          response => this.recommendedJobs = response.body
-        )
-      );
-    }*/
+    this.statisticsService.getCompaniesWithNumberOfOffers()
+      .subscribe(response => {
+        this.verticalChart = response.body;
+        console.log(response.body);
+        console.log(this.verticalChart);
+      });
+    this.statisticsService.mostLikedJobs()
+      .subscribe(response => {
+        this.pieChart = response.body;
+        console.log(response.body);
+        console.log(this.pieChart);
+      })
   }
 
   getRecommendedJobsIdsCBF(){

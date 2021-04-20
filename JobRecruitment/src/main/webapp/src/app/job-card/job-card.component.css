@@ -5,9 +5,9 @@
   max-width: 250px;
   border: 2px solid rgba(0,0,0,0.71);
   /*box-shadow: 5px 5px rgba(0,0,0,0.71);*/
-  border-radius: 15px 50px;
+  border-radius: 5%;
   background-color: whitesmoke;
-  box-shadow: rgb(38, 57, 77) 0 20px 30px -10px, rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
+  box-shadow: rgb(38, 57, 77) 0 20px 30px -10px;
 }
 
 .card-img{

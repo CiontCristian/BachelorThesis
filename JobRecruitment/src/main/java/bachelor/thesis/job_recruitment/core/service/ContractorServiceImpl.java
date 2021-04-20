@@ -1,10 +1,9 @@
 package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.Contractor;
+import bachelor.thesis.job_recruitment.core.model.Job;
 import bachelor.thesis.job_recruitment.core.repository.ContractorRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,8 @@ public class ContractorServiceImpl implements ContractorService{
 
     @Autowired
     private ContractorRepository contractorRepository;
+    @Autowired
+    private JobService jobService;
 
     @Override
     public Optional<Contractor> save(Contractor contractor) {
@@ -48,27 +49,16 @@ public class ContractorServiceImpl implements ContractorService{
 
     @Override
     @Transactional
-    public Optional<Contractor> modifyContractor(Contractor modifiedContractor) {
+    public Contractor modifyContractor(Contractor modifiedContractor) {
         log.trace("In ContractorServiceImpl - method: modifyContractor() - contractor={}", modifiedContractor);
 
-        Optional<Contractor> contractorOptional = findAll().stream()
-                .filter(contractor1 -> contractor1.getId().equals(modifiedContractor.getId()))
-                .findFirst();
+        return contractorRepository.save(modifiedContractor);
+    }
 
-        if(contractorOptional.isEmpty())
-            return Optional.empty();
-
-        Contractor contractor = contractorOptional.get();
-
-        contractor.setName(modifiedContractor.getName());
-        contractor.setDescription(modifiedContractor.getDescription());
-        contractor.getLogo().setName(modifiedContractor.getLogo().getName());
-        contractor.getLogo().setType(modifiedContractor.getLogo().getType());
-        contractor.getLogo().setData(modifiedContractor.getLogo().getData());
-        contractor.getLocation().setLatitude(modifiedContractor.getLocation().getLatitude());
-        contractor.getLocation().setLongitude(modifiedContractor.getLocation().getLongitude());
-        contractor.setNrOfEmployees(modifiedContractor.getNrOfEmployees());
-
-        return Optional.of(contractor);
+    @Override
+    public void removeContractor(Long id) {
+        jobService.findJobsForContractor(id)
+                .forEach(job -> jobService.remove(job.getId()));
+        contractorRepository.deleteById(id);
     }
 }

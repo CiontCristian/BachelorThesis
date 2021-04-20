@@ -41,6 +41,7 @@ export class JobSaveComponent implements OnInit {
               private jobService: JobService) { }
 
   ngOnInit(): void {
+    console.log(this.contractor);
   }
 
   register(): void{

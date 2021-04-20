@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private ContractorService contractorService;
+    @Autowired
     private PreferenceRepository preferenceRepository;
 
     @Override
@@ -57,6 +59,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public GenericUser modify(GenericUser modifiedUser) {
         return userRepository.save(modifiedUser);
+    }
+
+    @Override
+    public void remove(Long id) {
+        contractorService.findContractorForUser(id).ifPresent(contractor ->
+                contractorService.removeContractor(contractor.getId()));
+        userRepository.deleteById(id);
     }
 
     @Override

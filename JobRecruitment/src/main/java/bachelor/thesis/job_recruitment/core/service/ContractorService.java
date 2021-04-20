@@ -9,5 +9,6 @@ public interface ContractorService {
     Optional<Contractor> save(Contractor contractor);
     List<Contractor> findAll();
     Optional<Contractor> findContractorForUser(Long id);
-    Optional<Contractor> modifyContractor(Contractor modifiedContractor);
+    Contractor modifyContractor(Contractor modifiedContractor);
+    void removeContractor(Long id);
 }

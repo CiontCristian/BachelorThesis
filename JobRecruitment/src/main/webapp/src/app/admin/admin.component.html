@@ -1,3 +1,19 @@
 <div>
   <button mat-raised-button (click)="getDatasetJobs()">Get Dataset Jobs</button>
+  <button mat-raised-button (click)="test()">Test</button>
 </div>
+
+<ngx-charts-bar-vertical
+  [view]="[700,400]"
+  [results]="single"
+  [scheme]=""
+  [xAxisLabel]="'Offers'"
+  [legendTitle]="'Companies'"
+  [yAxisLabel]="'Company'"
+  [legend]="true"
+  [showXAxisLabel]="true"
+  [showYAxisLabel]="true"
+  [xAxis]="true"
+  [yAxis]="true"
+  [gradient]="true">>
+</ngx-charts-bar-vertical>

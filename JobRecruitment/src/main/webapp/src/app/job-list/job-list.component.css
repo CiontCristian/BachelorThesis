@@ -19,3 +19,11 @@
   background-color: rgba(0,0,0,0.71);
   color: rgba(241,255,1,0.71);
 }
+
+.job-list-statistics{
+  width: 1500px;
+  height: 400px;
+  text-align: center;
+  margin: 50px 10% 30px;
+  display: flex;
+}

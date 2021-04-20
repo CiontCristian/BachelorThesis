@@ -79,12 +79,10 @@ public class ContractorController {
         fileObject.setId(Long.parseLong(id));
 
         contractor.setLogo(fileObject);
-        Optional<Contractor> modifiedContractor = contractorService.modifyContractor(contractor);
-        if(modifiedContractor.isEmpty())
-            throw new ResourceNotFoundException("Contractor with the name: " + contractor.getName() + " was not found");
+        Contractor modifiedContractor = contractorService.modifyContractor(contractor);
 
         log.trace("In ContractorController - method: modifyContractor - modifiedContractor={}", modifiedContractor);
-        return new ResponseEntity<>(modifiedContractor.get(), HttpStatus.OK);
+        return new ResponseEntity<>(modifiedContractor, HttpStatus.OK);
     }
 
 

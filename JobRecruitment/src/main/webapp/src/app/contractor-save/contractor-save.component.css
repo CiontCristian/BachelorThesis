@@ -7,3 +7,9 @@
 .contractor-save-mat-dialog-actions{
   text-align: center;
 }
+
+agm-map {
+  height: 300px;
+  width: 500px;
+  text-align: center;
+}

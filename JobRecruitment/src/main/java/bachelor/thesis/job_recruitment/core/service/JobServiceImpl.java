@@ -80,6 +80,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
+    public List<Job> findAll() {
+        return jobRepository.findAll();
+    }
+
+    @Override
     public Job save(Job job) {
         log.trace("In JobServiceImpl - method: save() - job={}", job);
 
@@ -145,6 +150,22 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
+    public Integer countLikedJobPreferences(Long id) {
+        return (int)preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getJob().getId().equals(id))
+                .filter(preference -> preference.getInterested().equals(true))
+                .count();
+    }
+
+    @Override
+    public Integer countAppliedJobPreferences(Long id) {
+        return (int)preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getJob().getId().equals(id))
+                .filter(preference -> preference.getApplied().equals(true))
+                .count();
+    }
+
+    @Override
     public Set<String> getAvailableTechs() {
         List<Job> jobs = jobRepository.findAll();
         if(jobs.isEmpty())
@@ -178,6 +199,12 @@ public class JobServiceImpl implements JobService{
     @Override
     public Integer getJobRecordCount() {
         return jobRepository.findAll().size();
+    }
+
+    @Override
+    public Integer getContractorJobCount(Long id) {
+        return (int) jobRepository.findAll().stream()
+                .filter(job -> job.getContractor().getId().equals(id)).count();
     }
 
 }

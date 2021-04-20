@@ -23,6 +23,36 @@
   </mat-expansion-panel>
 
   <mat-divider></mat-divider>
+  <div class="job-list-statistics">
+    <div style="flex: 1;">
+      <ngx-charts-bar-vertical
+        [view]="[700,400]"
+        [results]="verticalChart"
+        [scheme]=""
+        [xAxisLabel]="'Companies'"
+        [yAxisLabel]="'Offers'"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [gradient]="true">>
+      </ngx-charts-bar-vertical>
+    </div>
+    <div style="flex: 1;">
+      <ngx-charts-pie-chart
+        [view]="[700,400]"
+        [scheme]=""
+        [results]="pieChart"
+        [gradient]="true"
+        [legend]="false"
+        [legendPosition]="'below'"
+        [labels]="true"
+        [doughnut]="false">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
     <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 

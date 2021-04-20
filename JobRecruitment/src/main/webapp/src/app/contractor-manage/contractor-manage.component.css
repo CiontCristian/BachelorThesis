@@ -40,3 +40,10 @@ agm-map {
   width: 500px;
   text-align: center;
 }
+
+.contractor-manage-statistics{
+  height: 400px;
+  width: 700px;
+  margin: 50px 10% 30px;
+  text-align: center;
+}

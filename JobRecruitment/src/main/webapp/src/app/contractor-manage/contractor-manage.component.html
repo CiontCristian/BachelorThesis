@@ -70,6 +70,21 @@
       </button>
 
       <form (ngSubmit)="modify()" *ngIf="contractor">
+        <div class="contractor-manage-statistics">
+          <ngx-charts-bar-horizontal
+            [view]="[700,400]"
+            [results]="horizontalChart"
+            [scheme]=""
+            [xAxisLabel]="'Company'"
+            [yAxisLabel]="'Offers'"
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [gradient]="true">>
+          </ngx-charts-bar-horizontal>
+        </div>
         <mat-horizontal-stepper linear #stepper class="contractor-manage-stepper">
 
           <mat-step [stepControl]="generalFormGroup">
@@ -104,8 +119,11 @@
               <br>
 
               <mat-label style="margin-left: 70px">
-                <input type="file" (change)="onFileChanged($event)" formControlName="logoForm">
+                <input type="file" (change)="onFileChanged($event)" formControlName="logoForm" required>
               </mat-label>
+              <mat-error *ngIf="this.contractor !== null && this.generalFormGroup.get('logoForm').hasError('required')">
+                Logo is required
+              </mat-error>
 
               <div>
                 <button mat-button matStepperNext>Next</button>

@@ -15,6 +15,7 @@ import {JobRemoveComponent} from "../job-remove/job-remove.component";
 import {ContractorSaveComponent} from "../contractor-save/contractor-save.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {AccountService} from "../service/AccountService";
+import {StatisticsService} from "../service/StatisticsService";
 
 @Component({
   selector: 'app-contractor-manage',
@@ -25,7 +26,7 @@ export class ContractorManageComponent implements OnInit {
 
   jobs: Job[] = [];
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
-  contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
+  contractor: Contractor = null;
 
   generalFormGroup: FormGroup;
   latitude: number;
@@ -40,20 +41,24 @@ export class ContractorManageComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
   columnsToDisplay = ['name', 'dob', 'email', 'experience'];
 
+  horizontalChart: any[] = [];
+
   constructor(private contractorService: ContractorService,
               private jobService: JobService,
               private accountService: AccountService,
+              private statisticsService: StatisticsService,
               private router: Router,
               private snackBar: MatSnackBar,
               private dialog: MatDialog,
               private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-
+    if(this.contractor === null)
+      this.contractor = JSON.parse(sessionStorage.getItem("contractor"));
     console.log(this.currentUser);
     console.log(this.contractor);
 
-    if(this.contractor) {
+    if(this.contractor !== null) {
       this.dataSource = new MatTableDataSource<User>();
       this.latitude = this.contractor.location.latitude;
       this.longitude = this.contractor.location.longitude;
@@ -66,6 +71,13 @@ export class ContractorManageComponent implements OnInit {
         nameForm: new FormControl(this.contractor.name), descriptionForm: new FormControl(this.contractor.description),
         nrOfEmployeesForm: new FormControl(this.contractor.nrOfEmployees), logoForm: new FormControl('')
       })
+
+      this.statisticsService.mostAppliedJobsForContractor(this.contractor.id)
+        .subscribe(response => {
+          this.horizontalChart = response.body;
+          console.log(response.body);
+          console.log(this.horizontalChart);
+        });
 
     }
   }
@@ -104,8 +116,9 @@ export class ContractorManageComponent implements OnInit {
       if(result !== "cancel")
         this.contractorService.findContractorForUser(this.currentUser.id)
           .subscribe(response => {this.contractor = response.body;
-            console.log(this.contractor);
-            sessionStorage.setItem("contractor", JSON.stringify(this.contractor));
+            console.log("After dialog close");
+            console.log(response.body);
+            sessionStorage.setItem("contractor", JSON.stringify(response.body));
             window.location.reload();
           })
       //window.location.reload();
