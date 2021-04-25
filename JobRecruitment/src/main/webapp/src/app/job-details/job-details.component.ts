@@ -77,7 +77,7 @@ export class JobDetailsComponent implements OnInit {
 
   navigateToJobDetails(id: number) {
     this.router.navigate(["job-list/details/", id]);
-    this.refresh();
+    //this.refresh();
   }
 
   apply() {

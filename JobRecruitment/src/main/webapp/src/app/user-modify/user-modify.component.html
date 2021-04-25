@@ -191,8 +191,8 @@
 
       </mat-horizontal-stepper>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close = "cancel">Cancel</button>
+  <div mat-dialog-actions style="justify-content: center;">
+    <button mat-button mat-dialog-close = "cancel" class="register-button">Cancel</button>
     <button type="submit" mat-raised-button class="register-button" mat-dialog-close="User modified!" (click)="modify()"
             [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
       || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||

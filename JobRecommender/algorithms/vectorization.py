@@ -1,6 +1,7 @@
 
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
+from sklearn.preprocessing import normalize as normalizer
 
 
 def getJobFeatures(jobs, input_id=-1, knn=False):
@@ -49,16 +50,16 @@ def vectorizeJobsKNN(jobs, input_id):
     headers = getJobFeatures(jobs, input_id, True)
 
     vectorizer = CountVectorizer()
-    vectorized_matrix = vectorizer.fit_transform(headers)
-    print(vectorizer.get_feature_names())
-    # print(vectorized_matrix.toarray())
-    vectorized_matrix = vectorized_matrix.toarray()
+    vectorized_jobs = vectorizer.fit_transform(headers).toarray()
+    #print(vectorizer.get_feature_names())
+    normalized_jobs = normalizer(vectorized_jobs, 'l2')
 
-    vectorized_input = vectorized_matrix[-1]
-    print(vectorized_input)
-    vectorized_matrix = np.delete(vectorized_matrix, len(vectorized_matrix) - 1, 0)
+    #vectorized_input = vectorized_jobs[-1]
+    #vectorized_jobs = np.delete(vectorized_jobs, len(vectorized_jobs) - 1, 0)
+    vectorized_input = normalized_jobs[-1]
+    vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
 
-    return vectorized_matrix, vectorized_input
+    return vectorized_jobs, vectorized_input
 
 
 def vectorizeDataCBF(jobs, preferences, background):
@@ -69,8 +70,12 @@ def vectorizeDataCBF(jobs, preferences, background):
 
     vectorizer = CountVectorizer()
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
+    normalized_jobs = normalizer(vectorized_jobs, 'l2')
+    print(normalized_jobs)
 
-    vectorized_background = vectorized_jobs[-1]
-    vectorized_jobs = np.delete(vectorized_jobs, len(vectorized_jobs) - 1, 0)
+    #vectorized_background = vectorized_jobs[-1]
+    #vectorized_jobs = np.delete(vectorized_jobs, len(vectorized_jobs) - 1, 0)
+    vectorized_background = normalized_jobs[-1]
+    vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
 
     return vectorized_jobs, vectorized_preferences, vectorized_background

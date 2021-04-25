@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class JobServiceImpl implements JobService{
     @Override
     public List<Job> findAll(Integer pageIndex, Integer pageSize, Filter criteria) {
 
-        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize, Sort.by("dateAdded").ascending());
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - filter criteria={}", criteria);
 
@@ -153,7 +154,7 @@ public class JobServiceImpl implements JobService{
     public Integer countLikedJobPreferences(Long id) {
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
-                .filter(preference -> preference.getInterested().equals(true))
+                .filter(preference -> preference.getInterested() != null && preference.getInterested().equals(true))
                 .count();
     }
 
@@ -161,7 +162,7 @@ public class JobServiceImpl implements JobService{
     public Integer countAppliedJobPreferences(Long id) {
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
-                .filter(preference -> preference.getApplied().equals(true))
+                .filter(preference -> preference.getApplied() != null && preference.getApplied().equals(true))
                 .count();
     }
 

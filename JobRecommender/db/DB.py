@@ -19,7 +19,7 @@ class DB:
             rows = cursor.fetchall()
 
             for row in rows:
-                self.jobs.append(Job(row[0], row[9], row[2], row[4], row[7], row[6], row[5], row[3], row[8], row[1], None))
+                self.jobs.append(Job(row[0], row[10], row[3], row[5], row[8], row[7], row[6], row[4], row[9], row[1], row[2], None))
 
         return self.jobs
 
@@ -46,6 +46,3 @@ class DB:
                 self.background = [row[1], row[2], row[3], row[4], row[5]]
 
         return self.background
-
-db = DB()
-print(db.getUserBackground(556))

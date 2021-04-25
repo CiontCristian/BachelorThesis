@@ -3,6 +3,7 @@ package bachelor.thesis.job_recruitment.core.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,6 +22,7 @@ public class Job extends BaseEntity<Long>{
     private String devType;//backend, frontend, QA, full-stack,...
     private String techs;//java, python, c#,...
     private Integer availablePos;
+    private Date dateAdded;
     @ManyToOne(fetch = FetchType.EAGER)
     private Contractor contractor;
 

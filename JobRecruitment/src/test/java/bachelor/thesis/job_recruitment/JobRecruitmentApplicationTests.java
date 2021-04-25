@@ -31,7 +31,7 @@ class JobRecruitmentApplicationTests {
 
     @Test
     void testSaveJob() throws Exception {
-        Job job = new Job("Job1", "Desc1","full-time", true, "entry",800, "QA", "java", 1, null);
+        Job job = new Job("Job1", "Desc1","full-time", true, "entry",800, "QA", "java", 1,null, null);
 
         mvc.perform(post("/job/saveJob")
                 .content(job.toString())

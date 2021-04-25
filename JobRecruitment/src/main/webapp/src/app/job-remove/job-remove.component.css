@@ -1,3 +1,10 @@
 .job-remove-container{
+  text-align: center;
+}
 
+.job_remove_button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
 }

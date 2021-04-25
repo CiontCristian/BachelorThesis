@@ -113,14 +113,17 @@ export class ContractorManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if(result !== "cancel")
+      if(result !== "cancel") {
+        setTimeout(() => {}, 1000);
         this.contractorService.findContractorForUser(this.currentUser.id)
-          .subscribe(response => {this.contractor = response.body;
+          .subscribe(response => {
+            this.contractor = response.body;
             console.log("After dialog close");
             console.log(response.body);
             sessionStorage.setItem("contractor", JSON.stringify(response.body));
             window.location.reload();
           })
+      }
       //window.location.reload();
     });
   }

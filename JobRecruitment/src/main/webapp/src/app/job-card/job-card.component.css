@@ -2,6 +2,7 @@
   height: 300px;
   max-height: 300px;
   width: 250px;
+  word-wrap: break-word;
   max-width: 250px;
   border: 2px solid rgba(0,0,0,0.71);
   /*box-shadow: 5px 5px rgba(0,0,0,0.71);*/

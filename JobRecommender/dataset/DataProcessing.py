@@ -1,7 +1,7 @@
-
 import pandas
 from model.Job import Job
 import random
+import datetime
 
 
 def processJobDataset():
@@ -60,14 +60,24 @@ def cleanDataset():
     df = processJobDataset()
     jobs = []
     for index, row in df.iterrows():
-        job = Job(index, str(row['Job Title']), "Desc1",
+        job = Job(index, str(row['Job Title']).strip(),
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis eros purus, id varius erat pretium quis."
+                  " Donec lobortis elit at euismod laoreet. Nam finibus augue vel posuere scelerisque. Maecenas eu augue iaculis, ultrices lacus nec,"
+                  " porta ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla blandit erat mi, non accumsan orci rutrum a. Maecenas laoreet "
+                  "imperdiet diam et cursus. Morbi feugiat orci ut magna condimentum dignissim.\nMorbi consequat libero vitae lorem pulvinar finibus. "
+                  "Ut tempor risus sed congue interdum. Nunc fermentum, augue nec consequat finibus, leo dolor tincidunt nibh, quis porta turpis sem sit amet mi."
+                  " Nunc id dolor pellentesque felis facilisis auctor. Nulla nec ante at sapien rhoncus malesuada ac eget velit. "
+                  "Nam sit amet dignissim felis, sed cursus enim. Nunc interdum erat non ante auctor, nec ultricies nulla congue. "
+                  "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean eget ligula quis libero dignissim facilisis. "
+                  "Ut semper suscipit lacus rhoncus cursus. Sed pulvinar nec sapien non ultrices. Donec orci justo, tristique vitae leo sed, auctor euismod nulla. "
+                  ,
                   random.choices(["full-time", "internship", "part-time"], [0.8, 0.1, 0.1],
                                  k=1)[0], random.choice([True, False]),
 
-                  classifyJobExperience(row['Job Experience Required']), 1000,
+                  classifyJobExperience(row['Job Experience Required']), random.randint(1000, 3500),
                   str(row['Role']),
 
-                  remodelTechs(row['Key Skills']), 1, None)
+                  remodelTechs(row['Key Skills']), random.randint(1, 10), datetime.datetime.now(), None)
         jobs.append(job)
     return jobs
 

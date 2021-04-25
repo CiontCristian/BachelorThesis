@@ -1,4 +1,16 @@
 .job-save-container{
+  text-align: center;
+}
 
+.job_save_form_field{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.job-save-button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  text-align: center;
+  font-size: large;
 }
 

@@ -1,6 +1,6 @@
 class Job:
     def __init__(self, id, title, description, jobType, remote, minExperience, minCompensation, devType, techs,
-                 availablePos, contractor):
+                 availablePos, dateAdded, contractor):
         self.id = id
         self.title = title
         self.description = description
@@ -11,6 +11,7 @@ class Job:
         self.devType = devType
         self.techs = techs
         self.availablePos = availablePos
+        self.dateAdded = dateAdded
         self.contractor = contractor
 
     def serialize(self):
@@ -25,6 +26,7 @@ class Job:
             'devType': self.devType,
             'techs': self.techs,
             'availablePos': self.availablePos,
+            'dateAdded': self.dateAdded,
             'contractor': None
         }
 
