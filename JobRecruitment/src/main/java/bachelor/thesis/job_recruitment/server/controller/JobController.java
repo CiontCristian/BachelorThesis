@@ -55,7 +55,7 @@ public class JobController {
 
     @PostMapping(value = "/saveJob")
     ResponseEntity<Job> saveJob(@RequestBody Job job){
-        log.trace("In JobController - method: saveJob - jobDTO={}", job);
+        log.trace("In JobController - method: saveJob - job={}", job);
 
         Job savedJob = jobService.save(job);
         log.trace("In JobController - method: saveJob - savedJob={}", savedJob);

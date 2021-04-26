@@ -41,9 +41,4 @@ export class AdminComponent implements OnInit {
         error => console.log(error.error))
   }
 
-  test(){
-    let job: Job = new Job(1,"Hello","","",true,"",800,
-      "","",0,null);
-    console.log(JSON.stringify(job))
-  }
 }

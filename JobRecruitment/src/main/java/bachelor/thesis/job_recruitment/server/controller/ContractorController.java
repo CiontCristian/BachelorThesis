@@ -73,12 +73,15 @@ public class ContractorController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     ResponseEntity<Contractor> modifyContractor(@RequestPart("file") MultipartFile file, @RequestPart("contractorDTO") Contractor contractor,
                                                    @RequestPart("logoID") String id) throws IOException {
-
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        File fileObject = new File(fileName, file.getContentType(), file.getBytes());
-        fileObject.setId(Long.parseLong(id));
+        if(!fileName.equals("no_change")){
+            //String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+            File fileObject = new File(fileName, file.getContentType(), file.getBytes());
+            fileObject.setId(Long.parseLong(id));
 
-        contractor.setLogo(fileObject);
+            contractor.setLogo(fileObject);
+        }
+
         Contractor modifiedContractor = contractorService.modifyContractor(contractor);
 
         log.trace("In ContractorController - method: modifyContractor - modifiedContractor={}", modifiedContractor);

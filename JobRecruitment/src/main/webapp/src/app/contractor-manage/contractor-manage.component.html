@@ -118,12 +118,11 @@
               </mat-form-field>
               <br>
 
-              <mat-label style="margin-left: 70px">
-                <input type="file" (change)="onFileChanged($event)" formControlName="logoForm" required>
+              <mat-label>
+                <button mat-button (click)="uploadImageEvent()" class="contractor-manage-button">Upload</button>
+                {{imageName}}
+                <input #imageUpload type="file" style="display: none;" formControlName="logoForm">
               </mat-label>
-              <mat-error *ngIf="this.contractor !== null && this.generalFormGroup.get('logoForm').hasError('required')">
-                Logo is required
-              </mat-error>
 
               <div>
                 <button mat-button matStepperNext>Next</button>

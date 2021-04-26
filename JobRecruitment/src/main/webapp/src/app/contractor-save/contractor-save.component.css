@@ -5,7 +5,15 @@
 }
 
 .contractor-save-mat-dialog-actions{
+  justify-content: center;
+}
+
+.contractor-save-button{
+  background-color: rgba(0,0,0,0.71);
+  color: rgba(241,255,1,0.71);
+  margin: 20px;
   text-align: center;
+  font-size: large;
 }
 
 agm-map {

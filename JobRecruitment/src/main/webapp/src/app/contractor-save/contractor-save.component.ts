@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {AccountService} from "../service/AccountService";
 import {Router} from "@angular/router";
@@ -23,7 +23,9 @@ export class ContractorSaveComponent implements OnInit {
   lngCluj = 23.629722860492784;
   locationChosen: boolean = false;
 
-  image: File;
+  @ViewChild('imageUpload', {static: false}) imageUpload: ElementRef;
+  image: File = null;
+  imageName: string = '';
   formData = new FormData();
 
   constructor(private contractorService: ContractorService,
@@ -42,9 +44,14 @@ export class ContractorSaveComponent implements OnInit {
 
   }
 
-  onFileChanged(event) {
-    this.image = event.target.files[0]
-
+  uploadImageEvent() {
+    const imageUpload = this.imageUpload.nativeElement;
+    imageUpload.onchange = () => {
+      this.image = imageUpload.files[0];
+      this.imageName = this.image.name;
+      this.imageUpload.nativeElement.value = '';
+    };
+    imageUpload.click();
   }
 
   register() {

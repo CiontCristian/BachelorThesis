@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ContractorService} from "../service/ContractorService";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -35,7 +35,9 @@ export class ContractorManageComponent implements OnInit {
   lngCluj = 23.629722860492784;
   locationChosen: boolean = false;
 
+  @ViewChild('imageUpload', {static: false}) imageUpload: ElementRef;
   image: File = null;
+  imageName: string = '';
   formData = new FormData();
 
   dataSource: MatTableDataSource<User>;
@@ -59,6 +61,7 @@ export class ContractorManageComponent implements OnInit {
     console.log(this.contractor);
 
     if(this.contractor !== null) {
+      this.imageName = this.contractor.logo.name;
       this.dataSource = new MatTableDataSource<User>();
       this.latitude = this.contractor.location.latitude;
       this.longitude = this.contractor.location.longitude;
@@ -114,32 +117,48 @@ export class ContractorManageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if(result !== "cancel") {
-        setTimeout(() => {}, 1000);
-        this.contractorService.findContractorForUser(this.currentUser.id)
-          .subscribe(response => {
-            this.contractor = response.body;
-            console.log("After dialog close");
-            console.log(response.body);
-            sessionStorage.setItem("contractor", JSON.stringify(response.body));
-            window.location.reload();
-          })
+        setTimeout(() => {
+          this.contractorService.findContractorForUser(this.currentUser.id)
+            .subscribe(response => {
+              this.contractor = response.body;
+              console.log("After dialog close");
+              console.log(response.body);
+              sessionStorage.setItem("contractor", JSON.stringify(response.body));
+              window.location.reload();
+            })
+        }, 1000);
       }
       //window.location.reload();
     });
   }
 
-  onFileChanged(event) {
-    this.image = event.target.files[0]
+  uploadImageEvent() {
+    const imageUpload = this.imageUpload.nativeElement;
+    imageUpload.onchange = () => {
+      this.image = imageUpload.files[0];
+      this.imageName = this.image.name;
+      this.imageUpload.nativeElement.value = '';
+    };
+    imageUpload.click();
   }
+
+
 
   modify() {
     let location: Location = new Location(this.contractor.location.id, this.latitude, this.longitude);
-
-    this.formData.append("file", this.image, this.image.name);
-    console.log(this.image);
-    let contractor: Contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
-      this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
-      null, location, this.currentUser);
+    let contractor: Contractor;
+    if(this.image !== null) {
+      this.formData.append("file", this.image, this.image.name);
+      contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
+        this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
+        null, location, this.currentUser);
+    }
+    else{
+      this.formData.append("file", new Blob([]),"no_change");
+      contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
+        this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
+        this.contractor.logo, location, this.currentUser);
+    }
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
     this.formData.append("contractorDTO", contractorBlob);

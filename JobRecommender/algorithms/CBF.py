@@ -17,9 +17,7 @@ def contentBasedFiltering(vectorized_jobs, vectorized_preferences, vectorized_ba
     print("Background with preferences: " + str(preference_vector_updated))
 
     similarity_vector = cosine_similarity(vectorized_jobs, preference_vector_updated.reshape(1, -1))
-    #similarity_vector = np.dot(vectorized_jobs, preference_vector_updated)
     similarity_vector = list(flatten(similarity_vector))
     print("Similarity vector " + str(similarity_vector))
-    #[(516, 46), (508, 21), (529, 18), (510, 17), (520, 17), (547, 16), (549, 16), (550, 16), (514, 15)
 
     return similarity_vector
