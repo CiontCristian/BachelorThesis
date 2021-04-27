@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
           this.currentUser = response.body;
 
-          this.snackBar.open("Login successful!", "Welcome");
+          this.snackBar.open("Login successful!", "Welcome", {duration: 3000});
           sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
           if(this.currentUser.permission.isCompany){
             this.contractorService.findContractorForUser(this.currentUser.id).subscribe(

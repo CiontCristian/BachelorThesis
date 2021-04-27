@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface JobService {
-    List<Job> findAll(Integer pageIndex, Integer pageSize, Filter criteria);
+    List<Job> findAll(Integer pageIndex, Integer pageSize, String sortType, Filter criteria);
     Optional<Job> findJobById(Long id);
     List<Job> findJobsByIds(Integer count, List<Long> ids);
     List<Job> findAll();

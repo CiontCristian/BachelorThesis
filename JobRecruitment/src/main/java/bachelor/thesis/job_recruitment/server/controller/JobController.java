@@ -30,10 +30,11 @@ public class JobController {
     }
 
     @PostMapping(value = "/findAllJobs")
-    ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize
-        , @RequestBody Filter criteria){
+    ResponseEntity<List<Job>> findAllJobs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize,
+        @RequestParam String sortType, @RequestBody Filter criteria)
+    {
         log.trace("In JobController - method: findAllJobs - pageIndex={}, pageSize={}", pageIndex, pageSize);
-        List<Job> jobs = jobService.findAll(pageIndex, pageSize, criteria);
+        List<Job> jobs = jobService.findAll(pageIndex, pageSize, sortType, criteria);
         log.trace("In JobController - method: findAllJobs - jobs={}", jobs.size());
 
         return new ResponseEntity<>(jobs, HttpStatus.OK);
@@ -105,7 +106,6 @@ public class JobController {
 
     @PostMapping(value = "/savePreference")
     ResponseEntity<?> savePreference(@RequestBody Preference preference){
-        preference.setKey(new PreferenceKey(preference.getUser().getId(), preference.getJob().getId()));
         jobService.savePreference(preference);
         return new ResponseEntity<>(HttpStatus.OK);
     }

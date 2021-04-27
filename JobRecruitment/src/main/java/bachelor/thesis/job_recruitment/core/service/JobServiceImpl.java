@@ -36,9 +36,14 @@ public class JobServiceImpl implements JobService{
     private ContractorRepository contractorRepository;
 
     @Override
-    public List<Job> findAll(Integer pageIndex, Integer pageSize, Filter criteria) {
-
-        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize, Sort.by("dateAdded").ascending());
+    public List<Job> findAll(Integer pageIndex, Integer pageSize, String sortType, Filter criteria) {
+        PageRequest pageRequest;
+        if(sortType.equals("minCompensation")){
+            pageRequest = PageRequest.of(pageIndex, pageSize, Sort.by(sortType).descending());
+        }
+        else{
+            pageRequest = PageRequest.of(pageIndex, pageSize, Sort.by(sortType).ascending());
+        }
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - filter criteria={}", criteria);
 
@@ -120,6 +125,7 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void savePreference(Preference preference) {
+        preference.setKey(new PreferenceKey(preference.getUser().getId(), preference.getJob().getId()));
         preferenceRepository.save(preference);
     }
 

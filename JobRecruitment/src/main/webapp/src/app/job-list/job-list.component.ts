@@ -34,6 +34,7 @@ export class JobListComponent implements OnInit {
   searchValue: string = "";
   verticalChart: any[] = [];
   pieChart: any[] = [];
+  sortType: string = "dateAdded"
 
   constructor(private jobService: JobService,
               private contractorService: ContractorService,
@@ -68,7 +69,7 @@ export class JobListComponent implements OnInit {
   }
 
   getAllJobs(): void{
-    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.currentFilter)
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.sortType, this.currentFilter)
       .subscribe(response => this.jobs = response.body);
   }
 
@@ -77,7 +78,7 @@ export class JobListComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     //this.objects = this.testData.slice(this.Page, this.Page + 2)
-    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.currentFilter)
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.sortType, this.currentFilter)
       .subscribe(response => this.jobs = response.body);
 
     return event
@@ -90,7 +91,7 @@ export class JobListComponent implements OnInit {
   viewFilter(event: Filter) {
     this.currentFilter = event;
     console.log(this.currentFilter)
-    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.currentFilter)
+    this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.sortType, this.currentFilter)
       .subscribe(response => this.jobs = response.body);
     //this.refresh();
   }

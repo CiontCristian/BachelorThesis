@@ -13,13 +13,15 @@
         Click to expand
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <div *ngIf="currentUser !== null && currentUser.permission.isClient">
-      <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
+    <ng-template matExpansionPanelContent>
+      <div *ngIf="currentUser !== null && currentUser.permission.isClient">
+        <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 
-        <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+          <mat-grid-tile class="grid-tile" *ngFor="let job of recommendedJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
 
-      </mat-grid-list>
-    </div>
+        </mat-grid-list>
+      </div>
+    </ng-template>
   </mat-expansion-panel>
 
   <mat-divider></mat-divider>
@@ -53,6 +55,14 @@
     </div>
   </div>
   <mat-divider></mat-divider>
+  <mat-form-field appearance="fill" style="margin:10px 16% 10px;">
+    <mat-label>Sort by</mat-label>
+    <mat-select [(ngModel)]="sortType" (selectionChange)="getAllJobs()">
+      <mat-option value="dateAdded">Most recent</mat-option>
+      <mat-option value="title">Title</mat-option>
+      <mat-option value="minCompensation">Salary</mat-option>
+    </mat-select>
+  </mat-form-field>
   <div class="job-list-container" *ngIf="pageIndex === 0 || pageEvent">
     <mat-grid-list class="grid-list" cols="4" rowHeight="300px" gutterSize="50px">
 

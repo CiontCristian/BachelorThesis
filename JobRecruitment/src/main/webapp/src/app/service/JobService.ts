@@ -26,9 +26,10 @@ export class JobService{
     return this.searchValue.asObservable();
   }
 
-  getAllJobs(pageIndex: number, pageSize: number, criteria: Filter): Observable<HttpResponse<Job[]>>
+  getAllJobs(pageIndex: number, pageSize: number, sortType: string, criteria: Filter): Observable<HttpResponse<Job[]>>
   {
-    return this.httpClient.post<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize, criteria, {observe: "response"});
+    return this.httpClient.post<Job[]>(this.jobURL + "/findAllJobs?pageIndex="+pageIndex+"&pageSize="+pageSize
+      +"&sortType="+sortType, criteria, {observe: "response"});
   }
 
   getJobRecordCount(): Observable<HttpResponse<number>>
