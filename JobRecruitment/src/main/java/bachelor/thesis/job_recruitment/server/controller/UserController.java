@@ -35,13 +35,13 @@ public class UserController {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public final ResponseEntity<Object> handleNotFound(BadRequestException exception) {
+    public final ResponseEntity<Object> handleBadRequest(BadRequestException exception) {
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(value = "/findAll")
-    ResponseEntity<List<GenericUser>> findAll(){
+    @GetMapping(value = "/findAllUsers")
+    ResponseEntity<List<GenericUser>> findAllUsers(){
         List<GenericUser> users = userService.findAll();
 
         log.trace("In UserController - method: findAll - users={}", users);
@@ -57,11 +57,9 @@ public class UserController {
 
         if (genericUser.isPresent()) {
             log.trace("In UserController - method: login - retrievedUser={}", genericUser);
-            //return new ResponseEntity<>(userConverter.convertModelToDto(genericUser.get()), HttpStatus.OK);
             return new ResponseEntity<>(genericUser.get(), HttpStatus.OK);
         }
 
-        //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         throw new ResourceNotFoundException("Invalid credentials!");
 
     }
@@ -92,6 +90,12 @@ public class UserController {
         List<GenericUser> users = userService.findJobCandidates(jobId);
         log.trace("In UserController - method: findJobCandidates - users={}", users);
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/removeUser/{id}")
+    ResponseEntity<?> removeUser(@PathVariable Long id){
+        userService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

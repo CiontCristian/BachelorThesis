@@ -24,7 +24,7 @@ public class JobController {
     private JobService jobService;
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public final ResponseEntity<Object> handleException(ResourceNotFoundException exception) {
+    public final ResponseEntity<Object> handleNotFound(ResourceNotFoundException exception) {
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
@@ -67,12 +67,8 @@ public class JobController {
 
     @PostMapping(value = "/saveJobs")
     ResponseEntity<List<Job>> saveJobs(@RequestBody List<Job> jobs){
-        //log.trace("In JobController - method: saveJob - jobDTO={}", job);
-
         jobs.forEach(job -> System.out.println(job.getId()));
         List<Job> savedJobs = jobService.saveJobs(jobs);
-        //log.trace("In JobController - method: saveJob - savedJob={}", savedJob);
-
 
         return new ResponseEntity<>(savedJobs, HttpStatus.OK);
     }

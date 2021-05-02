@@ -1,9 +1,7 @@
 .job-details-container{
   width: 50%;
   text-align: left;
-  margin-top: 20px;
-  position: absolute;
-  left:25%;
+  margin: 10px 25% 30px;
 }
 
 .job-details-button{

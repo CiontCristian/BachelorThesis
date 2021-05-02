@@ -33,13 +33,13 @@
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>
-    <button mat-raised-button class="toolbar-button" routerLink="job-list">Offers
+    <button mat-raised-button class="toolbar-button" routerLink="">Offers
       <mat-icon>card_travel</mat-icon>
     </button>
 
     <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser === null">Login</button>
     <button mat-raised-button class="toolbar-button" routerLink="register" *ngIf="currentUser === null">Register</button>
-    <button mat-raised-button class="toolbar-button" routerLink="" *ngIf="currentUser" (click)="logout()">Logout</button>
+    <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser" (click)="logout()">Logout</button>
   </mat-toolbar>
 </div>
 <div class="toolbar_body">

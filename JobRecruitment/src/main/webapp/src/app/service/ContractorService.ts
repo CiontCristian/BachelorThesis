@@ -31,4 +31,15 @@ export class ContractorService{
     return this.httpClient.put<Contractor>(this.contractorURL + '/modifyContractor',formData,
       {observe: "response"});
   }
+
+  removeContractor(id: number) : Observable<HttpResponse<void>>
+  {
+    return this.httpClient.delete<void>(this.contractorURL + '/removeContractor/' + id, {observe: "response"});
+  }
+
+  getAllContractors(): Observable<HttpResponse<Contractor[]>>
+  {
+    return this.httpClient.get<Contractor[]>(this.contractorURL + '/findAllContractors',
+      {observe: "response"});
+  }
 }

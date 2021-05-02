@@ -52,7 +52,7 @@ public class JobServiceImpl implements JobService{
         && criteria.getRemote().equals(false) && criteria.getMinCompensation().equals(0) && criteria.getAvailablePos().equals(0))){
             return jobRepository.findAll(pageRequest).getContent();
         }
-        return jobRepository.findAll().stream()
+        return jobRepository.findAll(Sort.by(sortType).ascending()).stream()
                 .filter(job -> criteria.getTitle().equals("") || job.getTitle().toLowerCase().contains(criteria.getTitle().toLowerCase()))
                 .filter(job -> criteria.getTechs().equals("") || job.getTechs().toLowerCase().contains(criteria.getTechs().toLowerCase()))
                 .filter(job -> criteria.getDevType().equals("") || job.getDevType().toLowerCase().contains(criteria.getDevType().toLowerCase()))

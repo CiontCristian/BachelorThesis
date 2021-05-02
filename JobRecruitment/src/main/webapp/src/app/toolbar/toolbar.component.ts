@@ -7,7 +7,6 @@ import {map, startWith} from "rxjs/operators";
 import {JobService} from "../service/JobService";
 import {Router} from "@angular/router";
 import {Job} from "../model/Job";
-import {HomeComponent} from "../home/home.component";
 import {JobListComponent} from "../job-list/job-list.component";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {JobModifyComponent} from "../job-modify/job-modify.component";
@@ -56,6 +55,7 @@ export class ToolbarComponent implements OnInit {
   logout() : void{
     this.accountService.logout();
     this.ngOnInit();
+    this.router.navigate(['/login']);
   }
 
   goToJobDetails(title: string) {

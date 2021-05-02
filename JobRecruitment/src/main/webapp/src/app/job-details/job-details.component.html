@@ -1,7 +1,12 @@
 <div *ngIf="job" class="job-details-container">
     <h1 style="text-align: center">{{job.title}}</h1>
+    <div style="text-align: center" *ngIf="currentUser && currentUser.permission.isAdmin">
+      <button mat-icon-button matTooltip="Remove Job" aria-label="Delete icon" (click)="removeJob(job.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
     <h3>-posted by {{job.contractor.name}} averaging around {{job.contractor.nrOfEmployees}} employees</h3>
-    <h3 *ngIf="currentUser !== null &&  currentUser.location.latitude !== null && currentUser.location.longitude !== null
+    <h3 *ngIf="currentUser !== null && currentUser.location !== null &&  currentUser.location.latitude !== null && currentUser.location.longitude !== null
       && job.contractor.location.latitude !== null && job.contractor.location.longitude !== null" >
       You are {{getHaversineDistance(latitudeUser, job.contractor.location.latitude,
       longitudeUser, job.contractor.location.longitude)}}
@@ -21,18 +26,21 @@
     <span>{{job.description}}</span>
     <mat-divider></mat-divider>
     <div class="job-details-buttons">
-      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="preference && preference.interested" (click)="vote(true)">
+      <button *ngIf="currentUser && !currentUser.permission.isCompany" mat-raised-button class="job-details-button"
+              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested)" (click)="vote(true)">
         <mat-icon>thumb_up</mat-icon>
       </button>
-      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="preference && preference.interested === false" (click)="vote(false)">
+      <button *ngIf="currentUser && !currentUser.permission.isCompany" mat-raised-button class="job-details-button"
+              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested === false)" (click)="vote(false)">
         <mat-icon>thumb_down</mat-icon>
       </button>
       <br>
-      <button *ngIf="currentUser" mat-raised-button class="job-details-button" [disabled]="currentUser === null || (preference && preference.applied)" (click)="apply()">
+      <button *ngIf="currentUser && !currentUser.permission.isCompany" mat-raised-button class="job-details-button"
+              [disabled]="currentUser === null || currentUser.permission.isAdmin  || (preference && preference.applied)" (click)="apply()">
         Apply
       </button>
       <br>
-      <button mat-raised-button class="job-details-button" [disabled]="currentUser === null" (click)="moreLikeThis(job.id)">
+      <button mat-raised-button class="job-details-button" (click)="moreLikeThis(job.id)">
         More Like This
       </button>
     </div>

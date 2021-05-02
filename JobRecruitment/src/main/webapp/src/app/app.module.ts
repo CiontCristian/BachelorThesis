@@ -12,7 +12,6 @@ import { LoginComponent } from './login/login.component';
 import {MatIconModule} from "@angular/material/icon";
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import { HomeComponent } from './home/home.component';
 import {AccountService} from "./service/AccountService";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RegisterComponent } from './register/register.component';
@@ -52,13 +51,13 @@ import { JobFilteringComponent } from './job-filtering/job-filtering.component';
 import { UserModifyComponent } from './user-modify/user-modify.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {StatisticsService} from "./service/StatisticsService";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ToolbarComponent,
-    HomeComponent,
     RegisterComponent,
     JobListComponent,
     JobCardComponent,
@@ -106,7 +105,8 @@ import {StatisticsService} from "./service/StatisticsService";
             apiKey: 'AIzaSyCnQwM5bsv0_rr-akrFM5cfE0VFUSEoG7Q'
         }),
         MatSlideToggleModule,
-        NgxChartsModule
+        NgxChartsModule,
+        MatTooltipModule
     ],
   providers: [AccountService, JobService, ContractorService, StatisticsService,{
     provide: STEPPER_GLOBAL_OPTIONS,

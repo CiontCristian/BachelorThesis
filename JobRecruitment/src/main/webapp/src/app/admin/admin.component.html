@@ -1,18 +1,30 @@
-<div>
-  <button mat-raised-button (click)="getDatasetJobs()">Get Dataset Jobs</button>
+<div class="admin-container">
+  <div>
+    <button class="admin-button" mat-raised-button (click)="getDatasetJobs()">Get Dataset Jobs</button>
+  </div>
+
+  <mat-list style="text-align: left">
+    <div mat-subheader>Users</div>
+    <mat-list-item *ngFor="let user of users">
+      <mat-icon mat-list-icon>supervised_user_circle</mat-icon>
+      <div mat-line>{{user.firstName + " " + user.lastName}}</div>
+      <div mat-line>{{user.email}}</div>
+      <button mat-icon-button aria-label="Delete icon" (click)="deleteUser(user.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <div mat-subheader>Companies</div>
+    <mat-list-item *ngFor="let comp of contractors">
+      <mat-icon mat-list-icon>business</mat-icon>
+      <div mat-line>{{comp.name}}</div>
+      <div mat-line> Owned by: {{comp.owner.firstName + " " + comp.owner.lastName}} </div>
+      <button mat-icon-button aria-label="Delete icon" (click)="deleteContractor(comp.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 </div>
 
-<ngx-charts-bar-vertical
-  [view]="[700,400]"
-  [results]="single"
-  [scheme]=""
-  [xAxisLabel]="'Offers'"
-  [legendTitle]="'Companies'"
-  [yAxisLabel]="'Company'"
-  [legend]="true"
-  [showXAxisLabel]="true"
-  [showYAxisLabel]="true"
-  [xAxis]="true"
-  [yAxis]="true"
-  [gradient]="true">>
-</ngx-charts-bar-vertical>

@@ -42,4 +42,14 @@ export class AccountService{
   {
     return this.httpClient.get<User[]>(this.accountURL + '/findJobCandidates/'+jobId, {observe: "response"});
   }
+
+  removeUser(id: number): Observable<HttpResponse<void>>
+  {
+    return this.httpClient.delete<void>(this.accountURL + '/removeUser/' + id, {observe: "response"});
+  }
+
+  getAllUsers(): Observable<HttpResponse<User[]>>
+  {
+    return this.httpClient.get<User[]>(this.accountURL + '/findAllUsers', {observe: "response"});
+  }
 }

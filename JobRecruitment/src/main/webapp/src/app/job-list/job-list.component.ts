@@ -19,8 +19,6 @@ import {StatisticsService} from "../service/StatisticsService";
 })
 export class JobListComponent implements OnInit {
 
-  /*@Input()
-  fromHome: boolean = false;*/
   currentUser: User = JSON.parse(sessionStorage.getItem("currentUser"));
   currentFilter: Filter = new Filter(null,null,null,null,null,
     null,null,null);
@@ -31,7 +29,6 @@ export class JobListComponent implements OnInit {
   pageSize: number=12;
   recordCount: number = null;
   pageSizeOptions: number[] = [12,24,100];
-  searchValue: string = "";
   verticalChart: any[] = [];
   pieChart: any[] = [];
   sortType: string = "dateAdded"
@@ -49,14 +46,10 @@ export class JobListComponent implements OnInit {
     this.statisticsService.getCompaniesWithNumberOfOffers()
       .subscribe(response => {
         this.verticalChart = response.body;
-        console.log(response.body);
-        console.log(this.verticalChart);
       });
     this.statisticsService.mostLikedJobs()
       .subscribe(response => {
         this.pieChart = response.body;
-        console.log(response.body);
-        console.log(this.pieChart);
       })
   }
 
@@ -74,10 +67,8 @@ export class JobListComponent implements OnInit {
   }
 
   pageNavigations(event: PageEvent) {
-    console.log(event);
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    //this.objects = this.testData.slice(this.Page, this.Page + 2)
     this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.sortType, this.currentFilter)
       .subscribe(response => this.jobs = response.body);
 
@@ -90,10 +81,8 @@ export class JobListComponent implements OnInit {
 
   viewFilter(event: Filter) {
     this.currentFilter = event;
-    console.log(this.currentFilter)
     this.jobService.getAllJobs(this.pageIndex, this.pageSize, this.sortType, this.currentFilter)
       .subscribe(response => this.jobs = response.body);
-    //this.refresh();
   }
 
   refresh(){

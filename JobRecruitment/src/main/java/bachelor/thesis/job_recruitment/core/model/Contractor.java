@@ -27,9 +27,14 @@ public class Contractor extends BaseEntity<Long>{
     @OneToOne(fetch = FetchType.EAGER)
     private GenericUser owner;
 
-    /*@Override
-    public String toString(){
-        return "contractor";
-    }*/
-
+    @Override
+    public String toString() {
+        return "Contractor{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", nrOfEmployees=" + nrOfEmployees +
+                ", logo=" + logo +
+                ", location=" + location +
+                '}';
+    }
 }

@@ -33,12 +33,12 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.pipe(switchMap((params: Params) => this.jobService.getJob(+params['jobID'])))
       .subscribe(response => {this.job = response.body;
-        if(this.currentUser !== null)
+        if(this.currentUser !== null && !this.currentUser.permission.isAdmin && !this.currentUser.permission.isCompany)
           this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
             .subscribe(response => {this.preference = response.body},
               error => console.log(error.error))});
 
-    if(this.currentUser){
+    if(this.currentUser && this.currentUser.location){
       this.latitudeUser = this.currentUser.location.latitude;
       this.longitudeUser = this.currentUser.location.longitude;
     }
@@ -109,4 +109,9 @@ export class JobDetailsComponent implements OnInit {
     var km = (R * c) / 1000; //distance in km
     return Math.round((km + Number.EPSILON) * 100) / 100
   };
+
+  removeJob(id: number) {
+    this.jobService.removeJob(id)
+      .subscribe(response => console.log("Job Removed!"));
+  }
 }

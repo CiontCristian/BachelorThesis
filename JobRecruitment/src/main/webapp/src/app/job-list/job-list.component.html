@@ -4,7 +4,8 @@
   </div>
   <mat-divider></mat-divider>
 
-  <mat-expansion-panel class="job-list-recommended" [disabled]="currentUser === null || !currentUser.permission.isClient" (opened)="getRecommendedJobsIdsCBF()">
+  <mat-expansion-panel class="job-list-recommended"
+                       [disabled]="currentUser === null || !currentUser.permission.isClient" (opened)="getRecommendedJobsIdsCBF()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h2>Recommended:</h2>

@@ -3,6 +3,9 @@ import {User} from "../model/User";
 import {JobService} from "../service/JobService";
 import {Job} from "../model/Job";
 import {StatisticsService} from "../service/StatisticsService";
+import {AccountService} from "../service/AccountService";
+import {ContractorService} from "../service/ContractorService";
+import {Contractor} from "../model/Contractor";
 
 @Component({
   selector: 'app-admin',
@@ -12,24 +15,40 @@ import {StatisticsService} from "../service/StatisticsService";
 export class AdminComponent implements OnInit {
 
   currentUser: User;
-  jobsIds: number[] = [];
   jobs: Job[] = [];
-  single: any[] = [];
+  users: User[] = [];
+  contractors: Contractor[] = [];
 
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
   constructor( private jobService: JobService,
-               private statisticsService: StatisticsService) {}
+               private accountService: AccountService,
+               private contractorService: ContractorService) {}
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
-    this.statisticsService.getCompaniesWithNumberOfOffers()
-      .subscribe(response => {
-        this.single = response.body;
-        console.log(response.body);
-        console.log(this.single);
-      })
+    this.getUsers();
+    this.getContractors();
+  }
+
+  getUsers() {
+    this.accountService.getAllUsers()
+      .subscribe(response => {this.users = response.body});
+  }
+
+  deleteUser(id: number){
+    this.accountService.removeUser(id)
+      .subscribe(response => console.log("User Removed!"));
+    this.refresh();
+  }
+
+  getContractors() {
+    this.contractorService.getAllContractors()
+      .subscribe(response => {this.contractors = response.body});
+  }
+
+  deleteContractor(id: number){
+    this.contractorService.removeContractor(id)
+      .subscribe(response => console.log("Contractor removed!"));
+    this.refresh();
   }
 
   getDatasetJobs() {
@@ -39,6 +58,10 @@ export class AdminComponent implements OnInit {
           this.jobService.saveJobs(this.jobs).subscribe()
         },
         error => console.log(error.error))
+  }
+
+  refresh(){
+    window.location.reload();
   }
 
 }

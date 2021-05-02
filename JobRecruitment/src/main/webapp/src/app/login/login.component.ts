@@ -3,7 +3,6 @@ import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {AccountService} from "../service/AccountService";
 import {Router} from "@angular/router";
-import {HomeComponent} from "../home/home.component";
 import {Observable} from "rxjs";
 import {User} from "../model/User";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -24,7 +23,6 @@ export class LoginComponent implements OnInit {
   passwordForm = new FormControl('', [Validators.required])
   hidePassword = true;
   private currentUser : User;
-  arr: Book[] = [];
 
   constructor(private accountService: AccountService,
               private contractorService: ContractorService,
@@ -65,7 +63,7 @@ export class LoginComponent implements OnInit {
         },
           error => {
             console.log(error);
-            this.snackBar.open(error.error, "Retry");
+            this.snackBar.open(error.error, "Retry", {duration: 3000});
             this.currentUser = null;
           })
   }

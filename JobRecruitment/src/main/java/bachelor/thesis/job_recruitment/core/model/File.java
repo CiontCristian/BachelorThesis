@@ -17,9 +17,11 @@ public class File extends BaseEntity<Long>{
     @Lob
     private byte[] data;
 
-
     @Override
     public String toString() {
-        return name + " " + type;
+        return "File{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
