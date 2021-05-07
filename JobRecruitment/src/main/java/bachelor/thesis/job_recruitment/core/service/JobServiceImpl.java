@@ -33,7 +33,7 @@ public class JobServiceImpl implements JobService{
     @Autowired
     private PreferenceRepository preferenceRepository;
     @Autowired
-    private ContractorRepository contractorRepository;
+    private ContractorService contractorService;
 
     @Override
     public List<Job> findAll(Integer pageIndex, Integer pageSize, String sortType, Filter criteria) {
@@ -46,6 +46,8 @@ public class JobServiceImpl implements JobService{
         }
         log.trace("In JobServiceImpl - method: findAll() - pageIndex={}, pageSize={}", pageIndex, pageSize);
         log.trace("In JobServiceImpl - method: findAll() - filter criteria={}", criteria);
+        log.trace("In JobServiceImpl - method: findAll() - sort type={}", sortType);
+
 
         if(criteria.getTitle() == null || (criteria.getTitle().equals("") && criteria.getTechs().equals("")
         && criteria.getJobType().equals("") && criteria.getDevType().equals("") && criteria.getMinExperience().equals("")
@@ -62,20 +64,19 @@ public class JobServiceImpl implements JobService{
                 .filter(job -> job.getAvailablePos() >= criteria.getAvailablePos())
                 .filter(job -> job.getMinCompensation() >= criteria.getMinCompensation())
                 .collect(Collectors.toList());
-
-        //logger.trace("In JobServiceImpl - method: findAll() - jobs={}", jobs);
-
-        //return jobs.getContent();
     }
 
     @Override
     public Optional<Job> findJobById(Long id) {
+        log.trace("In JobServiceImpl - method: findJobById() - id={}", id);
         return jobRepository.findById(id);
     }
 
     @Override
     public List<Job> findJobsByIds(Integer count, List<Long> ids) {
-        log.trace("In JobServiceImpl - method: findJobsByIds() - ids={}", ids);
+        log.trace("In JobServiceImpl - method: findJobsByIds() - nr. of received jobs={}", ids.size());
+        log.trace("In JobServiceImpl - method: findJobsByIds() - nr. of required jobs={}", count);
+
         List<Job> jobs = new ArrayList<>();
         for(int i=0; i<count;i++){
             jobs.add(jobRepository.findById(ids.get(i)).orElse(null));
@@ -87,20 +88,25 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public List<Job> findAll() {
+        log.trace("In JobServiceImpl - method: findAll() - no parameters");
         return jobRepository.findAll();
     }
 
     @Override
     public Job save(Job job) {
         log.trace("In JobServiceImpl - method: save() - job={}", job);
-
         return jobRepository.save(job);
     }
 
     @Override
     public List<Job> saveJobs(List<Job> jobs) {
+        log.trace("In JobServiceImpl - method: saveJobs() - nr. of jobs={}", jobs.size());
+
+        List<Long> contractorIds = contractorService.findContractorIds();
+        Random random = new Random();
         jobRepository.deleteAll();
-        jobs.forEach(job -> job.setContractor(contractorRepository.findAll().stream().findFirst().get()));
+        jobs.forEach(job -> job.setContractor(contractorService.
+                findById(contractorIds.get(random.nextInt(contractorIds.size()))).orElse(new Contractor())));
 
         return jobRepository.saveAll(jobs);
     }
@@ -125,12 +131,16 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void savePreference(Preference preference) {
+        log.trace("In JobServiceImpl - method: savePreference() - preference={}", preference);
+
         preference.setKey(new PreferenceKey(preference.getUser().getId(), preference.getJob().getId()));
         preferenceRepository.save(preference);
     }
 
     @Override
     public List<Job> findJobsForContractor(Long id) {
+        log.trace("In JobServiceImpl - method: findJobsForContractor() - id={}", id);
+
         return jobRepository.findAll().stream()
                 .filter(job -> job.getContractor().getId().equals(id))
                 .collect(Collectors.toList());
@@ -138,6 +148,8 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public List<String> findJobsTitles() {
+        log.trace("In JobServiceImpl - method: findJobsTitles()");
+
         return jobRepository.findAll().stream()
                 .map(Job::getTitle)
                 .collect(Collectors.toList());
@@ -145,6 +157,8 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Optional<Job> findJobByTitle(String title) {
+        log.trace("In JobServiceImpl - method: findJobByTitle() - title={}", title);
+
         return jobRepository.findAll().stream()
                 .filter(job -> job.getTitle().equals(title))
                 .findAny();
@@ -153,11 +167,15 @@ public class JobServiceImpl implements JobService{
     @Override
     @Transactional
     public Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId) {
+        log.trace("In JobServiceImpl - method: findJobPreferenceForUser() - userId={},jobId={}", userId, jobId);
+
         return preferenceRepository.findByKey(new PreferenceKey(userId, jobId));
     }
 
     @Override
     public Integer countLikedJobPreferences(Long id) {
+        log.trace("In JobServiceImpl - method: countLikedJobPreferences() - id={}", id);
+
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
                 .filter(preference -> preference.getInterested() != null && preference.getInterested().equals(true))
@@ -166,6 +184,8 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Integer countAppliedJobPreferences(Long id) {
+        log.trace("In JobServiceImpl - method: countAppliedJobPreferences() - id={}", id);
+
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
                 .filter(preference -> preference.getApplied() != null && preference.getApplied().equals(true))
@@ -174,6 +194,8 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Set<String> getAvailableTechs() {
+        log.trace("In JobServiceImpl - method: getAvailableTechs()");
+
         List<Job> jobs = jobRepository.findAll();
         if(jobs.isEmpty())
             return new HashSet<>();
@@ -190,6 +212,8 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Set<String> getAvailableDevTypes() {
+        log.trace("In JobServiceImpl - method: getAvailableDevTypes()");
+
         List<Job> jobs = jobRepository.findAll();
         if(jobs.isEmpty())
             return new HashSet<>();
@@ -205,11 +229,14 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Integer getJobRecordCount() {
+        log.trace("In JobServiceImpl - method: getJobRecordCount()");
         return jobRepository.findAll().size();
     }
 
     @Override
     public Integer getContractorJobCount(Long id) {
+        log.trace("In JobServiceImpl - method: getContractorJobCount() - id={}", id);
+
         return (int) jobRepository.findAll().stream()
                 .filter(job -> job.getContractor().getId().equals(id)).count();
     }

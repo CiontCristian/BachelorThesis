@@ -11,4 +11,6 @@ public interface ContractorService {
     Optional<Contractor> findContractorForUser(Long id);
     Contractor modifyContractor(Contractor modifiedContractor);
     void removeContractor(Long id);
+    List<Long> findContractorIds();
+    Optional<Contractor> findById(Long id);
 }

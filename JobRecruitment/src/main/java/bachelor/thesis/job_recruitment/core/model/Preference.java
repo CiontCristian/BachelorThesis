@@ -23,4 +23,12 @@ public class Preference{
     private Boolean interested;
     private Boolean applied;
 
+    @Override
+    public String toString() {
+        return "Preference{" +
+                "key=" + key +
+                ", interested=" + interested +
+                ", applied=" + applied +
+                '}';
+    }
 }

@@ -38,7 +38,7 @@ public class Job extends BaseEntity<Long>{
                 ", devType='" + devType + '\'' +
                 ", techs='" + techs + '\'' +
                 ", availablePos=" + availablePos +
+                ", dateAdded=" + dateAdded +
                 '}';
     }
-
 }

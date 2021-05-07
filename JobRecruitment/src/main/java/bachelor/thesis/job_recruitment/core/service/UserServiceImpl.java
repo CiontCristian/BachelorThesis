@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Optional<GenericUser> verifyUserCredentials(String email, String password) {
-        log.trace("In UserServiceImpl - method: verifyUserCredentials() - credentials={}",email+ " " + password);
+        log.trace("In UserServiceImpl - method: verifyUserCredentials() - email={}, password={}",email, password);
 
         return findAll().stream().filter(genericUser -> genericUser.getEmail().equals(email)
                 && genericUser.getPassword().equals(password)).findFirst();
@@ -58,11 +58,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public GenericUser modify(GenericUser modifiedUser) {
+        log.trace("In UserServiceImpl - method: modify() - modifiedUser={}", modifiedUser);
         return userRepository.save(modifiedUser);
     }
 
     @Override
     public void remove(Long id) {
+        log.trace("In UserServiceImpl - method: remove() - id={}", id);
+
         contractorService.findContractorForUser(id).ifPresent(contractor ->
                 contractorService.removeContractor(contractor.getId()));
         userRepository.deleteById(id);
@@ -70,6 +73,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<GenericUser> findJobCandidates(Long jobId) {
+        log.trace("In UserServiceImpl - method: findJobCandidates() - id={}", jobId);
+
         return preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(jobId))
                 .map(Preference::getUser)

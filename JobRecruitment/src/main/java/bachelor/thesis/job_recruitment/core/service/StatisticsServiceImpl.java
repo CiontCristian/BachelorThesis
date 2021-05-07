@@ -3,6 +3,7 @@ package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.Statistic;
 import bachelor.thesis.job_recruitment.core.repository.ContractorRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class StatisticsServiceImpl implements  StatisticsService{
     @Autowired
     private JobService jobService;
@@ -22,6 +24,8 @@ public class StatisticsServiceImpl implements  StatisticsService{
 
     @Override
     public List<Statistic> companiesWithNumberOfOffers() {
+        log.trace("In StatisticsServiceImpl - method: companiesWithNumberOfOffers()");
+
         List<Statistic> statistics = new ArrayList<>();
         contractorRepository.findAll()
                 .forEach(
@@ -37,6 +41,8 @@ public class StatisticsServiceImpl implements  StatisticsService{
 
     @Override
     public List<Statistic> mostLikedJobs() {
+        log.trace("In StatisticsServiceImpl - method: mostLikedJobs()");
+
         List<Statistic> statistics = new ArrayList<>();
         jobService.findAll().forEach(
                 job -> {
@@ -55,6 +61,8 @@ public class StatisticsServiceImpl implements  StatisticsService{
 
     @Override
     public List<Statistic> mostAppliedJobsForContractor(Long id) {
+        log.trace("In StatisticsServiceImpl - method: mostAppliedJobsForContractor() - id={}", id);
+
         List<Statistic> statistics = new ArrayList<>();
         jobService.findJobsForContractor(id).forEach(
                 job -> {

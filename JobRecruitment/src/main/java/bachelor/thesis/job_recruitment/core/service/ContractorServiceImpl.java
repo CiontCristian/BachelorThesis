@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,10 +28,11 @@ public class ContractorServiceImpl implements ContractorService{
                 .filter(contractor1 -> contractor1.getName().equals(contractor.getName()))
                 .findFirst();
         if(alreadyUsed.isPresent()) {
+            log.trace("In ContractorServiceImpl - method: saveContractor() - duplicate name={}", contractor.getName());
             return Optional.empty();
         }
+        log.trace("In ContractorServiceImpl - method: saveContractor() - success");
         contractorRepository.save(contractor);
-
         return Optional.of(contractor);
     }
 
@@ -42,6 +44,7 @@ public class ContractorServiceImpl implements ContractorService{
 
     @Override
     public Optional<Contractor> findContractorForUser(Long id) {
+        log.trace("In ContractorServiceImpl - method: findContractorForUser() - id={}", id);
         return findAll().stream()
                 .filter(contractor -> contractor.getOwner().getId().equals(id))
                 .findFirst();
@@ -51,14 +54,31 @@ public class ContractorServiceImpl implements ContractorService{
     @Transactional
     public Contractor modifyContractor(Contractor modifiedContractor) {
         log.trace("In ContractorServiceImpl - method: modifyContractor() - contractor={}", modifiedContractor);
-
         return contractorRepository.save(modifiedContractor);
     }
 
     @Override
     public void removeContractor(Long id) {
+        log.trace("In ContractorServiceImpl - method: removeContractor() - id={}", id);
+
         jobService.findJobsForContractor(id)
                 .forEach(job -> jobService.remove(job.getId()));
         contractorRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Long> findContractorIds() {
+        log.trace("In ContractorServiceImpl - method: findContractorIds()");
+
+        return contractorRepository.findAll().stream()
+                .map(Contractor::getId)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Contractor> findById(Long id) {
+        log.trace("In ContractorServiceImpl - method: findById() - id={}", id);
+
+        return contractorRepository.findById(id);
     }
 }

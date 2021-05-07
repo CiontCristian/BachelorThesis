@@ -1,7 +1,6 @@
 
 from pandas.core.common import flatten
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.preprocessing import normalize
 import numpy as np
 
 
