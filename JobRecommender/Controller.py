@@ -28,6 +28,7 @@ class Controller:
         return res
 
     def recommendCBF(self, input_id):
+        #jobs = self.db.getUserUnseenJobs(input_id)
         jobs = self.db.getJobs()
         preferences = self.db.getUserPreferences(input_id)
         background = self.db.getUserBackground(input_id)
