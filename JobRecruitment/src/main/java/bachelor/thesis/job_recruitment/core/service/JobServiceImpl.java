@@ -193,12 +193,12 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public Set<String> getAvailableTechs() {
+    public List<String> getAvailableTechs() {
         log.trace("In JobServiceImpl - method: getAvailableTechs()");
 
         List<Job> jobs = jobRepository.findAll();
         if(jobs.isEmpty())
-            return new HashSet<>();
+            return new ArrayList<>();
 
         StringBuilder allTechs = new StringBuilder();
         jobs.forEach(
@@ -206,7 +206,10 @@ public class JobServiceImpl implements JobService{
         );
         allTechs.deleteCharAt(allTechs.length()-1);
 
-        return new HashSet<>(Arrays.asList(allTechs.toString().split(",")));
+        Set<String> techsSet = new HashSet<>(Arrays.asList(allTechs.toString().split(",")));
+        List<String> techsList = new ArrayList<>(techsSet);
+        Collections.sort(techsList);
+        return techsList;
 
     }
 

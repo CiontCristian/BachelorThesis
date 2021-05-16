@@ -13,7 +13,6 @@ ctr = Controller()
 @app.route('/recommender/getRecommendedJobsIdsKNN', methods=["POST"], strict_slashes=False)
 def getRecommendedJobsIdsKNN():
     input_id = request.get_json(force=True)
-    print(input_id)
     global ctr
     jobs_ids = ctr.recommendKNN(int(input_id))
     response = jsonify(jobs_ids)
@@ -25,7 +24,6 @@ def getRecommendedJobsIdsKNN():
 @app.route('/recommender/getRecommendedJobsIdsCBF', methods=["POST"], strict_slashes=False)
 def getRecommendedJobsIdsCBF():
     input_id = request.get_json(force=True)
-    print(input_id)
     global ctr
     jobs_ids = ctr.recommendCBF(int(input_id))
     response = jsonify(jobs_ids)

@@ -1,15 +1,12 @@
-<h1 mat-dialog-title>Modify Job Announcement</h1>
+<h1 mat-dialog-title style="text-align: center">Modify Job Announcement</h1>
 <div mat-dialog-content>
   <div class="job_modify_container">
-    <h1>Upload</h1>
-
     <mat-form-field appearance="fill" class="job_modify_form_field">
       <mat-label>Title</mat-label>
       <label>
         <input type="text" matInput [formControl]="titleForm" required
                placeholder="Ex. FullStack Dev Recruitment">
       </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="titleForm.hasError('required')">
         Title is required
       </mat-error>
@@ -22,7 +19,6 @@
           <textarea type="text" matInput [formControl]="descriptionForm" required
                     placeholder="Ex. Lalala"></textarea>
       </label>
-      <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="descriptionForm.hasError('required')">
         Desc is required
       </mat-error>
@@ -49,7 +45,6 @@
             (matChipInputTokenEnd)="add($event, 'tech')" required>
         </label>
       </mat-chip-list>
-      <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="techsForm.hasError('required')">
         Techs are required
       </mat-error>
@@ -84,7 +79,6 @@
       <mat-select [formControl]="jobTypeForm" multiple required>
         <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
       </mat-select>
-      <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="jobTypeForm.hasError('required')">
         Job type is required
       </mat-error>
@@ -127,8 +121,6 @@
 
     <mat-label>Available Positions</mat-label>
     <label>
-      <!--<input type="number" matInput [formControl]="availablePosForm" required
-             placeholder="Ex. 5">-->
       <mat-slider
         thumbLabel
         min="1"

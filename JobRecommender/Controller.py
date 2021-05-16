@@ -10,25 +10,28 @@ class Controller:
         self.knn = KNN(k=7)
 
     def recommendKNN(self, input_id):
+        print("ID: " + str(input_id))
         jobs = self.db.getJobs()
+        print("Initial jobs:" + str(len(jobs)))
 
         data = vectorizeJobsKNN(jobs, input_id)
         vectorizedJobs = data[0]
+        print("Vectorized jobs:" + str(len(vectorizedJobs)))
         query = data[1]
-        print(query)
 
         self.knn.fit(vectorizedJobs, query)
-        for job in jobs:
-            if job.id == input_id:
-                jobs.remove(job)
+
+        jobs = [job for job in jobs if job.id != input_id]
+
         res = self.knn.recommend(jobs)
+        print("After input removal:" + str(len(jobs)))
 
         for job in res:
             print(job)
         return res
 
     def recommendCBF(self, input_id):
-        #jobs = self.db.getUserUnseenJobs(input_id)
+        # jobs = self.db.getUserUnseenJobs(input_id)
         jobs = self.db.getJobs()
         preferences = self.db.getUserPreferences(input_id)
         background = self.db.getUserBackground(input_id)
@@ -49,5 +52,3 @@ class Controller:
         ids = [elem[0] for elem in ids_similiraty_desc]
         print(ids)
         return ids
-
-

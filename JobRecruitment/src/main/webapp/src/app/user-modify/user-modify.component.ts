@@ -44,23 +44,26 @@ export class UserModifyComponent implements OnInit {
       birthDateForm: new FormControl(this.currentUser.dateOfBirth, [Validators.required]), genderForm : new FormControl(this.currentUser.gender, [Validators.required])
     });
 
-    this.backgroundFormGroup = this.formBuilder.group({
-      techsForm: new FormControl(this.currentUser.background.techs.split(','), [Validators.required]),
-      experienceForm: new FormControl(this.currentUser.background.experience, [Validators.required]),
-      jobTypeForm: new FormControl(this.currentUser.background.jobType.split(','), Validators.required),
-      devTypeForm: new FormControl(this.currentUser.background.devType.split(','), Validators.required),
-      remoteForm: new FormControl(this.currentUser.background.remote, Validators.required)
-    });
+    if(this.currentUser.permission.isClient){
+      this.backgroundFormGroup = this.formBuilder.group({
+        techsForm: new FormControl(this.currentUser.background.techs.split(','), [Validators.required]),
+        experienceForm: new FormControl(this.currentUser.background.experience, [Validators.required]),
+        jobTypeForm: new FormControl(this.currentUser.background.jobType.split(','), Validators.required),
+        devTypeForm: new FormControl(this.currentUser.background.devType.split(','), Validators.required),
+        remoteForm: new FormControl(this.currentUser.background.remote, Validators.required)
+      });
 
-    this.jobService.getAvailableTechs()
-      .subscribe(response => {this.availableTechs = response.body},
-        error => console.log(error.error))
-    this.jobService.getAvailableDevTypes()
-      .subscribe(response => {this.availableDevTypes = response.body},
-        error => console.log(error.error))
-
-    this.latitude = this.currentUser.location.latitude;
-    this.longitude = this.currentUser.location.longitude;
+      this.jobService.getAvailableTechs()
+        .subscribe(response => {this.availableTechs = response.body},
+          error => console.log(error.error))
+      this.jobService.getAvailableDevTypes()
+        .subscribe(response => {this.availableDevTypes = response.body},
+          error => console.log(error.error))
+    }
+    if(!this.currentUser.permission.isAdmin){
+      this.latitude = this.currentUser.location.latitude;
+      this.longitude = this.currentUser.location.longitude;
+    }
   }
 
   onChosenLocation(event) {

@@ -3,9 +3,6 @@
   <form (ngSubmit)="register()">
     <mat-horizontal-stepper linear #stepper class="register-stepper">
       <mat-step [stepControl]="generalFormGroup" label="General Info" state="general">
-        <ng-template matStepperIcon="general">
-          <mat-icon color="primary">info</mat-icon>
-        </ng-template>
         <form [formGroup]="generalFormGroup">
           <!--<ng-template matStepLabel>General Info</ng-template>-->
 
@@ -86,9 +83,6 @@
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
-        <ng-template matStepperIcon="chat">
-          <mat-icon color="accent">forum</mat-icon>
-        </ng-template>
       </mat-step>
 
       <mat-step [optional]=true>
@@ -113,7 +107,7 @@
             <mat-label>Hunting/Recruiting:  </mat-label>
             <label>
               <mat-radio-group aria-label="Select an option" formControlName="permissionForm" required>
-                <mat-radio-button value="client">Client</mat-radio-button>
+                <mat-radio-button value="client">Job-seeker</mat-radio-button>
                 <mat-radio-button value="company">Company</mat-radio-button>
               </mat-radio-group>
             </label>
@@ -184,21 +178,6 @@
           </div>
         </form>
       </mat-step>
-
-     <!-- <mat-step [optional]=true>
-        <form>
-          <ng-template matStepLabel>Location</ng-template>
-          <agm-map [latitude]="latCluj" [longitude]="lngCluj" (mapClick)="onChosenLocation($event)">
-            <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"></agm-marker>
-          </agm-map>
-
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-          </div>
-        </form>
-      </mat-step>-->
-
     </mat-horizontal-stepper>
 
 

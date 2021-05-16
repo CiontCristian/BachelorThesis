@@ -50,7 +50,8 @@ export class RegisterComponent implements OnInit {
         Validators.email
       ]), passwordForm: new FormControl('', [Validators.required]),
       firstNameForm: new FormControl('', [Validators.required]), lastNameForm: new FormControl('', [Validators.required]),
-      birthDateForm: new FormControl('', [Validators.required]), genderForm : new FormControl('', [Validators.required])
+      birthDateForm: new FormControl('', [Validators.required]),
+      genderForm : new FormControl('M', [Validators.required])
     });
 
     this.backgroundFormGroup = this.formBuilder.group({

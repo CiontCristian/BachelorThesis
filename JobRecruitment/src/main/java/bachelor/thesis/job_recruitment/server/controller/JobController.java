@@ -135,8 +135,8 @@ public class JobController {
     }
 
     @GetMapping(value = "/getAvailableTechs")
-    ResponseEntity<Set<String>> getAvailableTechs(){
-        Set<String> techs = jobService.getAvailableTechs();
+    ResponseEntity<List<String>> getAvailableTechs(){
+        List<String> techs = jobService.getAvailableTechs();
         return new ResponseEntity<>(techs, HttpStatus.OK);
     }
 

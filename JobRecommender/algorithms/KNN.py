@@ -13,6 +13,7 @@ class KNN:
 
     def fit(self, data, query):
         self.data = data
+        print("Length:"+str(len(self.data)))
         self.query = query
 
     def predict(self, distance_fn):
@@ -20,18 +21,13 @@ class KNN:
 
         for index, example in enumerate(self.data):
             distance = distance_fn(example, self.query)
-            print(str(index) + " " + str(distance) + " " + str(np.sum(example)) + " " + str(np.sum(self.query)))
             neighbor_distances_and_indices.append((distance, index))
 
         sorted_neighbor_distances_and_indices = sorted(neighbor_distances_and_indices)[:self.k]
-
         print(sorted_neighbor_distances_and_indices)
-
         return sorted_neighbor_distances_and_indices
 
     def recommend(self, rawData):
-        for index, example in enumerate(rawData):
-            print(index, example.id)
 
         recommendation_indices = self.predict(
             distance_fn=euclidean_distance

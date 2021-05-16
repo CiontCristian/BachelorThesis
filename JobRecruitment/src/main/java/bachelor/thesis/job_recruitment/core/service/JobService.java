@@ -25,7 +25,7 @@ public interface JobService {
     Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId);
     Integer countLikedJobPreferences(Long id);
     Integer countAppliedJobPreferences(Long id);
-    Set<String> getAvailableTechs();
+    List<String> getAvailableTechs();
     Set<String> getAvailableDevTypes();
     Integer getJobRecordCount();
     Integer getContractorJobCount(Long id);

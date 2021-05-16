@@ -35,7 +35,7 @@ export class JobSaveComponent implements OnInit {
   techs: string[] = [];
 
   minCompForm = new FormControl('');
-  availablePosForm = new FormControl('', [Validators.required]);
+  availablePosForm = new FormControl('1', [Validators.required]);
 
   constructor(@Inject(MAT_DIALOG_DATA) data,
               private jobService: JobService) { }

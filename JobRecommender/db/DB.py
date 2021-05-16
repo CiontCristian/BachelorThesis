@@ -19,11 +19,25 @@ class DB:
         cursor.execute("SELECT * from job")
         rows = cursor.fetchall()
 
+        self.jobs.clear()
         for row in rows:
             self.jobs.append(
                 Job(row[0], row[10], row[3], row[5], row[8], row[7], row[6], row[4], row[9], row[1], row[2], None))
 
         return self.jobs
+
+    def getJobById(self, id):
+
+        cursor = self.con.cursor()
+        cursor.execute("SELECT * from job where id=" + str(id))
+        rows = cursor.fetchall()
+        job = None
+
+        for row in rows:
+            job = Job(row[0], row[10], row[3], row[5], row[8], row[7], row[6], row[4], row[9], row[1], row[2], None)
+            break
+
+        return job
 
     def getUserUnseenJobs(self, id):
         jobs = self.getJobs()
@@ -43,6 +57,7 @@ class DB:
 
         rows = cursor.fetchall()
 
+        self.preferences.clear()
         for row in rows:
             self.preferences.append(Preference(row[3], row[2], row[1], row[0]))
 
@@ -56,6 +71,7 @@ class DB:
 
         rows = cursor.fetchall()
 
+        self.background.clear()
         for row in rows:
             self.background = [row[1], row[2], row[3], row[4], row[5]]
 

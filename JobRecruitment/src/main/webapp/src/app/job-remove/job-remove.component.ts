@@ -9,10 +9,12 @@ import {JobService} from "../service/JobService";
 })
 export class JobRemoveComponent implements OnInit {
   id: number;
+  title: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) data,
               private jobService: JobService) {
     this.id = data.id;
+    this.title = data.title;
   }
 
   ngOnInit(): void {

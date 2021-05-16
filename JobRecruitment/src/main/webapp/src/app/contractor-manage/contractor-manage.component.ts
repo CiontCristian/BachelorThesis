@@ -193,15 +193,16 @@ export class ContractorManageComponent implements OnInit {
     });
   }
 
-  openRemoveJobDialog(id: number) {
+  openRemoveJobDialog(id: number, title: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      id
+      id,
+      title
     }
 
     const dialogRef = this.dialog.open(JobRemoveComponent,{
-      width: '300px',
-      height: '300px',
+      width: '500px',
+      height: '200px',
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {

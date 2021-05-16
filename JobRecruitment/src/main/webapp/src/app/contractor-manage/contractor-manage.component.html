@@ -21,7 +21,7 @@
                     </button>
                   </td>
                   <td>
-                    <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id)">
+                    <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id, job.title)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>
@@ -103,8 +103,8 @@
               <mat-form-field appearance="fill" class="register_form_field">
                 <mat-label>Description</mat-label>
                 <label>
-              <textarea cols="100" rows="15" type="text" matInput formControlName="descriptionForm" required
-                        placeholder="Ex. Desc" cdkTextareaAutosize></textarea>
+              <textarea type="text" matInput formControlName="descriptionForm" required
+                        placeholder="Ex. Desc"></textarea>
                 </label>
               </mat-form-field>
               <br>
@@ -118,9 +118,9 @@
               </mat-form-field>
               <br>
 
-              <mat-label>
+              <mat-label>Logo
                 <button mat-button (click)="uploadImageEvent()" class="contractor-manage-button">Upload</button>
-                {{imageName}}
+                <span *ngIf="imageName !== ''">{{imageName}}</span>
                 <input #imageUpload type="file" style="display: none;" formControlName="logoForm">
               </mat-label>
 

@@ -16,6 +16,7 @@ def getJobFeatures(jobs, input_id=-1, knn=False):
             input_vector_string = vectorString
         vectorString = ""
     if knn:
+        headers.remove(input_vector_string)
         headers.append(input_vector_string)
     return headers
 
@@ -51,15 +52,13 @@ def vectorizeJobsKNN(jobs, input_id):
 
     vectorizer = CountVectorizer()
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
-    #print(vectorizer.get_feature_names())
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
+    print("Numpy after" + str(len(normalized_jobs)))
 
-    #vectorized_input = vectorized_jobs[-1]
-    #vectorized_jobs = np.delete(vectorized_jobs, len(vectorized_jobs) - 1, 0)
     vectorized_input = normalized_jobs[-1]
-    vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
-
-    return vectorized_jobs, vectorized_input
+    normalized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
+    print("Numpy before" + str(len(normalized_jobs)))
+    return normalized_jobs, vectorized_input
 
 
 def vectorizeDataCBF(jobs, preferences, background):

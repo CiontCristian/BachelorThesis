@@ -15,7 +15,7 @@ def processJobDataset():
     df = df.drop(df[(df['Industry'] != 'IT-Software, Software Services') | (
             df['Role Category'] != 'Programming & Design') | (df['Job Experience Required'] == '')].index)
 
-    jobs = df.sample(50)
+    jobs = df.sample(200)
 
     return jobs
 
