@@ -145,4 +145,16 @@ public class JobController {
         Set<String> devs = jobService.getAvailableDevTypes();
         return new ResponseEntity<>(devs, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/computeMainRecommenderAccuracy/{userId}")
+    ResponseEntity<Integer> computeMainRecommenderAccuracy(@PathVariable Long userId){
+        Integer accuracy = jobService.computeMainRecommenderAccuracy(userId);
+        return new ResponseEntity<>(accuracy, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/computeSecondaryRecommenderAccuracy/{userId}")
+    ResponseEntity<Integer> computeSecondaryRecommenderAccuracy(@PathVariable Long userId){
+        Integer accuracy = jobService.computeSecondaryRecommenderAccuracy(userId);
+        return new ResponseEntity<>(accuracy, HttpStatus.OK);
+    }
 }

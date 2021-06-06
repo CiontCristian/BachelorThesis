@@ -22,6 +22,8 @@ export class JobDetailsComponent implements OnInit {
   similarJobs: Job[] = null;
   latitudeUser: number;
   longitudeUser: number;
+  toggleAccuracy: boolean = false;
+  accuracy: number = 0;
 
   constructor(private jobService: JobService,
               private route: ActivatedRoute,
@@ -46,9 +48,9 @@ export class JobDetailsComponent implements OnInit {
 
   }
 
-  vote(isInterested: boolean) {
+  rateJob(isInterested: boolean) {
     if(this.preference === null) {
-      let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, false);
+      let preference: Preference = new Preference(0, this.currentUser, this.job, isInterested, false, null, null);
       this.jobService.savePreference(preference).subscribe();
       this.refresh();
     }
@@ -63,8 +65,15 @@ export class JobDetailsComponent implements OnInit {
     window.location.reload();
   }
 
-  moreLikeThis(id: number) {
-    this.jobService.getRecommendedJobsIdsKNN(id).subscribe(
+  moreLikeThis(jobId: number) {
+    let currentUserId: number;
+    if(this.currentUser === null || !this.currentUser.permission.isClient){
+      currentUserId = -1;
+    }
+    else{
+      currentUserId = this.currentUser.id;
+    }
+    this.jobService.getRecommendedJobsIdsKNN(jobId, currentUserId).subscribe(
       response => {
         this.jobService.getJobsByIds(7, response.body).subscribe(
           response => { this.similarJobs = response.body},
@@ -82,7 +91,7 @@ export class JobDetailsComponent implements OnInit {
 
   apply() {
     if(this.preference === null){
-      let preference: Preference = new Preference(0, this.currentUser, this.job, null, true);
+      let preference: Preference = new Preference(0, this.currentUser, this.job, null, true, null, null);
       this.jobService.savePreference(preference).subscribe();
       this.refresh();
     }
@@ -113,5 +122,27 @@ export class JobDetailsComponent implements OnInit {
   removeJob(id: number) {
     this.jobService.removeJob(id)
       .subscribe(response => console.log("Job Removed!"));
+  }
+
+  rateRecommendation(relevanceSec: boolean, job: Job) {
+    let preference: Preference;
+    this.jobService.getJobPreferenceForUser(this.currentUser.id, job.id)
+      .subscribe(response => {preference = response.body;
+          preference.relevanceSec = relevanceSec;
+          this.jobService.savePreference(preference).subscribe()},
+        error => {console.log(error.error);
+          preference = new Preference(0, this.currentUser, job, null, false, null, relevanceSec);
+          this.jobService.savePreference(preference).subscribe();});
+  }
+
+  showAccuracy() {
+    if(this.toggleAccuracy){
+      this.toggleAccuracy = !this.toggleAccuracy;
+      return;
+    }
+    this.jobService.computeSecondaryRecommenderAccuracy(this.currentUser.id).subscribe(
+      response => {this.accuracy = response.body;
+        this.toggleAccuracy = !this.toggleAccuracy;}
+    );
   }
 }

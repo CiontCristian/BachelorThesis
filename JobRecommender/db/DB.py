@@ -39,17 +39,32 @@ class DB:
 
         return job
 
-    def getUserUnseenJobs(self, id):
-        jobs = self.getJobs()
-        preferences = self.getUserPreferences(id)
-        for job in jobs:
-            for preference in preferences:
-                if job.id == preference.job_id and id == preference.user_id and \
-                        (preference.interested or not preference.interested):
-                    jobs.remove(job)
-        self.unseen_jobs = jobs
+    def getRatedJobsCBF(self, input_id):
+        cursor = self.con.cursor()
+        cursor.execute("select id from job j inner join preference p on p.job_id=j.id where p.user_id="+str(input_id)+"and (p.interested=TRUE or p.interested=FALSE or p.relevance_main=FALSE)")
 
-        return self.unseen_jobs
+        rows = cursor.fetchall()
+
+        ids = []
+        for row in rows:
+            ids.append(row[0])
+
+        print("Banned ids for CBF:" + str(ids))
+        return ids
+
+    def getRatedJobsKNN(self, input_id):
+        cursor = self.con.cursor()
+        print(input_id)
+        cursor.execute("select id from job j inner join preference p on p.job_id=j.id where p.user_id="+str(input_id)+"and (p.relevance_sec=FALSE)")
+
+        rows = cursor.fetchall()
+
+        ids = []
+        for row in rows:
+            ids.append(row[0])
+
+        print("Banned ids for KNN:" + str(ids))
+        return ids
 
     def getUserPreferences(self, id):
         cursor = self.con.cursor()
@@ -59,7 +74,7 @@ class DB:
 
         self.preferences.clear()
         for row in rows:
-            self.preferences.append(Preference(row[3], row[2], row[1], row[0]))
+            self.preferences.append(Preference(row[3], row[2], row[1], row[0], row[4], row[5]))
 
         return self.preferences
 

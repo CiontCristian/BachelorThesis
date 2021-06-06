@@ -9,29 +9,27 @@ class Controller:
         self.db = DB()
         self.knn = KNN(k=7)
 
-    def recommendKNN(self, input_id):
-        print("ID: " + str(input_id))
+    def recommendKNN(self, job_id, user_id):
         jobs = self.db.getJobs()
-        print("Initial jobs:" + str(len(jobs)))
-
-        data = vectorizeJobsKNN(jobs, input_id)
+        data = vectorizeJobsKNN(jobs, job_id)
         vectorizedJobs = data[0]
-        print("Vectorized jobs:" + str(len(vectorizedJobs)))
         query = data[1]
 
         self.knn.fit(vectorizedJobs, query)
 
-        jobs = [job for job in jobs if job.id != input_id]
+        jobs = [job for job in jobs if job.id != job_id]
+        if user_id != -1:
+            bannedIds = self.db.getRatedJobsKNN(user_id)
+        else:
+            bannedIds = []
 
-        res = self.knn.recommend(jobs)
-        print("After input removal:" + str(len(jobs)))
+        res = self.knn.recommend(jobs, len(bannedIds))
+        res = [elem for elem in res if elem not in bannedIds]
 
-        for job in res:
-            print(job)
         return res
 
     def recommendCBF(self, input_id):
-        # jobs = self.db.getUserUnseenJobs(input_id)
+
         jobs = self.db.getJobs()
         preferences = self.db.getUserPreferences(input_id)
         background = self.db.getUserBackground(input_id)
@@ -43,12 +41,14 @@ class Controller:
 
         similarity_values = contentBasedFiltering(vectorized_jobs, vectorized_preferences, vectorized_background)
 
-        ids_similiraty = []
+        ids_similarity = []
         for index, _ in enumerate(jobs):
-            ids_similiraty.append((jobs[index].id, similarity_values[index]))
+            ids_similarity.append((jobs[index].id, similarity_values[index]))
 
-        ids_similiraty_desc = sorted(ids_similiraty, key=lambda x: x[1], reverse=True)
-        print(ids_similiraty_desc)
-        ids = [elem[0] for elem in ids_similiraty_desc]
-        print(ids)
+        ids_similarity_desc = sorted(ids_similarity, key=lambda x: x[1], reverse=True)
+        print("Highest similarities: " + str(ids_similarity_desc))
+        ids = [elem[0] for elem in ids_similarity_desc]
+        ratedJobIds = self.db.getRatedJobsCBF(input_id)
+        ids = [elem for elem in ids if elem not in ratedJobIds]
+        print("Highest unrated similarities: " + str(ids))
         return ids

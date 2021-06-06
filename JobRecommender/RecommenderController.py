@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from Controller import Controller
+from RecommenderService import Controller
 from dataset.DataProcessing import *
 
 app = Flask(__name__)
@@ -12,9 +12,9 @@ ctr = Controller()
 
 @app.route('/recommender/getRecommendedJobsIdsKNN', methods=["POST"], strict_slashes=False)
 def getRecommendedJobsIdsKNN():
-    input_id = request.get_json(force=True)
+    [job_id, user_id] = request.get_json(force=True)
     global ctr
-    jobs_ids = ctr.recommendKNN(int(input_id))
+    jobs_ids = ctr.recommendKNN(int(job_id), int(user_id))
     response = jsonify(jobs_ids)
     response.headers.add("Access-Control-Allow-Origin", "*")
 

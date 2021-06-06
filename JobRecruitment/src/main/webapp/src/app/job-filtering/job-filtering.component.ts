@@ -86,7 +86,7 @@ export class JobFilteringComponent implements OnInit {
 
   filter() {
     let filterObj: Filter = new Filter(this.titleForm.value, this.jobTypeForm.value.toString(), this.remoteForm.value, this.minExpForm.value.toString(),
-      this.minCompForm.value === "" ? 0 : + this.minCompForm.value, this.devTypeForm.value.toString(), this.techsForm.value.toString(),
+      this.minCompForm.value === "" ? 0 : + this.minCompForm.value, this.devTypes.toString(), this.techs.toString(),
       this.availablePosForm.value === "" ? 0 : + this.availablePosForm.value);
     this.addFilterEvent(filterObj);
   }

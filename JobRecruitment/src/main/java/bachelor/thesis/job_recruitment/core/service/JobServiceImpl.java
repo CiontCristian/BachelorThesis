@@ -1,29 +1,18 @@
 package bachelor.thesis.job_recruitment.core.service;
 
 import bachelor.thesis.job_recruitment.core.model.*;
-import bachelor.thesis.job_recruitment.core.repository.ContractorRepository;
 import bachelor.thesis.job_recruitment.core.repository.JobRepository;
 import bachelor.thesis.job_recruitment.core.repository.PreferenceRepository;
-import bachelor.thesis.job_recruitment.core.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 @Service
 @Slf4j
@@ -56,14 +45,37 @@ public class JobServiceImpl implements JobService{
         }
         return jobRepository.findAll(Sort.by(sortType).ascending()).stream()
                 .filter(job -> criteria.getTitle().equals("") || job.getTitle().toLowerCase().contains(criteria.getTitle().toLowerCase()))
-                .filter(job -> criteria.getTechs().equals("") || job.getTechs().toLowerCase().contains(criteria.getTechs().toLowerCase()))
-                .filter(job -> criteria.getDevType().equals("") || job.getDevType().toLowerCase().contains(criteria.getDevType().toLowerCase()))
-                .filter(job -> criteria.getJobType().equals("") || job.getJobType().toLowerCase().contains(criteria.getJobType().toLowerCase()))
+                .filter(job -> criteria.getTechs().equals("") || filterTechs(job.getTechs().toLowerCase(), criteria.getTechs().toLowerCase()))
+                .filter(job -> criteria.getDevType().equals("") || filterDevType(job.getDevType().toLowerCase(), criteria.getDevType().toLowerCase()))
+                .filter(job -> criteria.getJobType().equals("") || filterJobType(job.getJobType().toLowerCase(), criteria.getJobType().toLowerCase()))
                 .filter(job -> job.getRemote().equals(criteria.getRemote()))
-                .filter(job -> criteria.getMinExperience().equals("") || job.getMinExperience().toLowerCase().contains(criteria.getMinExperience().toLowerCase()))
+                .filter(job -> criteria.getMinExperience().equals("") || filterMinExperience(job.getMinExperience().toLowerCase(), criteria.getMinExperience().toLowerCase()))
                 .filter(job -> job.getAvailablePos() >= criteria.getAvailablePos())
                 .filter(job -> job.getMinCompensation() >= criteria.getMinCompensation())
                 .collect(Collectors.toList());
+    }
+
+    private Boolean filterMinExperience(String actual, String filter){
+        List<String> actualList = Arrays.asList(actual.split(","));
+        List<String> filterList = Arrays.asList(filter.split(","));
+        return actualList.containsAll(filterList);
+    }
+
+    private Boolean filterTechs(String actual, String filter){
+        List<String> actualList = Arrays.asList(actual.split(","));
+        List<String> filterList = Arrays.asList(filter.split(","));
+        return actualList.containsAll(filterList);
+    }
+    private Boolean filterDevType(String actual, String filter){
+        List<String> actualList = Arrays.asList(actual.split(","));
+        List<String> filterList = Arrays.asList(filter.split(","));
+        return actualList.containsAll(filterList);
+    }
+
+    private Boolean filterJobType(String actual, String filter){
+        List<String> actualList = Arrays.asList(actual.split(","));
+        List<String> filterList = Arrays.asList(filter.split(","));
+        return actualList.containsAll(filterList);
     }
 
     @Override
@@ -173,8 +185,15 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
+    public List<Preference> findJobPreferencesForUser(Long userId) {
+        return preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getUser().getId().equals(userId))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Integer countLikedJobPreferences(Long id) {
-        log.trace("In JobServiceImpl - method: countLikedJobPreferences() - id={}", id);
+        //log.trace("In JobServiceImpl - method: countLikedJobPreferences() - id={}", id);
 
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))
@@ -242,6 +261,48 @@ public class JobServiceImpl implements JobService{
 
         return (int) jobRepository.findAll().stream()
                 .filter(job -> job.getContractor().getId().equals(id)).count();
+    }
+
+    @Override
+    public Integer computeMainRecommenderAccuracy(Long userId) {
+        double positiveCount = 0;
+        double negativeCount = 0;
+        List<Preference> preferences = findJobPreferencesForUser(userId);
+        preferences = preferences.stream()
+                .filter(preference -> preference.getRelevanceMain() != null)
+                .collect(Collectors.toList());
+        if(preferences.isEmpty())
+            return 0;
+
+        for(Preference preference: preferences){
+            if (preference.getRelevanceMain()) {
+                positiveCount++;
+            } else {
+                negativeCount++;
+            }
+        }
+        return (int) Math.round((positiveCount / (positiveCount + negativeCount)) * 100);
+    }
+
+    @Override
+    public Integer computeSecondaryRecommenderAccuracy(Long userId) {
+        double positiveCount = 0;
+        double negativeCount = 0;
+        List<Preference> preferences = findJobPreferencesForUser(userId);
+        preferences = preferences.stream()
+                .filter(preference -> preference.getRelevanceSec() != null)
+                .collect(Collectors.toList());
+        if(preferences.isEmpty())
+            return 0;
+
+        for(Preference preference: preferences){
+            if (preference.getRelevanceSec()) {
+                positiveCount++;
+            } else {
+                negativeCount++;
+            }
+        }
+        return (int) Math.round((positiveCount / (positiveCount + negativeCount)) * 100);
     }
 
 }

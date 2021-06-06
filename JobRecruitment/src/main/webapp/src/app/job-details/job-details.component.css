@@ -16,3 +16,11 @@
   text-align: center;
 }
 
+.relevance-button-up:hover{
+  background-color: green;
+}
+
+.relevance-button-down:hover{
+  background-color: red;
+}
+

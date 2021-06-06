@@ -22,6 +22,8 @@ public class Preference{
     private Job job;
     private Boolean interested;
     private Boolean applied;
+    private Boolean relevanceMain;
+    private Boolean relevanceSec;
 
     @Override
     public String toString() {

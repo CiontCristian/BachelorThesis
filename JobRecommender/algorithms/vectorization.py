@@ -53,11 +53,10 @@ def vectorizeJobsKNN(jobs, input_id):
     vectorizer = CountVectorizer()
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
-    print("Numpy after" + str(len(normalized_jobs)))
+    print("Number of vectorized entities: " + str(len(normalized_jobs)))
 
     vectorized_input = normalized_jobs[-1]
     normalized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
-    print("Numpy before" + str(len(normalized_jobs)))
     return normalized_jobs, vectorized_input
 
 
@@ -66,14 +65,14 @@ def vectorizeDataCBF(jobs, preferences, background):
     background_features = getUserBackgroundFeatures(background)
     headers.append(background_features)
     vectorized_preferences = vectorizeUserPreferences(jobs, preferences)
+    vectorized_preferences = np.array(vectorized_preferences)
+
 
     vectorizer = CountVectorizer()
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
-    print(normalized_jobs)
+    print("Number of vectorized entities: " + str(len(normalized_jobs)))
 
-    #vectorized_background = vectorized_jobs[-1]
-    #vectorized_jobs = np.delete(vectorized_jobs, len(vectorized_jobs) - 1, 0)
     vectorized_background = normalized_jobs[-1]
     vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
 

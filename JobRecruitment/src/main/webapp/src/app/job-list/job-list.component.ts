@@ -10,6 +10,7 @@ import {User} from "../model/User";
 import {Filter} from "../model/Filter";
 import {$e} from "codelyzer/angular/styles/chars";
 import {StatisticsService} from "../service/StatisticsService";
+import {Preference} from "../model/Preference";
 
 
 @Component({
@@ -32,6 +33,8 @@ export class JobListComponent implements OnInit {
   verticalChart: any[] = [];
   pieChart: any[] = [];
   sortType: string = "dateAdded"
+  toggleAccuracy: boolean = false;
+  accuracy: number = 0;
 
   constructor(private jobService: JobService,
               private contractorService: ContractorService,
@@ -87,5 +90,29 @@ export class JobListComponent implements OnInit {
 
   refresh(){
     window.location.reload();
+  }
+
+  rateRecommendation(relevanceMain: boolean, job:  Job) {
+    let preference: Preference;
+    this.jobService.getJobPreferenceForUser(this.currentUser.id, job.id)
+      .subscribe(response => {preference = response.body;
+                                    preference.relevanceMain = relevanceMain;
+                                    this.jobService.savePreference(preference).subscribe()},
+        error => {console.log(error.error);
+          preference = new Preference(0, this.currentUser, job, null, false, relevanceMain, null);
+          this.jobService.savePreference(preference).subscribe();});
+
+    //this.refresh();
+  }
+
+  showAccuracy() {
+    if(this.toggleAccuracy){
+      this.toggleAccuracy = !this.toggleAccuracy;
+      return;
+    }
+    this.jobService.computeMainRecommenderAccuracy(this.currentUser.id).subscribe(
+      response => {this.accuracy = response.body;
+        this.toggleAccuracy = !this.toggleAccuracy;}
+    );
   }
 }

@@ -23,10 +23,13 @@ public interface JobService {
     List<String> findJobsTitles();
     Optional<Job> findJobByTitle(String title);
     Optional<Preference> findJobPreferenceForUser(Long userId, Long jobId);
+    List<Preference> findJobPreferencesForUser(Long userId);
     Integer countLikedJobPreferences(Long id);
     Integer countAppliedJobPreferences(Long id);
     List<String> getAvailableTechs();
     Set<String> getAvailableDevTypes();
     Integer getJobRecordCount();
     Integer getContractorJobCount(Long id);
+    Integer computeMainRecommenderAccuracy(Long userId);
+    Integer computeSecondaryRecommenderAccuracy(Long userId);
 }

@@ -27,3 +27,11 @@
   margin: 50px 10% 30px;
   display: flex;
 }
+
+.relevance-button-up:hover{
+  background-color: green;
+}
+
+.relevance-button-down:hover{
+  background-color: red;
+}

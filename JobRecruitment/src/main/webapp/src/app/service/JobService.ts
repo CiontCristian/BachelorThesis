@@ -93,9 +93,9 @@ export class JobService{
     "&jobId="+jobId, {observe: "response"});
   }
 
-  getRecommendedJobsIdsKNN(id: number): Observable<HttpResponse<number[]>>
+  getRecommendedJobsIdsKNN(jobId: number, userId): Observable<HttpResponse<number[]>>
   {
-    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIdsKNN", id, {observe: "response"});
+    return this.httpClient.post<number[]>(this.recommenderURL + "/getRecommendedJobsIdsKNN", [jobId, userId], {observe: "response"});
   }
 
   getRecommendedJobsIdsCBF(id: number): Observable<HttpResponse<number[]>>
@@ -114,5 +114,13 @@ export class JobService{
 
   getAvailableTechs(): Observable<HttpResponse<string[]>>{
     return this.httpClient.get<string[]>(this.jobURL + "/getAvailableTechs", {observe: "response"});
+  }
+
+  computeSecondaryRecommenderAccuracy(userId: number): Observable<HttpResponse<number>>{
+    return this.httpClient.get<number>(this.jobURL + "/computeSecondaryRecommenderAccuracy/"+userId, {observe: "response"});
+  }
+
+  computeMainRecommenderAccuracy(userId: number): Observable<HttpResponse<number>>{
+    return this.httpClient.get<number>(this.jobURL + "/computeMainRecommenderAccuracy/"+userId, {observe: "response"});
   }
 }

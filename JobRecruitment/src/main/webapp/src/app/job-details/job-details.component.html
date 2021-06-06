@@ -29,11 +29,11 @@
     <mat-divider></mat-divider>
     <div class="job-details-buttons">
       <button *ngIf="currentUser && !currentUser.permission.isCompany" mat-raised-button class="job-details-button"
-              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested)" (click)="vote(true)">
+              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested)" (click)="rateJob(true)">
         <mat-icon>thumb_up</mat-icon>
       </button>
       <button *ngIf="currentUser && !currentUser.permission.isCompany" mat-raised-button class="job-details-button"
-              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested === false)" (click)="vote(false)">
+              [disabled]="currentUser === null || currentUser.permission.isAdmin || (preference && preference.interested === false)" (click)="rateJob(false)">
         <mat-icon>thumb_down</mat-icon>
       </button>
       <br>
@@ -47,9 +47,27 @@
       </button>
     </div>
     <div *ngIf="similarJobs">
-      <mat-grid-list class="grid-list" cols="3" rowHeight="300px" gutterSize="50px">
-
-        <mat-grid-tile class="grid-tile" *ngFor="let job of similarJobs" [colspan]="1" [rowspan]="1"><app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card></mat-grid-tile>
+      <button mat-raised-button style="margin-left: 10px"
+              [disabled]="currentUser === null || !currentUser.permission.isClient" (click)="showAccuracy()"> Show accuracy
+        <mat-icon>wifi_tethering</mat-icon>
+      </button>
+      <span *ngIf="toggleAccuracy && accuracy !== 0">Accuracy: {{accuracy}}%</span>
+      <span *ngIf="toggleAccuracy && accuracy === 0">Rate some recommendations first!</span>
+      <mat-grid-list class="grid-list" cols="3" rowHeight="375px" gutterSize="50px">
+        <mat-grid-tile class="grid-tile" *ngFor="let job of similarJobs" [colspan]="1" [rowspan]="1">
+          <div style="text-align: center">
+            <app-job-card [job]="job" (click)="navigateToJobDetails(job.id)"></app-job-card>
+            <br>
+            <button mat-raised-button (click)="rateRecommendation(true, job)"
+                    [disabled]="currentUser === null || !currentUser.permission.isClient" class="relevance-button-up">
+              <mat-icon>thumb_up</mat-icon>
+            </button>
+            <button mat-raised-button (click)="rateRecommendation(false, job)"
+                    [disabled]="currentUser === null || !currentUser.permission.isClient" class="relevance-button-down">
+              <mat-icon>thumb_down</mat-icon>
+            </button>
+          </div>
+        </mat-grid-tile>
 
       </mat-grid-list>
     </div>
