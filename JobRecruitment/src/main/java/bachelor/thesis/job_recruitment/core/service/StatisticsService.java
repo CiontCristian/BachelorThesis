@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface StatisticsService {
     List<Statistic> companiesWithNumberOfOffers();
-    List<Statistic> mostLikedJobs();
+    List<Statistic> mostLikedCompanies();
     List<Statistic> mostAppliedJobsForContractor(Long id);
 }

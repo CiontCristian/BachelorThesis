@@ -50,7 +50,7 @@ export class JobListComponent implements OnInit {
       .subscribe(response => {
         this.verticalChart = response.body;
       });
-    this.statisticsService.mostLikedJobs()
+    this.statisticsService.mostLikedCompanies()
       .subscribe(response => {
         this.pieChart = response.body;
       })

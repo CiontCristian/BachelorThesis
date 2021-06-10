@@ -192,13 +192,18 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public Integer countLikedJobPreferences(Long id) {
-        //log.trace("In JobServiceImpl - method: countLikedJobPreferences() - id={}", id);
-
-        return (int)preferenceRepository.findAll().stream()
-                .filter(preference -> preference.getJob().getId().equals(id))
-                .filter(preference -> preference.getInterested() != null && preference.getInterested().equals(true))
+    public Long countPreferencesForJob(Long jobId) {
+        return preferenceRepository.findAll().stream()
+                .filter(preference -> preference.getJob().getId().equals(jobId))
+                .filter(preference -> preference.getInterested() != null && preference.getInterested())
                 .count();
+    }
+
+    @Override
+    public Integer countCompanyLikes(Long id) {
+        //log.trace("In JobServiceImpl - method: countCompanyLikes() - id={}", id);
+        return (int)findJobsForContractor(id).stream().mapToLong(job -> countPreferencesForJob(job.getId()))
+                .reduce(0, Long::sum);
     }
 
     @Override
@@ -257,7 +262,7 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Integer getContractorJobCount(Long id) {
-        log.trace("In JobServiceImpl - method: getContractorJobCount() - id={}", id);
+        //log.trace("In JobServiceImpl - method: getContractorJobCount() - id={}", id);
 
         return (int) jobRepository.findAll().stream()
                 .filter(job -> job.getContractor().getId().equals(id)).count();

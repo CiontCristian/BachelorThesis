@@ -40,23 +40,19 @@ public class StatisticsServiceImpl implements  StatisticsService{
     }
 
     @Override
-    public List<Statistic> mostLikedJobs() {
-        log.trace("In StatisticsServiceImpl - method: mostLikedJobs()");
+    public List<Statistic> mostLikedCompanies() {
+        log.trace("In StatisticsServiceImpl - method: mostLikedCompanies()");
 
         List<Statistic> statistics = new ArrayList<>();
-        jobService.findAll().forEach(
-                job -> {
-                    Statistic statistic = new Statistic(job.getTitle(),
-                            jobService.countLikedJobPreferences(job.getId()));
-                    statistics.add(statistic);
-
-                }
-        );
-
-        return statistics.stream()
-                .sorted(Comparator.comparingInt(Statistic::getValue).reversed())
-                .limit(10L)
-                .collect(Collectors.toList());
+        contractorRepository.findAll()
+                .forEach(
+                        contractor -> {
+                            Statistic statistic = new Statistic(contractor.getName(),
+                                    jobService.countCompanyLikes(contractor.getId()));
+                            statistics.add(statistic);
+                        }
+                );
+        return statistics;
     }
 
     @Override
@@ -71,6 +67,9 @@ public class StatisticsServiceImpl implements  StatisticsService{
                     statistics.add(statistic);
                 }
         );
-        return statistics;
+        return statistics.stream()
+                .sorted(Comparator.comparingInt(Statistic::getValue).reversed())
+                .limit(10L)
+                .collect(Collectors.toList());
     }
 }

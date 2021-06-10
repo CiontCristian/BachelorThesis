@@ -26,9 +26,9 @@ public class StatisticsController {
         return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/mostLikedJobs")
-    ResponseEntity<List<Statistic>> mostLikedJobs(){
-        List<Statistic> statistics = statisticsService.mostLikedJobs();
+    @GetMapping(value = "/mostLikedCompanies")
+    ResponseEntity<List<Statistic>> mostLikedCompanies(){
+        List<Statistic> statistics = statisticsService.mostLikedCompanies();
         return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 

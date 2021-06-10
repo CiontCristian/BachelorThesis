@@ -57,8 +57,6 @@ export class ContractorManageComponent implements OnInit {
   ngOnInit(): void {
     if(this.contractor === null)
       this.contractor = JSON.parse(sessionStorage.getItem("contractor"));
-    console.log(this.currentUser);
-    console.log(this.contractor);
 
     if(this.contractor !== null) {
       this.imageName = this.contractor.logo.name;
@@ -184,7 +182,6 @@ export class ContractorManageComponent implements OnInit {
 
     const dialogRef = this.dialog.open(JobModifyComponent,{
       width: '50%',
-      height: '80vh',
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {

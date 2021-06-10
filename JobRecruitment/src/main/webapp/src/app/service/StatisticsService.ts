@@ -18,9 +18,9 @@ export class StatisticsService{
     return this.httpClient.get<any>(this.statisticURL + "/companiesWithNumberOfOffers" ,{observe: "response"});
   }
 
-  mostLikedJobs(): Observable<HttpResponse<any[]>>
+  mostLikedCompanies(): Observable<HttpResponse<any[]>>
   {
-    return this.httpClient.get<any>(this.statisticURL + "/mostLikedJobs" ,{observe: "response"});
+    return this.httpClient.get<any>(this.statisticURL + "/mostLikedCompanies" ,{observe: "response"});
   }
 
   mostAppliedJobsForContractor(id: number): Observable<HttpResponse<any[]>>

@@ -13,7 +13,7 @@
     </mat-form-field>
     <br>
 
-    <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 50%">
+    <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 40%">
       <mat-label>Description</mat-label>
       <label>
           <textarea type="text" cols="50" matInput [formControl]="descriptionForm" required
@@ -52,7 +52,7 @@
     <br>
 
     <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 50%">
-      <mat-label>Dev Type</mat-label>
+      <mat-label>Developer Type</mat-label>
       <mat-chip-list #chipListDev aria-label="Dev selection">
         <mat-chip
           *ngFor="let dev of devTypes"
