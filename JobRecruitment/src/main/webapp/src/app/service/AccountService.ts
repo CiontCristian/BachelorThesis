@@ -30,7 +30,6 @@ export class AccountService{
   }
 
   register(user: User) : Observable<HttpResponse<User>>{
-    console.log(user)
     return this.httpClient.post<User>( this.accountURL + '/register', user, {observe: "response"});
   }
 

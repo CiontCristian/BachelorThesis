@@ -7,7 +7,7 @@
           <form [formGroup]="generalFormGroup">
 
             <ng-template matStepLabel>General Info</ng-template>
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
               <label>
                 <input type="text" matInput formControlName="nameForm" required
@@ -20,10 +20,10 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" style="width: 50%;">
               <mat-label>Description</mat-label>
               <label>
-              <textarea type="text" matInput formControlName="descriptionForm" required
+              <textarea type="text" cols="50" matInput formControlName="descriptionForm" required
                         placeholder="Ex. Desc"></textarea>
               </label>
               <mat-hint>Errors appear instantly!</mat-hint>
@@ -33,7 +33,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill">
               <mat-label>Number of Employees</mat-label>
               <label>
                 <input type="text" matInput formControlName="nrOfEmployeesForm" required

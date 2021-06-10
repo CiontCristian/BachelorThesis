@@ -1,7 +1,8 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer class="mat-drawer-sidenav" mode="side" opened>
       <h1 *ngIf="contractor === null">Register your company before adding jobs!</h1>
-      <button mat-mini-fab class="contractor-manage-button" *ngIf="contractor !== null" (click)="openAddJobDialog()">
+      <button matTooltip="Add offer"
+        mat-mini-fab class="contractor-manage-button" *ngIf="contractor !== null" (click)="openAddJobDialog()">
         <mat-icon>add</mat-icon>
       </button>
 
@@ -9,19 +10,21 @@
       <mat-accordion  *ngIf="contractor">
         <h2>Offers:</h2>
 
-        <mat-expansion-panel  *ngFor="let job of jobs" (opened)="getJobsCandidates(job.id)">
+        <mat-expansion-panel matTooltip="View candidates"  *ngFor="let job of jobs" (opened)="getJobsCandidates(job.id)">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <table>
                 <tr>
                   <td><b>{{job.title}}</b></td>
                   <td>
-                    <button mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
+                    <button matTooltip="Edit offer"
+                      mat-icon-button aria-label="Edit icon" (click)="openModifyJobDialog(job)">
                       <mat-icon>edit</mat-icon>
                     </button>
                   </td>
                   <td>
-                    <button mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id, job.title)">
+                    <button matTooltip="Remove offer"
+                      mat-icon-button aria-label="Delete icon" (click)="openRemoveJobDialog(job.id, job.title)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>
@@ -91,30 +94,39 @@
             <form [formGroup]="generalFormGroup">
               <ng-template matStepLabel>General Info</ng-template>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <mat-form-field appearance="fill">
                 <mat-label>Name</mat-label>
                 <label>
                   <input type="text" matInput formControlName="nameForm"
                          placeholder="Ex. Delgado">
                 </label>
+                <mat-error *ngIf="this.generalFormGroup.get('nameForm').hasError('required')">
+                  Name is required
+                </mat-error>
               </mat-form-field>
               <br>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <mat-form-field appearance="fill" style="width: 50%">
                 <mat-label>Description</mat-label>
                 <label>
-              <textarea type="text" matInput formControlName="descriptionForm" required
+              <textarea type="text" cols="50" matInput formControlName="descriptionForm" required
                         placeholder="Ex. Desc"></textarea>
                 </label>
+                <mat-error *ngIf="this.generalFormGroup.get('descriptionForm').hasError('required')">
+                  Description is required
+                </mat-error>
               </mat-form-field>
               <br>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <mat-form-field appearance="fill">
                 <mat-label>Number of Employees</mat-label>
                 <label>
                   <input type="text" matInput formControlName="nrOfEmployeesForm" required
                          placeholder="Ex. Delgado">
                 </label>
+                <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
+                  Nr. of Employees is required
+                </mat-error>
               </mat-form-field>
               <br>
 
@@ -146,7 +158,9 @@
           </mat-step>
 
         </mat-horizontal-stepper>
-        <button type="submit" mat-raised-button class="contractor-manage-button" [disabled]="contractor === null">Confirm</button>
+        <button type="submit" mat-raised-button class="contractor-manage-button" [disabled]="contractor === null
+          || this.generalFormGroup.get('nameForm').invalid ||
+     this.generalFormGroup.get('descriptionForm').invalid || this.generalFormGroup.get('nrOfEmployeesForm').invalid">Confirm</button>
       </form>
     </div>
 

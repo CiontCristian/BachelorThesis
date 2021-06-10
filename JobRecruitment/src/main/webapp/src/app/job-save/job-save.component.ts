@@ -7,6 +7,7 @@ import {User} from "../model/User";
 import {COMMA, ENTER, SPACE} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {Contractor} from "../model/Contractor";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-job-save',
@@ -31,14 +32,15 @@ export class JobSaveComponent implements OnInit {
   techsForm = new FormControl('', [Validators.required]);
   selectable = true;
   removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
   techs: string[] = [];
 
   minCompForm = new FormControl('');
   availablePosForm = new FormControl('1', [Validators.required]);
 
   constructor(@Inject(MAT_DIALOG_DATA) data,
-              private jobService: JobService) { }
+              private jobService: JobService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     console.log(this.contractor);
@@ -52,7 +54,7 @@ export class JobSaveComponent implements OnInit {
 
     console.log(job);
     this.jobService.saveJob(job).subscribe(
-      response => {
+      response => {this.snackBar.open("Job added successfully!","",{duration: 3000})
       },
       error => console.log(error)
     );
@@ -105,7 +107,5 @@ export class JobSaveComponent implements OnInit {
 
   setRemote(checked: boolean) {
     this.remote = checked;
-    console.log(this.remote);
-    console.log(this.remoteForm.value);
   }
 }

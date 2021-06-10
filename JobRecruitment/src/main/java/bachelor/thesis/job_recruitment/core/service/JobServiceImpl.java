@@ -27,7 +27,7 @@ public class JobServiceImpl implements JobService{
     @Override
     public List<Job> findAll(Integer pageIndex, Integer pageSize, String sortType, Filter criteria) {
         PageRequest pageRequest;
-        if(sortType.equals("minCompensation")){
+        if(sortType.equals("minCompensation") || sortType.equals("dateAdded")){
             pageRequest = PageRequest.of(pageIndex, pageSize, Sort.by(sortType).descending());
         }
         else{
@@ -116,7 +116,7 @@ public class JobServiceImpl implements JobService{
 
         List<Long> contractorIds = contractorService.findContractorIds();
         Random random = new Random();
-        jobRepository.deleteAll();
+        findAll().forEach(job -> remove(job.getId()));
         jobs.forEach(job -> job.setContractor(contractorService.
                 findById(contractorIds.get(random.nextInt(contractorIds.size()))).orElse(new Contractor())));
 

@@ -24,8 +24,8 @@
             <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
               <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="this.generalFormGroup.get('passwordForm').hasError('required')">
-              Password is required
+            <mat-error *ngIf="this.generalFormGroup.get('passwordForm').invalid">
+              {{getPasswordErrorMessage()}}
             </mat-error>
           </mat-form-field>
           <br>
@@ -118,42 +118,30 @@
 
           <div *ngIf="this.backgroundFormGroup.get('permissionForm').value === 'client'">
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" class="register_form_field" style="width: 35%">
 
               <mat-label>Preferred Technologies</mat-label>
-              <mat-select formControlName="techsForm" multiple required *ngIf="availableTechs !== null">
+              <mat-select formControlName="techsForm" multiple *ngIf="availableTechs !== null">
                 <mat-option *ngFor="let tech of availableTechs" [value]="tech">{{tech}}</mat-option>
               </mat-select>
-
-              <mat-error *ngIf="this.backgroundFormGroup.get('techsForm').hasError('required')">
-                At least one tech is required
-              </mat-error>
             </mat-form-field>
 
             <br>
 
-            <mat-form-field appearance="fill">
-
+            <mat-form-field appearance="fill" class="register_form_field" style="width: 35%">
               <mat-label>Preferred Developer Domain</mat-label>
-              <mat-select formControlName="devTypeForm" multiple required *ngIf="availableDevTypes !== null">
+              <mat-select formControlName="devTypeForm" multiple *ngIf="availableDevTypes !== null">
                 <mat-option *ngFor="let dev of availableDevTypes" [value]="dev">{{dev}}</mat-option>
               </mat-select>
-
-              <mat-error *ngIf="this.backgroundFormGroup.get('devTypeForm').hasError('required')">
-                At least one tech is required
-              </mat-error>
             </mat-form-field>
 
             <br>
 
             <mat-form-field appearance="fill" class="register_form_field">
               <mat-label>Experience</mat-label>
-              <mat-select formControlName="experienceForm" required>
+              <mat-select formControlName="experienceForm">
                 <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
               </mat-select>
-              <mat-error *ngIf="this.backgroundFormGroup.get('experienceForm').hasError('required')">
-                Please specify your experience!
-              </mat-error>
             </mat-form-field>
             <br>
               <mat-label>Remote</mat-label>
@@ -162,13 +150,9 @@
 
             <mat-form-field appearance="fill" class="register_form_field">
               <mat-label>Job Type</mat-label>
-              <mat-select formControlName="jobTypeForm" multiple required>
+              <mat-select formControlName="jobTypeForm" multiple>
                 <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
               </mat-select>
-
-              <mat-error *ngIf="this.backgroundFormGroup.get('jobTypeForm').hasError('required')">
-                Please specify the job type!
-              </mat-error>
             </mat-form-field>
           </div>
 
@@ -184,8 +168,7 @@
     <button type="submit" mat-raised-button class="register-button" [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
       || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
        this.generalFormGroup.get('birthDateForm').invalid ||
-      this.backgroundFormGroup.get('permissionForm').invalid ||
-      (this.backgroundFormGroup.get('permissionForm').value === 'client' && this.backgroundFormGroup.get('experienceForm').invalid ) ">Register</button>
+      this.backgroundFormGroup.get('permissionForm').invalid">Register</button>
   </form>
 
 </div>

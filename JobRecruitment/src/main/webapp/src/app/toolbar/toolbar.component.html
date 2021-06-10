@@ -1,9 +1,12 @@
 <div class="toolbar_menu">
   <mat-toolbar class="toolbar">
-    <button mat-mini-fab class="toolbar-settings-button" *ngIf="currentUser !== null" (click)="openModifyUserDialog(this.currentUser)">
+    <button matTooltip="Modify account"
+      mat-mini-fab class="toolbar-settings-button" *ngIf="currentUser !== null" (click)="openModifyUserDialog(this.currentUser)">
       <mat-icon>settings</mat-icon>
     </button>
-    <button mat-raised-button class="toolbar-button" routerLink="">Job Recruitment</button>
+    <button matTooltip="Home page"
+      mat-raised-button class="toolbar-button" routerLink="">
+      <mat-icon>card_travel</mat-icon> Job Recruitment</button>
     <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'M'" src="assets/male_avatar.png" alt="Generic Male Avatar">
     <img class="toolbar-img" *ngIf="currentUser !== null && currentUser.gender === 'F'" src="assets/female_avatar.png" alt="Generic Female Avatar">
     <span style="color: rgba(241,255,1,0.71)" *ngIf="currentUser">Welcome {{currentUser.firstName + ' ' + currentUser.lastName}}</span>
@@ -13,6 +16,7 @@
         <input type="search"
                placeholder="Search"
                matInput
+               matTooltip="Search by job title"
                class="search-input"
                [formControl]="searchForm"
                [matAutocomplete]="auto">
@@ -33,13 +37,11 @@
     <button mat-raised-button class="toolbar-button" routerLink="admin" *ngIf="currentUser && currentUser.permission.isAdmin">Settings
       <mat-icon>settings</mat-icon>
     </button>
-    <button mat-raised-button class="toolbar-button" routerLink="">Offers
-      <mat-icon>card_travel</mat-icon>
-    </button>
 
     <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser === null">Login</button>
     <button mat-raised-button class="toolbar-button" routerLink="register" *ngIf="currentUser === null">Register</button>
-    <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser" (click)="logout()">Logout</button>
+    <button mat-raised-button class="toolbar-button" routerLink="login" *ngIf="currentUser" (click)="logout()" matTooltip="Logout">
+      <mat-icon>exit_to_app</mat-icon>Logout</button>
   </mat-toolbar>
 </div>
 <div class="toolbar_body">

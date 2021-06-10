@@ -13,10 +13,10 @@
     </mat-form-field>
     <br>
 
-    <mat-form-field appearance="fill" class="job_modify_form_field">
+    <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 50%">
       <mat-label>Description</mat-label>
       <label>
-          <textarea type="text" matInput [formControl]="descriptionForm" required
+          <textarea type="text" cols="50" matInput [formControl]="descriptionForm" required
                     placeholder="Ex. Lalala"></textarea>
       </label>
       <mat-error *ngIf="descriptionForm.hasError('required')">
@@ -25,7 +25,7 @@
     </mat-form-field>
     <br>
 
-    <mat-form-field appearance="fill" class="job_modify_form_field">
+    <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 50%">
       <mat-label>Technologies</mat-label>
       <mat-chip-list #chipList aria-label="Tech selection">
         <mat-chip
@@ -51,40 +51,7 @@
     </mat-form-field>
     <br>
 
-    <mat-label>Remote</mat-label>
-    <label>
-      <mat-checkbox [(ngModel)]="remote"
-                    [formControl]="remoteForm"
-                    (change)="setRemote($event.checked)">
-      </mat-checkbox>
-    </label>
-    <br>
-
-    <mat-form-field appearance="fill">
-
-      <mat-label>Experience</mat-label>
-      <mat-select [formControl]="minExpForm" multiple required>
-        <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
-      </mat-select>
-
-      <mat-error *ngIf="minExpForm.hasError('required')">
-        MinExp is required
-      </mat-error>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field appearance="fill" class="job_modify_form_field">
-      <mat-label>Job Type</mat-label>
-      <mat-select [formControl]="jobTypeForm" multiple required>
-        <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="jobTypeForm.hasError('required')">
-        Job type is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="job_modify_form_field">
+    <mat-form-field appearance="fill" class="job_modify_form_field" style="width: 50%">
       <mat-label>Dev Type</mat-label>
       <mat-chip-list #chipListDev aria-label="Dev selection">
         <mat-chip
@@ -108,6 +75,39 @@
         Dev type is required
       </mat-error>
     </mat-form-field>
+    <br>
+
+    <mat-checkbox [checked]="remote"
+                  [formControl]="remoteForm"
+                  (change)="setRemote($event.checked)"
+                  [labelPosition]="'before'">
+      Remote
+    </mat-checkbox>
+
+    <br>
+
+    <mat-form-field appearance="fill">
+
+      <mat-label>Experience</mat-label>
+      <mat-select [formControl]="minExpForm" multiple required>
+        <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="minExpForm.hasError('required')">
+        MinExp is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="job_modify_form_field">
+      <mat-label>Job Type</mat-label>
+      <mat-select [formControl]="jobTypeForm" multiple required>
+        <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="jobTypeForm.hasError('required')">
+        Job type is required
+      </mat-error>
+    </mat-form-field>
+
 
     <br>
     <mat-form-field appearance="fill" class="job_modify_form_field">
@@ -137,5 +137,7 @@
 </div>
 <div mat-dialog-actions style="justify-content: center;">
   <button class="job_modify_button" mat-button mat-dialog-close = "cancel">Cancel</button>
-  <button class="job_modify_button" mat-button  (click)="modify()">Confirm</button>
+  <button class="job_modify_button" mat-button mat-dialog-close="confirm"
+          [disabled]="titleForm.invalid || descriptionForm.invalid || techs.length === 0 || devTypes.length === 0
+            || jobTypeForm.invalid || minExpForm.invalid || availablePosForm.invalid" (click)="modify()">Confirm</button>
 </div>

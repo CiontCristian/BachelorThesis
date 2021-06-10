@@ -35,7 +35,7 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.pipe(switchMap((params: Params) => this.jobService.getJob(+params['jobID'])))
       .subscribe(response => {this.job = response.body;
-        if(this.currentUser !== null && !this.currentUser.permission.isAdmin && !this.currentUser.permission.isCompany)
+        if(this.currentUser !== null && this.currentUser.permission.isClient)
           this.jobService.getJobPreferenceForUser(this.currentUser.id, this.job.id)
             .subscribe(response => {this.preference = response.body},
               error => console.log(error.error))});
@@ -108,7 +108,7 @@ export class JobDetailsComponent implements OnInit {
 
   getHaversineDistance(lat1, lat2, lng1, lng2) {
 
-    var R = 6378137; // Earth’s mean radius in meter
+    var R = 6378137; // Earth’s mean radius in meters
     var dLat = this.rad(lat2 - lat1);
     var dLong = this.rad(lng2 - lng1);
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +

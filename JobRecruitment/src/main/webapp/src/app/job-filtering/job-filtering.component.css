@@ -1,5 +1,5 @@
 .job-filtering{
-  text-align: center;
+
   margin: 50px 15% 30px;
 }
 
@@ -8,11 +8,10 @@
   color: rgba(241,255,1,0.71);
   text-align: center;
   font-size: large;
-  margin-left: 15px;
+  margin-left: 30px;
 }
 
 .filter_form_field{
   padding-left: 15px;
   padding-right: 15px;
-
 }

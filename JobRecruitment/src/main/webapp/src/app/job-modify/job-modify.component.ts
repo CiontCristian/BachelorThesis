@@ -7,6 +7,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {Job} from "../model/Job";
 import {MatChipInputEvent} from "@angular/material/chips";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-job-modify',
@@ -39,13 +40,15 @@ export class JobModifyComponent implements OnInit {
   availablePosForm = new FormControl('', [Validators.required]);
 
   constructor(@Inject(MAT_DIALOG_DATA) data,
-              private jobService: JobService) {
+              private jobService: JobService,
+              private snackBar: MatSnackBar) {
     this.job = data.job;
     this.titleForm.setValue(this.job.title);
     this.descriptionForm.setValue(this.job.description);
     this.jobTypeForm.setValue(this.job.jobType.split(','));
-    this.devTypeForm.setValue(this.job.devType.split(','));
-    this.remoteForm.setValue(this.setRemote(this.job.remote));
+    //this.devTypeForm.setValue(this.job.devType.split(','));
+    this.devTypes = this.job.devType.split(',')
+    this.remoteForm.setValue(this.job.remote);
     this.minExpForm.setValue(this.job.minExperience.split(','));
     //this.techsForm.setValue(this.job.techs.split(','));
     this.techs = this.job.techs.split(',');
@@ -104,8 +107,6 @@ export class JobModifyComponent implements OnInit {
 
   setRemote(checked: boolean) {
     this.remote = checked;
-    console.log(this.remote);
-    console.log(this.remoteForm.value);
   }
 
   modify() {
@@ -114,6 +115,8 @@ export class JobModifyComponent implements OnInit {
         : this.minCompForm.value, this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, this.job.dateAdded, this.job.contractor);
 
-    this.jobService.modifyJob(job).subscribe();
+    this.jobService.modifyJob(job).subscribe(
+      response => this.snackBar.open("Job modified successfully!", "", {duration:3000})
+    );
   }
 }

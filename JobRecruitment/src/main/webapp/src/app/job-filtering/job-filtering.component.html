@@ -14,9 +14,37 @@
         <mat-label>Title</mat-label>
         <label>
           <input type="text" matInput [formControl]="titleForm"
-                 placeholder="Ex. FullStack Dev Recruitment">
+                 placeholder="Ex. Java Developer">
         </label>
       </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter_form_field">
+        <mat-label>Min Compensation</mat-label>
+        <label>
+          <input type="text" matInput [formControl]="minCompForm"
+                 placeholder="Ex. 800$/month">
+        </label>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter_form_field">
+        <mat-label>Job Type</mat-label>
+        <mat-select [formControl]="jobTypeForm" multiple>
+          <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Experience</mat-label>
+        <mat-select [formControl]="minExpForm" multiple>
+          <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button class="filter-button"> Search
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <br>
 
       <mat-form-field appearance="fill" class="filter_form_field">
         <mat-label>Technologies</mat-label>
@@ -60,50 +88,15 @@
               (matChipInputTokenEnd)="add($event, 'dev')" required>
           </label>
         </mat-chip-list>
-
       </mat-form-field>
-
-      <mat-form-field appearance="fill" class="filter_form_field">
-        <mat-label>Job Type</mat-label>
-        <mat-select [formControl]="jobTypeForm" multiple>
-          <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <button type="submit" mat-raised-button class="filter-button"> Search
-        <mat-icon>search</mat-icon>
-      </button>
-
-      <br>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Experience</mat-label>
-        <mat-select [formControl]="minExpForm" multiple>
-          <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-label>Remote</mat-label>
-      <mat-slide-toggle [formControl]="remoteForm"></mat-slide-toggle>
-
-      <mat-form-field appearance="fill" class="filter_form_field">
-        <mat-label>Min Compensation</mat-label>
-        <label>
-          <input type="text" matInput [formControl]="minCompForm"
-                 placeholder="Ex. 800$/month">
-        </label>
-      </mat-form-field>
-
 
       <mat-label>Available Positions</mat-label>
-      <label>
-        <!--<input type="number" matInput [formControl]="availablePosForm" required
-               placeholder="Ex. 5">-->
-        <mat-slider
-          thumbLabel
-          min="1"
-          max="20" [formControl]="availablePosForm" required></mat-slider>
-      </label>
+      <mat-slider
+        thumbLabel
+        min="1"
+        max="20" [formControl]="availablePosForm" required></mat-slider>
+
+      <mat-slide-toggle [labelPosition]="'before'" [formControl]="remoteForm">Remote</mat-slide-toggle>
 
     </form>
   </mat-expansion-panel>

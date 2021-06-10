@@ -67,10 +67,12 @@ export class ContractorSaveComponent implements OnInit {
     this.formData.append("contractor", contractorBlob);
     this.contractorService.saveContractor(this.formData).subscribe(
       response => {
-        //sessionStorage.setItem("contractor", JSON.stringify(response.body))
-        //console.log("In add contractor dialog " + response.body);
+        this.snackBar.open("Company registered successfully", "You can start adding offers",
+          {duration: 3000})
       },
-      error => console.log(error)
+      error => {console.log(error);
+        this.snackBar.open("Company registration failed", "Try Again!",
+          {duration: 3000}) }
     );
   }
 

@@ -8,7 +8,7 @@ import {Job} from "../model/Job";
 import {User} from "../model/User";
 import {JobService} from "../service/JobService";
 import {Contractor} from "../model/Contractor";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Location} from "../model/Location";
 import {JobModifyComponent} from "../job-modify/job-modify.component";
 import {JobRemoveComponent} from "../job-remove/job-remove.component";
@@ -71,8 +71,9 @@ export class ContractorManageComponent implements OnInit {
       )
 
       this.generalFormGroup = this.formBuilder.group({
-        nameForm: new FormControl(this.contractor.name), descriptionForm: new FormControl(this.contractor.description),
-        nrOfEmployeesForm: new FormControl(this.contractor.nrOfEmployees), logoForm: new FormControl('')
+        nameForm: new FormControl(this.contractor.name, Validators.required), descriptionForm: new FormControl(this.contractor.description,
+          Validators.required),
+        nrOfEmployeesForm: new FormControl(this.contractor.nrOfEmployees, Validators.required), logoForm: new FormControl('')
       })
 
       this.statisticsService.mostAppliedJobsForContractor(this.contractor.id)
@@ -93,7 +94,6 @@ export class ContractorManageComponent implements OnInit {
 
     const dialogRef = this.dialog.open(JobSaveComponent,{
       width: '50%',
-      height: '80vh',
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {

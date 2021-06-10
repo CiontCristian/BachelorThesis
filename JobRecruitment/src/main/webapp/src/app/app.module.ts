@@ -108,10 +108,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         NgxChartsModule,
         MatTooltipModule
     ],
-  providers: [AccountService, JobService, ContractorService, StatisticsService,{
-    provide: STEPPER_GLOBAL_OPTIONS,
-    useValue: { displayDefaultIndicatorType: false }
-  }],
+  providers: [AccountService, JobService, ContractorService, StatisticsService],
   bootstrap: [AppComponent],
   entryComponents: [JobSaveComponent]
 })

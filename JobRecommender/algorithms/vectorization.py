@@ -1,4 +1,4 @@
-
+from pandas.core.common import flatten
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from sklearn.preprocessing import normalize as normalizer
@@ -9,8 +9,9 @@ def getJobFeatures(jobs, input_id=-1, knn=False):
     vectorString = ""
     input_vector_string = ""
     for job in jobs:
-        vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-            job.remote).strip() + "," + job.techs.strip()
+        #vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
+        #    job.remote).strip() + "," + job.techs.strip()
+        vectorString += job.minExperience.strip() +  "," + job.devType.strip() + "," + job.techs.strip()
         headers.append(vectorString)
         if knn and job.id == input_id:
             input_vector_string = vectorString
@@ -23,8 +24,9 @@ def getJobFeatures(jobs, input_id=-1, knn=False):
 
 def getUserBackgroundFeatures(background):
     vectorString = ""
-    vectorString += background[1] + "," + background[2] + "," + background[0] + "," + str(
-        background[3]) + "," + background[4]
+    #vectorString += background[1] + "," + background[2] + "," + background[0] + "," + str(
+    #    background[3]) + "," + background[4]
+    vectorString += background[1] + "," + background[0] + "," + background[4]
     return vectorString
 
 
@@ -35,15 +37,17 @@ def vectorizeUserPreferences(jobs, preferences):
         for preference in preferences:
             if job.id == preference.job_id:
                 found = True
-                if preference.interested:
+                if preference.interested == True:
                     vector.append(1)
-                else:
+                elif preference.interested == False:
                     vector.append(-1)
+                else:
+                    vector.append(0)
                 break
         if not found:
             vector.append(0)
         found = False
-
+    print("Preference vector: " + str(vector))
     return vector
 
 
@@ -66,14 +70,17 @@ def vectorizeDataCBF(jobs, preferences, background):
     headers.append(background_features)
     vectorized_preferences = vectorizeUserPreferences(jobs, preferences)
     vectorized_preferences = np.array(vectorized_preferences)
-
+    print("Preference vectorized: " + str(vectorized_preferences))
 
     vectorizer = CountVectorizer()
+    normalized_preferences = list(flatten(normalizer(vectorized_preferences.reshape(1,-1), 'l2')))
+    print("aaa" + str(normalized_preferences))
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
+
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
     print("Number of vectorized entities: " + str(len(normalized_jobs)))
 
     vectorized_background = normalized_jobs[-1]
     vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
 
-    return vectorized_jobs, vectorized_preferences, vectorized_background
+    return vectorized_jobs, normalized_preferences, vectorized_background

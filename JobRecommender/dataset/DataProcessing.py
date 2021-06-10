@@ -13,9 +13,10 @@ def processJobDataset():
         usecols=[col for col in headers if col != 'Uniq Id' and col != 'Crawl Timestamp'])
 
     df = df.drop(df[(df['Industry'] != 'IT-Software, Software Services') | (
-            df['Role Category'] != 'Programming & Design') | (df['Job Experience Required'] == '')].index)
+            df['Role Category'] != 'Programming & Design') | (df['Job Experience Required'] == '')
+                    | (df['Key Skills'] == '')].index)
 
-    jobs = df.sample(200)
+    jobs = df.sample(600)
 
     return jobs
 
@@ -59,7 +60,11 @@ def remodelTechs(techs):
 def cleanDataset():
     df = processJobDataset()
     jobs = []
+    sec = 0
     for index, row in df.iterrows():
+        techs = remodelTechs(row['Key Skills'])
+        if techs == "nan" or techs == " " or techs == "":
+            continue
         job = Job(index, str(row['Job Title']).strip(),
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis eros purus, id varius erat pretium quis."
                   " Donec lobortis elit at euismod laoreet. Nam finibus augue vel posuere scelerisque. Maecenas eu augue iaculis, ultrices lacus nec,"
@@ -77,6 +82,8 @@ def cleanDataset():
                   classifyJobExperience(row['Job Experience Required']), random.randint(1000, 3500),
                   str(row['Role']),
 
-                  remodelTechs(row['Key Skills']), random.randint(1, 10), datetime.datetime.now(), None)
+                  techs, random.randint(1, 10), datetime.datetime.now() + datetime.timedelta(seconds=sec), None)
+        sec += 1
+
         jobs.append(job)
     return jobs

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
           this.currentUser = response.body;
 
-          this.snackBar.open("Login successful!", "Welcome", {duration: 3000});
+          this.snackBar.open("Login successful!", "Welcome!", {duration: 3000});
           sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
           if(this.currentUser.permission.isCompany){
             this.contractorService.findContractorForUser(this.currentUser.id).subscribe(
@@ -62,8 +62,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate([""]);
         },
           error => {
-            console.log(error);
-            this.snackBar.open(error.error, "Retry", {duration: 3000});
+            console.log(error.error);
+            this.snackBar.open(error.error, "Retry!", {duration: 3000});
             this.currentUser = null;
           })
   }

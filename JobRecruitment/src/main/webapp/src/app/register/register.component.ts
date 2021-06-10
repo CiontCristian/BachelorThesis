@@ -48,16 +48,16 @@ export class RegisterComponent implements OnInit {
       emailForm : new FormControl('', [
         Validators.required,
         Validators.email
-      ]), passwordForm: new FormControl('', [Validators.required]),
+      ]), passwordForm: new FormControl('', [Validators.required,Validators.minLength(4)]),
       firstNameForm: new FormControl('', [Validators.required]), lastNameForm: new FormControl('', [Validators.required]),
       birthDateForm: new FormControl('', [Validators.required]),
       genderForm : new FormControl('M', [Validators.required])
     });
 
     this.backgroundFormGroup = this.formBuilder.group({
-      techsForm: new FormControl('', [Validators.required]), experienceForm: new FormControl('', [Validators.required]),
-      permissionForm: new FormControl('', Validators.required), jobTypeForm: new FormControl('', Validators.required),
-      devTypeForm: new FormControl('', Validators.required),remoteForm: new FormControl(false, Validators.required)
+      techsForm: new FormControl(''), experienceForm: new FormControl(''),
+      permissionForm: new FormControl('', Validators.required), jobTypeForm: new FormControl(''),
+      devTypeForm: new FormControl(''),remoteForm: new FormControl(false)
     });
 
     this.jobService.getAvailableTechs()
@@ -76,6 +76,14 @@ export class RegisterComponent implements OnInit {
     return this.generalFormGroup.get('emailForm').hasError('email') ? 'Not a valid email' : '';
   }
 
+  getPasswordErrorMessage(){
+    if (this.generalFormGroup.get('passwordForm').hasError('required')) {
+      return 'Password is required!';
+    }
+
+    return this.generalFormGroup.get('passwordForm').hasError('minlength') ? 'Password too short!' : '';
+  }
+
   register() {
     const value = this.backgroundFormGroup.get('permissionForm').value === 'client';
     let permission : Permission = new Permission(null, value === true, value !== true, false);
@@ -90,16 +98,14 @@ export class RegisterComponent implements OnInit {
       new Date(this.generalFormGroup.get('birthDateForm').value), this.generalFormGroup.get('genderForm').value, background,
      permission, location);
 
-
-    console.log(newUser)
     this.accountService.register(newUser).subscribe( response => {
         this.registeredUser = response.body;
-        this.snackBar.open("Registration Successful", "Go to login!")
+        this.snackBar.open("Registration Successful", "Go to login!", {duration: 3000})
         this.router.navigate(["login"]);
     },
       error => {
         console.log(error);
-        this.snackBar.open("Email or username already taken", "Registration Failed!")
+        this.snackBar.open("Email already taken", "Registration Failed!", {duration: 3000})
       });
   }
 
