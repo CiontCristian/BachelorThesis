@@ -112,7 +112,7 @@ export class JobModifyComponent implements OnInit {
   modify() {
     let job: Job = new Job(this.job.id, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
       this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
-        : this.minCompForm.value, this.devTypes.toString(),
+        : Math.abs(this.minCompForm.value), this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, this.job.dateAdded, this.job.contractor);
 
     this.jobService.modifyJob(job).subscribe(

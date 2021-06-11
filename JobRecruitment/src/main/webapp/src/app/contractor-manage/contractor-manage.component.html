@@ -72,13 +72,13 @@
         <mat-icon>add</mat-icon>
       </button>
 
-      <form (ngSubmit)="modify()" *ngIf="contractor">
+      <form (ngSubmit)="modify()" *ngIf="contractor && generalFormGroup">
         <div class="contractor-manage-statistics">
           <ngx-charts-bar-horizontal
             [view]="[700,400]"
             [results]="horizontalChart"
             [scheme]=""
-            [xAxisLabel]="'Company'"
+            [xAxisLabel]="'Applicants'"
             [yAxisLabel]="'Offers'"
             [legend]="true"
             [showXAxisLabel]="true"
@@ -121,7 +121,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Number of Employees</mat-label>
                 <label>
-                  <input type="text" matInput formControlName="nrOfEmployeesForm" required
+                  <input type="number" min="1" matInput formControlName="nrOfEmployeesForm" required
                          placeholder="Ex. Delgado">
                 </label>
                 <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
@@ -133,7 +133,7 @@
               <mat-label>Logo
                 <button mat-button (click)="uploadImageEvent()" class="contractor-manage-button">Upload</button>
                 <span *ngIf="imageName !== ''">{{imageName}}</span>
-                <input #imageUpload type="file" style="display: none;" formControlName="logoForm">
+                <input #imageUpload type="file" accept="image/png, image/jpg, image/jpeg" style="display: none;" formControlName="logoForm">
               </mat-label>
 
               <div>

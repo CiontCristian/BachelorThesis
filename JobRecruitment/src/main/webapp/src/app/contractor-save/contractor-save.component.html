@@ -13,7 +13,6 @@
                 <input type="text" matInput formControlName="nameForm" required
                        placeholder="Ex. Delgado">
               </label>
-              <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="this.generalFormGroup.get('nameForm').hasError('required')">
                 Name is required
               </mat-error>
@@ -26,7 +25,6 @@
               <textarea type="text" cols="50" matInput formControlName="descriptionForm" required
                         placeholder="Ex. Desc"></textarea>
               </label>
-              <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="this.generalFormGroup.get('descriptionForm').hasError('required')">
                 Desc is required
               </mat-error>
@@ -36,10 +34,9 @@
             <mat-form-field appearance="fill">
               <mat-label>Number of Employees</mat-label>
               <label>
-                <input type="text" matInput formControlName="nrOfEmployeesForm" required
+                <input type="number" min="1" matInput formControlName="nrOfEmployeesForm" required
                        placeholder="Ex. Delgado">
               </label>
-              <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
                 nrOfEmployees is required
               </mat-error>
@@ -50,12 +47,12 @@
             <label>
               <button mat-button (click)="uploadImageEvent()" class="contractor-save-button">Upload</button>
               {{imageName}}
-              <input #imageUpload type="file" style="display: none;" formControlName="logoForm" required>
+              <input #imageUpload type="file" accept="image/png, image/jpg, image/jpeg" style="display: none;" formControlName="logoForm" required>
             </label>
             <mat-error *ngIf="this.generalFormGroup.get('logoForm').hasError('required')">
               Logo is required
             </mat-error>
-
+            <mat-hint>Upload the image in .png or .jpeg format!</mat-hint>
 
             <div>
               <button mat-button matStepperNext>Next</button>

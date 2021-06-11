@@ -49,7 +49,7 @@ export class JobSaveComponent implements OnInit {
   register(): void{
     let job: Job = new Job(0, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
       this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
-      : this.minCompForm.value, this.devTypes.toString(),
+      : Math.abs(this.minCompForm.value), this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, new Date(Date.now()), this.contractor);
 
     console.log(job);

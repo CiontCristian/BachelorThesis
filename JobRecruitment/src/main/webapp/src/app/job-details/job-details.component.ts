@@ -122,6 +122,7 @@ export class JobDetailsComponent implements OnInit {
   removeJob(id: number) {
     this.jobService.removeJob(id)
       .subscribe(response => console.log("Job Removed!"));
+    this.router.navigate(['']);
   }
 
   rateRecommendation(relevanceSec: boolean, job: Job) {

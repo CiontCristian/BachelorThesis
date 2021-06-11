@@ -46,11 +46,11 @@ export class UserModifyComponent implements OnInit {
 
     if(this.currentUser.permission.isClient){
       this.backgroundFormGroup = this.formBuilder.group({
-        techsForm: new FormControl(this.currentUser.background.techs.split(','), [Validators.required]),
-        experienceForm: new FormControl(this.currentUser.background.experience, [Validators.required]),
-        jobTypeForm: new FormControl(this.currentUser.background.jobType.split(','), Validators.required),
-        devTypeForm: new FormControl(this.currentUser.background.devType.split(','), Validators.required),
-        remoteForm: new FormControl(this.currentUser.background.remote, Validators.required)
+        techsForm: new FormControl(this.currentUser.background.techs.split(',')),
+        experienceForm: new FormControl(this.currentUser.background.experience),
+        jobTypeForm: new FormControl(this.currentUser.background.jobType.split(',')),
+        devTypeForm: new FormControl(this.currentUser.background.devType.split(',')),
+        remoteForm: new FormControl(this.currentUser.background.remote)
       });
 
       this.jobService.getAvailableTechs()

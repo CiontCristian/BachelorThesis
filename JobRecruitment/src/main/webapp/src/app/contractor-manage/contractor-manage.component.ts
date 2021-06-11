@@ -77,8 +77,6 @@ export class ContractorManageComponent implements OnInit {
       this.statisticsService.mostAppliedJobsForContractor(this.contractor.id)
         .subscribe(response => {
           this.horizontalChart = response.body;
-          console.log(response.body);
-          console.log(this.horizontalChart);
         });
 
     }
@@ -146,15 +144,20 @@ export class ContractorManageComponent implements OnInit {
     let location: Location = new Location(this.contractor.location.id, this.latitude, this.longitude);
     let contractor: Contractor;
     if(this.image !== null) {
+      console.log(this.image.type);
+      if(this.image.type !== "image/png" && this.image.type !== "image/jpeg"){
+        this.snackBar.open("Please upload an image in .png or .jpg format!", "Retry!", {duration: 3000});
+        return;
+      }
       this.formData.append("file", this.image, this.image.name);
       contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
-        this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
+        this.generalFormGroup.get('descriptionForm').value, Math.abs(this.generalFormGroup.get('nrOfEmployeesForm').value),
         null, location, this.currentUser);
     }
     else{
       this.formData.append("file", new Blob([]),"no_change");
       contractor = new Contractor(this.contractor.id, this.generalFormGroup.get('nameForm').value,
-        this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
+        this.generalFormGroup.get('descriptionForm').value, Math.abs(this.generalFormGroup.get('nrOfEmployeesForm').value),
         this.contractor.logo, location, this.currentUser);
     }
 

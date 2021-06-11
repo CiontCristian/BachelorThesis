@@ -47,7 +47,6 @@ def vectorizeUserPreferences(jobs, preferences):
         if not found:
             vector.append(0)
         found = False
-    print("Preference vector: " + str(vector))
     return vector
 
 
@@ -70,11 +69,10 @@ def vectorizeDataCBF(jobs, preferences, background):
     headers.append(background_features)
     vectorized_preferences = vectorizeUserPreferences(jobs, preferences)
     vectorized_preferences = np.array(vectorized_preferences)
-    print("Preference vectorized: " + str(vectorized_preferences))
 
     vectorizer = CountVectorizer()
     normalized_preferences = list(flatten(normalizer(vectorized_preferences.reshape(1,-1), 'l2')))
-    print("aaa" + str(normalized_preferences))
+    print("Normalized preference vector" + str(normalized_preferences))
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
 
     normalized_jobs = normalizer(vectorized_jobs, 'l2')

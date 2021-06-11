@@ -57,10 +57,15 @@ export class ContractorSaveComponent implements OnInit {
   register() {
     let location: Location = new Location(null, this.latitude, this.longitude);
 
+    console.log(this.image.type);
+    if(this.image.type !== "image/png" && this.image.type !== "image/jpeg"){
+      this.snackBar.open("Please upload an image in .png or .jpg format!", "Retry!", {duration: 3000});
+      return;
+    }
+
     this.formData.append("file", this.image, this.image.name);
-    console.log(this.image);
     let contractor: Contractor = new Contractor(0, this.generalFormGroup.get('nameForm').value,
-      this.generalFormGroup.get('descriptionForm').value, this.generalFormGroup.get('nrOfEmployeesForm').value,
+      this.generalFormGroup.get('descriptionForm').value, Math.abs(this.generalFormGroup.get('nrOfEmployeesForm').value),
       null, location,  this.currentUser);
 
     const contractorBlob = new Blob([JSON.stringify(contractor)],{ type: "application/json"})
