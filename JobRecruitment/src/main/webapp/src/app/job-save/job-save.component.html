@@ -19,12 +19,9 @@
         <mat-form-field appearance="fill" class="job_save_form_field" style="width: 40%">
           <mat-label>Description</mat-label>
           <label>
-            <textarea type="text" cols="50" matInput [formControl]="descriptionForm" required
+            <textarea type="text" cols="50" matInput [formControl]="descriptionForm"
                       placeholder="Ex. Description"></textarea>
           </label>
-          <mat-error *ngIf="descriptionForm.hasError('required')">
-            Desc is required
-          </mat-error>
         </mat-form-field>
         <br>
 
@@ -141,7 +138,7 @@
   <div mat-dialog-actions style="justify-content: center;">
     <button class="job-save-button" mat-button mat-dialog-close="cancel">Cancel</button>
     <button class="job-save-button" mat-button mat-dialog-close="confirm"
-           [disabled]="titleForm.invalid || descriptionForm.invalid || techs.length === 0 || devTypes.length === 0
+           [disabled]="titleForm.invalid || techs.length === 0 || devTypes.length === 0
             || jobTypeForm.invalid || minExpForm.invalid || availablePosForm.invalid" (click)="register()">Confirm</button>
   </div>
 </div>

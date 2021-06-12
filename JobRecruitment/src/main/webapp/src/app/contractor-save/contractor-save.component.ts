@@ -57,7 +57,6 @@ export class ContractorSaveComponent implements OnInit {
   register() {
     let location: Location = new Location(null, this.latitude, this.longitude);
 
-    console.log(this.image.type);
     if(this.image.type !== "image/png" && this.image.type !== "image/jpeg"){
       this.snackBar.open("Please upload an image in .png or .jpg format!", "Retry!", {duration: 3000});
       return;
@@ -75,7 +74,7 @@ export class ContractorSaveComponent implements OnInit {
         this.snackBar.open("Company registered successfully", "You can start adding offers",
           {duration: 3000})
       },
-      error => {console.log(error);
+      error => {console.log(error.error);
         this.snackBar.open("Company registration failed", "Try Again!",
           {duration: 3000}) }
     );

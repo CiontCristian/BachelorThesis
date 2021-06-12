@@ -11,7 +11,7 @@
   </mat-card-header>
   <mat-card-content style="text-align: center">
     <img  class="card-img" src="data:image/JPEG;base64,{{job.contractor.logo.data}}" alt="Company">
-    <p style="text-align: left;margin-top: 3px" *ngIf="job.minCompensation !== -1">Min. Salary: {{job.minCompensation}}</p>
-    <p style="text-align: left;margin-top: 3px" *ngIf="job.minCompensation === -1">Min. Salary: Undisclosed</p>
+    <p style="text-align: left;margin-top: 3px" *ngIf="job.minCompensation !== 0">Min. Salary: {{job.minCompensation}}</p>
+    <p style="text-align: left;margin-top: 3px" *ngIf="job.minCompensation === 0">Min. Salary: Undisclosed</p>
   </mat-card-content>
 </mat-card>

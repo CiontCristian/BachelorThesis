@@ -22,7 +22,7 @@
         <mat-label>Min Compensation</mat-label>
         <label>
           <input type="number" matInput [formControl]="minCompForm"
-                 placeholder="Ex. 800$/month">
+                 placeholder="Ex. 800$">
         </label>
       </mat-form-field>
 
@@ -66,6 +66,7 @@
               (matChipInputTokenEnd)="add($event, 'tech')" required>
           </label>
         </mat-chip-list>
+        <mat-hint>Press ENTER or COMMA to submit</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="filter_form_field">
@@ -88,6 +89,7 @@
               (matChipInputTokenEnd)="add($event, 'dev')" required>
           </label>
         </mat-chip-list>
+        <mat-hint>Press ENTER or COMMA to submit</mat-hint>
       </mat-form-field>
 
       <mat-label>Available Positions</mat-label>

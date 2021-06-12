@@ -117,14 +117,11 @@ export class ContractorManageComponent implements OnInit {
           this.contractorService.findContractorForUser(this.currentUser.id)
             .subscribe(response => {
               this.contractor = response.body;
-              console.log("After dialog close");
-              console.log(response.body);
               sessionStorage.setItem("contractor", JSON.stringify(response.body));
               window.location.reload();
             })
         }, 1000);
       }
-      //window.location.reload();
     });
   }
 
@@ -138,13 +135,10 @@ export class ContractorManageComponent implements OnInit {
     imageUpload.click();
   }
 
-
-
   modify() {
     let location: Location = new Location(this.contractor.location.id, this.latitude, this.longitude);
     let contractor: Contractor;
     if(this.image !== null) {
-      console.log(this.image.type);
       if(this.image.type !== "image/png" && this.image.type !== "image/jpeg"){
         this.snackBar.open("Please upload an image in .png or .jpg format!", "Retry!", {duration: 3000});
         return;

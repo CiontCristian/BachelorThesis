@@ -28,9 +28,7 @@ export class JobDetailsComponent implements OnInit {
   constructor(private jobService: JobService,
               private route: ActivatedRoute,
               private router: Router,
-              private config: NgbRatingConfig) {
-    config.max = 5;
-  }
+              private config: NgbRatingConfig) {}
 
   ngOnInit(): void {
     this.route.params.pipe(switchMap((params: Params) => this.jobService.getJob(+params['jobID'])))
@@ -86,7 +84,6 @@ export class JobDetailsComponent implements OnInit {
 
   navigateToJobDetails(id: number) {
     this.router.navigate(["job-list/details/", id]);
-    //this.refresh();
   }
 
   apply() {
@@ -115,7 +112,7 @@ export class JobDetailsComponent implements OnInit {
       Math.cos(this.rad(lat1)) * Math.cos(this.rad(lat2)) *
       Math.sin(dLong / 2) * Math.sin(dLong / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var km = (R * c) / 1000; //distance in km
+    var km = (R * c) / 1000;
     return Math.round((km + Number.EPSILON) * 100) / 100
   };
 
@@ -143,7 +140,9 @@ export class JobDetailsComponent implements OnInit {
     }
     this.jobService.computeSecondaryRecommenderAccuracy(this.currentUser.id).subscribe(
       response => {this.accuracy = response.body;
-        this.toggleAccuracy = !this.toggleAccuracy;}
+        this.toggleAccuracy = !this.toggleAccuracy;
+     },
+      error => {console.log(error.error)}
     );
   }
 }

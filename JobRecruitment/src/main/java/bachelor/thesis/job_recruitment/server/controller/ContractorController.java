@@ -72,6 +72,7 @@ public class ContractorController {
         if(contractor.isEmpty())
             throw new ResourceNotFoundException("Contractor with the id: " + id + " was not found");
 
+        log.trace("In ContractorController - method: findContractorForUser - contractor retrieved!");
         return new ResponseEntity<>(contractor.get(), HttpStatus.OK);
 
     }
@@ -97,6 +98,7 @@ public class ContractorController {
     @DeleteMapping(value = "/removeContractor/{id}")
     ResponseEntity<?> removeContractor(@PathVariable Long id){
         contractorService.removeContractor(id);
+        log.trace("In ContractorController - method: removeContractor - id={}",id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

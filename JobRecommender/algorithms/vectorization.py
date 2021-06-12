@@ -9,9 +9,7 @@ def getJobFeatures(jobs, input_id=-1, knn=False):
     vectorString = ""
     input_vector_string = ""
     for job in jobs:
-        #vectorString += job.minExperience.strip() + "," + job.jobType.strip() + "," + job.devType.strip() + "," + str(
-        #    job.remote).strip() + "," + job.techs.strip()
-        vectorString += job.minExperience.strip() +  "," + job.devType.strip() + "," + job.techs.strip()
+        vectorString += job.minExperience.strip() + "," + job.devType.strip() + "," + job.techs.strip()
         headers.append(vectorString)
         if knn and job.id == input_id:
             input_vector_string = vectorString
@@ -24,8 +22,6 @@ def getJobFeatures(jobs, input_id=-1, knn=False):
 
 def getUserBackgroundFeatures(background):
     vectorString = ""
-    #vectorString += background[1] + "," + background[2] + "," + background[0] + "," + str(
-    #    background[3]) + "," + background[4]
     vectorString += background[1] + "," + background[0] + "," + background[4]
     return vectorString
 
@@ -56,7 +52,7 @@ def vectorizeJobsKNN(jobs, input_id):
     vectorizer = CountVectorizer()
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
-    print("Number of vectorized entities: " + str(len(normalized_jobs)))
+    print("Number of vectorized entities KNN: " + str(len(normalized_jobs)))
 
     vectorized_input = normalized_jobs[-1]
     normalized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)
@@ -71,12 +67,11 @@ def vectorizeDataCBF(jobs, preferences, background):
     vectorized_preferences = np.array(vectorized_preferences)
 
     vectorizer = CountVectorizer()
-    normalized_preferences = list(flatten(normalizer(vectorized_preferences.reshape(1,-1), 'l2')))
-    print("Normalized preference vector" + str(normalized_preferences))
+    normalized_preferences = list(flatten(normalizer(vectorized_preferences.reshape(1, -1), 'l2')))
     vectorized_jobs = vectorizer.fit_transform(headers).toarray()
 
     normalized_jobs = normalizer(vectorized_jobs, 'l2')
-    print("Number of vectorized entities: " + str(len(normalized_jobs)))
+    print("Number of vectorized entities CBF: " + str(len(normalized_jobs)))
 
     vectorized_background = normalized_jobs[-1]
     vectorized_jobs = np.delete(normalized_jobs, len(normalized_jobs) - 1, 0)

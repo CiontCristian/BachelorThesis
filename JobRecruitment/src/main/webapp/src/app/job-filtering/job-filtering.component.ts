@@ -24,7 +24,7 @@ export class JobFilteringComponent implements OnInit {
 
   selectable = true;
   removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
   techs: string[] = [];
   devTypes: string[] = [];
 
@@ -65,7 +65,6 @@ export class JobFilteringComponent implements OnInit {
         input.value = '';
       }
 
-      //this.techsForm.setValue(null);
     }
     else{
       if ((value || '').trim()) {
@@ -75,8 +74,6 @@ export class JobFilteringComponent implements OnInit {
       if (input) {
         input.value = '';
       }
-
-      //this.devTypeForm.setValue(null);
     }
   }
 

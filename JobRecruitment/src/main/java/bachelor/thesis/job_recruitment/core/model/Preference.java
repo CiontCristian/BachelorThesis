@@ -31,6 +31,8 @@ public class Preference{
                 "key=" + key +
                 ", interested=" + interested +
                 ", applied=" + applied +
+                ", relevanceMain=" + relevanceMain +
+                ", relevanceSec=" + relevanceSec +
                 '}';
     }
 }

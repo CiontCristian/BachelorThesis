@@ -80,7 +80,6 @@ public class JobController {
         Job modifiedJob = jobService.modify(job);
         log.trace("In JobController - method: saveJob - savedJob={}", modifiedJob);
 
-
         return new ResponseEntity<>(modifiedJob, HttpStatus.OK);
     }
 
@@ -103,12 +102,17 @@ public class JobController {
     @PostMapping(value = "/savePreference")
     ResponseEntity<?> savePreference(@RequestBody Preference preference){
         jobService.savePreference(preference);
+        log.trace("In JobController - method: savePreference - preference={}", preference);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value="/findJobsForContractor/{id}")
     ResponseEntity<List<Job>> findJobsForContractor(@PathVariable Long id){
-        return new ResponseEntity<>(jobService.findJobsForContractor(id),
+        List<Job> jobs = jobService.findJobsForContractor(id);
+        log.trace("In JobController - method: findJobsForContractor - Nr. of retrieved jobs={}", jobs.size());
+
+        return new ResponseEntity<>(jobs,
                 HttpStatus.OK);
     }
 
@@ -127,7 +131,7 @@ public class JobController {
 
     @GetMapping(value = "/getJobPreferenceForUser")
     ResponseEntity<Preference> getJobPreferenceForUser(@RequestParam Long userId, @RequestParam Long jobId){
-        log.debug("In JobController - method: getJobPreferenceForUser - userId={}, jobId={}",userId, jobId);
+        log.trace("In JobController - method: getJobPreferenceForUser - userId={}, jobId={}",userId, jobId);
         Optional<Preference> preference = jobService.findJobPreferenceForUser(userId, jobId);
         if(preference.isEmpty())
             throw new ResourceNotFoundException("Preference not found!");
@@ -137,24 +141,30 @@ public class JobController {
     @GetMapping(value = "/getAvailableTechs")
     ResponseEntity<List<String>> getAvailableTechs(){
         List<String> techs = jobService.getAvailableTechs();
+        log.trace("In JobController - method: getAvailableTechs - Nr. of techs={}", techs.size());
+
         return new ResponseEntity<>(techs, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getAvailableDevTypes")
     ResponseEntity<Set<String>> getAvailableDevTypes(){
         Set<String> devs = jobService.getAvailableDevTypes();
+        log.trace("In JobController - method: getAvailableDevTypes - Nr. of developer types={}", devs.size());
+
         return new ResponseEntity<>(devs, HttpStatus.OK);
     }
 
     @GetMapping(value = "/computeMainRecommenderAccuracy/{userId}")
     ResponseEntity<Integer> computeMainRecommenderAccuracy(@PathVariable Long userId){
         Integer accuracy = jobService.computeMainRecommenderAccuracy(userId);
+        log.trace("In JobController - method: computeMainRecommenderAccuracy - accuracy={}", accuracy);
         return new ResponseEntity<>(accuracy, HttpStatus.OK);
     }
 
     @GetMapping(value = "/computeSecondaryRecommenderAccuracy/{userId}")
     ResponseEntity<Integer> computeSecondaryRecommenderAccuracy(@PathVariable Long userId){
         Integer accuracy = jobService.computeSecondaryRecommenderAccuracy(userId);
+        log.trace("In JobController - method: computeSecondaryRecommenderAccuracy - accuracy={}", accuracy);
         return new ResponseEntity<>(accuracy, HttpStatus.OK);
     }
 }

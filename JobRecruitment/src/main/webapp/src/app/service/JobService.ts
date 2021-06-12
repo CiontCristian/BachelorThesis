@@ -10,21 +10,12 @@ import {Filter} from "../model/Filter";
 @Injectable()
 export class JobService{
   private jobURL = environment.apiBaseUrl + '/job';
-  private searchValue = new BehaviorSubject<string>("");
   private recommenderURL = environment.recommenderBaseUrl + '/recommender';
 
   constructor(
     private httpClient: HttpClient,
     private router: Router
   ) {}
-
-  sendSearchValue(value: string){
-    this.searchValue.next(value);
-  }
-
-  receiveSearchValue(): Observable<string>{
-    return this.searchValue.asObservable();
-  }
 
   getAllJobs(pageIndex: number, pageSize: number, sortType: string, criteria: Filter): Observable<HttpResponse<Job[]>>
   {

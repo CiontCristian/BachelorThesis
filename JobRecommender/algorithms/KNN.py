@@ -23,7 +23,6 @@ class KNN:
             neighbor_distances_and_indices.append((distance, index))
 
         sorted_neighbor_distances_and_indices = sorted(neighbor_distances_and_indices)[:self.k + new_k]
-        print("Top distances: " + str(sorted_neighbor_distances_and_indices))
         return sorted_neighbor_distances_and_indices
 
     def recommend(self, rawData, lookAhead):
@@ -33,7 +32,7 @@ class KNN:
         )
 
         recommended = []
-        for _, index in recommendation_indices:
-            recommended.append(rawData[index].id)
+        for distance, index in recommendation_indices:
+            recommended.append((rawData[index].id, distance))
 
         return recommended

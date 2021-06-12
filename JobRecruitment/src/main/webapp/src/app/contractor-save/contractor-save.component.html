@@ -26,7 +26,7 @@
                         placeholder="Ex. Desc"></textarea>
               </label>
               <mat-error *ngIf="this.generalFormGroup.get('descriptionForm').hasError('required')">
-                Desc is required
+                Description is required
               </mat-error>
             </mat-form-field>
             <br>
@@ -38,7 +38,7 @@
                        placeholder="Ex. Delgado">
               </label>
               <mat-error *ngIf="this.generalFormGroup.get('nrOfEmployeesForm').hasError('required')">
-                nrOfEmployees is required
+                Nr. Of Employees is required
               </mat-error>
             </mat-form-field>
             <br>
@@ -49,10 +49,10 @@
               {{imageName}}
               <input #imageUpload type="file" accept="image/png, image/jpg, image/jpeg" style="display: none;" formControlName="logoForm" required>
             </label>
+            <mat-hint>Upload the image in .png or .jpeg format!</mat-hint>
             <mat-error *ngIf="this.generalFormGroup.get('logoForm').hasError('required')">
               Logo is required
             </mat-error>
-            <mat-hint>Upload the image in .png or .jpeg format!</mat-hint>
 
             <div>
               <button mat-button matStepperNext>Next</button>

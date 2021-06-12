@@ -49,7 +49,6 @@ class DB:
         for row in rows:
             ids.append(row[0])
 
-        print("Banned ids for CBF:" + str(ids))
         return ids
 
     def getRatedJobsKNN(self, input_id):
@@ -63,7 +62,6 @@ class DB:
         for row in rows:
             ids.append(row[0])
 
-        print("Banned ids for KNN:" + str(ids))
         return ids
 
     def getUserPreferences(self, id):

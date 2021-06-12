@@ -1,18 +1,17 @@
 
-<div class="register_container">
+<div class="modify_container">
   <h1 mat-dialog-title>Edit Profile Settings</h1>
   <div mat-dialog-content>
 
     <h1>Register</h1>
-      <mat-horizontal-stepper linear #stepper class="register-stepper">
+      <mat-horizontal-stepper linear #stepper class="modify-stepper">
         <mat-step [stepControl]="generalFormGroup" label="General Info" state="general">
           <ng-template matStepperIcon="general">
             <mat-icon color="primary">info</mat-icon>
           </ng-template>
           <form [formGroup]="generalFormGroup">
-            <!--<ng-template matStepLabel>General Info</ng-template>-->
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" class="modify_form_field">
               <mat-label>Email</mat-label>
               <label>
                 <input type="email" matInput formControlName="emailForm" required
@@ -22,7 +21,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" class="modify_form_field">
               <mat-label>Enter your password</mat-label>
               <label>
                 <input matInput formControlName="passwordForm" [type]="hidePassword ? 'password' : 'text'" required>
@@ -30,13 +29,13 @@
               <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
-              <mat-error *ngIf="this.generalFormGroup.get('passwordForm').hasError('required')">
-                Password is required
+              <mat-error *ngIf="this.generalFormGroup.get('passwordForm').invalid">
+                {{getPasswordErrorMessage()}}
               </mat-error>
             </mat-form-field>
             <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" class="modify_form_field">
               <mat-label>First Name</mat-label>
               <label>
                 <input type="text" matInput formControlName="firstNameForm" required
@@ -47,7 +46,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" class="modify_form_field">
               <mat-label>Last Name</mat-label>
               <label>
                 <input type="text" matInput formControlName="lastNameForm" required
@@ -59,7 +58,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field appearance="fill" class="register_form_field">
+            <mat-form-field appearance="fill" class="modify_form_field">
               <mat-label>Date of Birth</mat-label>
 
 
@@ -73,7 +72,7 @@
             </mat-form-field>
             <br>
 
-            <div class="register-gender-div">
+            <div class="modify-gender-div">
 
               <mat-radio-group aria-label="Select an option" formControlName="genderForm" required>
                 <mat-radio-button value="M">Male</mat-radio-button>
@@ -134,7 +133,7 @@
 
               <br>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <mat-form-field appearance="fill" class="modify_form_field">
                 <mat-label>Experience</mat-label>
                 <mat-select formControlName="experienceForm">
                   <mat-option *ngFor="let exp of experienceLevels" [value]="exp">{{exp}}</mat-option>
@@ -147,7 +146,7 @@
               <mat-slide-toggle formControlName="remoteForm"></mat-slide-toggle>
               <br>
 
-              <mat-form-field appearance="fill" class="register_form_field">
+              <mat-form-field appearance="fill" class="modify_form_field">
                 <mat-label>Job Type</mat-label>
                 <mat-select formControlName="jobTypeForm" multiple>
                   <mat-option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</mat-option>
@@ -165,8 +164,8 @@
       </mat-horizontal-stepper>
   </div>
   <div mat-dialog-actions style="justify-content: center;">
-    <button mat-button mat-dialog-close = "cancel" class="register-button">Cancel</button>
-    <button type="submit" mat-raised-button class="register-button" mat-dialog-close="User modified!" (click)="modify()"
+    <button mat-button mat-dialog-close = "cancel" class="modify-button">Cancel</button>
+    <button type="submit" mat-raised-button class="modify-button" mat-dialog-close="User modified!" (click)="modify()"
             [disabled]="this.generalFormGroup.get('emailForm').invalid || this.generalFormGroup.get('passwordForm').invalid
       || this.generalFormGroup.get('firstNameForm').invalid || this.generalFormGroup.get('lastNameForm').invalid ||
        this.generalFormGroup.get('birthDateForm').invalid">Register</button>

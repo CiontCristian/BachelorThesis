@@ -20,7 +20,7 @@ export class JobSaveComponent implements OnInit {
   contractor: Contractor = JSON.parse(sessionStorage.getItem("contractor"));
 
   titleForm = new FormControl('', [Validators.required]);
-  descriptionForm = new FormControl('', [Validators.required]);
+  descriptionForm = new FormControl('');
   jobTypeForm = new FormControl('', [Validators.required]);
   jobTypes: string[] = ["part-time", "full-time", "internship"];
   devTypeForm = new FormControl('', [Validators.required]);
@@ -48,7 +48,7 @@ export class JobSaveComponent implements OnInit {
 
   register(): void{
     let job: Job = new Job(0, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
-      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
+      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? 0
       : Math.abs(this.minCompForm.value), this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, new Date(Date.now()), this.contractor);
 
@@ -56,7 +56,7 @@ export class JobSaveComponent implements OnInit {
     this.jobService.saveJob(job).subscribe(
       response => {this.snackBar.open("Job added successfully!","",{duration: 3000})
       },
-      error => console.log(error)
+      error => console.log(error.error)
     );
   }
 

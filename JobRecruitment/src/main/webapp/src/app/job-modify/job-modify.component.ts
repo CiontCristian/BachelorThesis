@@ -20,7 +20,7 @@ export class JobModifyComponent implements OnInit {
   job: Job = null;
 
   titleForm = new FormControl('', [Validators.required]);
-  descriptionForm = new FormControl('', [Validators.required]);
+  descriptionForm = new FormControl('');
   jobTypeForm = new FormControl('', [Validators.required]);
   jobTypes: string[] = ["part-time", "full-time", "internship"];
   devTypeForm = new FormControl('', [Validators.required]);
@@ -30,7 +30,6 @@ export class JobModifyComponent implements OnInit {
   minExpForm = new FormControl('', [Validators.required]);
   experienceLevels: string[] = ["entry", "junior", "middle", "senior", "lead", "manager"];
   techsForm = new FormControl('', [Validators.required]);
-  visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -46,11 +45,9 @@ export class JobModifyComponent implements OnInit {
     this.titleForm.setValue(this.job.title);
     this.descriptionForm.setValue(this.job.description);
     this.jobTypeForm.setValue(this.job.jobType.split(','));
-    //this.devTypeForm.setValue(this.job.devType.split(','));
     this.devTypes = this.job.devType.split(',')
     this.remoteForm.setValue(this.job.remote);
     this.minExpForm.setValue(this.job.minExperience.split(','));
-    //this.techsForm.setValue(this.job.techs.split(','));
     this.techs = this.job.techs.split(',');
     this.minCompForm.setValue(this.job.minCompensation);
     this.availablePosForm.setValue(this.job.availablePos);
@@ -111,7 +108,7 @@ export class JobModifyComponent implements OnInit {
 
   modify() {
     let job: Job = new Job(this.job.id, this.titleForm.value, this.descriptionForm.value, this.jobTypeForm.value.toString(),
-      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? -1
+      this.remoteForm.value, this.minExpForm.value.toString(), this.minCompForm.value === '' ? 0
         : Math.abs(this.minCompForm.value), this.devTypes.toString(),
       this.techs.toString(), this.availablePosForm.value, this.job.dateAdded, this.job.contractor);
 

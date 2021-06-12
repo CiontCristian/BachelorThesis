@@ -39,7 +39,7 @@ export class UserModifyComponent implements OnInit {
       emailForm : new FormControl(this.currentUser.email, [
         Validators.required,
         Validators.email
-      ]), passwordForm: new FormControl(this.currentUser.password, [Validators.required]),
+      ]), passwordForm: new FormControl(this.currentUser.password, [Validators.required, Validators.minLength(4)]),
       firstNameForm: new FormControl(this.currentUser.firstName, [Validators.required]), lastNameForm: new FormControl(this.currentUser.lastName, [Validators.required]),
       birthDateForm: new FormControl(this.currentUser.dateOfBirth, [Validators.required]), genderForm : new FormControl(this.currentUser.gender, [Validators.required])
     });
@@ -53,12 +53,12 @@ export class UserModifyComponent implements OnInit {
         remoteForm: new FormControl(this.currentUser.background.remote)
       });
 
-      this.jobService.getAvailableTechs()
-        .subscribe(response => {this.availableTechs = response.body},
-          error => console.log(error.error))
-      this.jobService.getAvailableDevTypes()
-        .subscribe(response => {this.availableDevTypes = response.body},
-          error => console.log(error.error))
+    this.jobService.getAvailableTechs()
+      .subscribe(response => {this.availableTechs = response.body},
+        error => console.log(error.error))
+    this.jobService.getAvailableDevTypes()
+      .subscribe(response => {this.availableDevTypes = response.body},
+        error => console.log(error.error))
     }
     if(!this.currentUser.permission.isAdmin){
       this.latitude = this.currentUser.location.latitude;
@@ -79,6 +79,14 @@ export class UserModifyComponent implements OnInit {
     }
 
     return this.generalFormGroup.get('emailForm').hasError('email') ? 'Not a valid email' : '';
+  }
+
+  getPasswordErrorMessage(){
+    if (this.generalFormGroup.get('passwordForm').hasError('required')) {
+      return 'Password is required!';
+    }
+
+    return this.generalFormGroup.get('passwordForm').hasError('minlength') ? 'Password too short!' : '';
   }
 
 

@@ -4,13 +4,12 @@
     <mat-horizontal-stepper linear #stepper class="register-stepper">
       <mat-step [stepControl]="generalFormGroup" label="General Info" state="general">
         <form [formGroup]="generalFormGroup">
-          <!--<ng-template matStepLabel>General Info</ng-template>-->
 
           <mat-form-field appearance="fill" class="register_form_field">
             <mat-label>Email</mat-label>
             <label>
               <input type="email" matInput formControlName="emailForm" required
-                     placeholder="Ex. pat@example.com">
+                     placeholder="Ex. name@example.com">
             </label>
             <mat-error *ngIf="this.generalFormGroup.get('emailForm').invalid">{{getEmailErrorMessage()}}</mat-error>
           </mat-form-field>
@@ -55,8 +54,6 @@
 
           <mat-form-field appearance="fill" class="register_form_field">
             <mat-label>Date of Birth</mat-label>
-
-
             <input matInput [matDatepicker]="picker" formControlName="birthDateForm" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -68,7 +65,6 @@
           <br>
 
           <div class="register-gender-div">
-
             <mat-radio-group aria-label="Select an option" formControlName="genderForm" required>
               <mat-radio-button value="M">Male</mat-radio-button>
               <mat-radio-button value="F">Female</mat-radio-button>

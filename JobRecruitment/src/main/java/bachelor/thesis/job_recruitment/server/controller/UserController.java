@@ -44,7 +44,7 @@ public class UserController {
     ResponseEntity<List<GenericUser>> findAllUsers(){
         List<GenericUser> users = userService.findAll();
 
-        log.trace("In UserController - method: findAll - users={}", users);
+        log.trace("In UserController - method: findAll - number of users={}", users.size());
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }

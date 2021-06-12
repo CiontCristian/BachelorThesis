@@ -23,8 +23,8 @@
     <p *ngIf="job.remote"><b>Attention: job is available remote only! </b></p>
     <mat-divider></mat-divider>
     <p>Necessary languages: {{job.techs}}</p>
-    <p *ngIf="job.minCompensation !== -1">Monthly salary: {{job.minCompensation}} $</p>
-    <p *ngIf="job.minCompensation === -1">Monthly salary: Undisclosed</p>
+    <p *ngIf="job.minCompensation !== 0">Monthly salary: {{job.minCompensation}} $</p>
+    <p *ngIf="job.minCompensation === 0">Monthly salary: Undisclosed</p>
     <p><b> Description: </b></p>
     <span>{{job.description}}</span>
     <mat-divider></mat-divider>

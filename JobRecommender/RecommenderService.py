@@ -23,10 +23,15 @@ class Controller:
         else:
             bannedIds = []
 
-        res = self.knn.recommend(jobs, len(bannedIds))
-        res = [elem for elem in res if elem not in bannedIds]
+        ids_distance = self.knn.recommend(jobs, len(bannedIds))
+        print("Lowest distances: " + str(ids_distance))
+        print("Banned ids for KNN:" + str(bannedIds))
+        
+        ids_distance = [elem for elem in ids_distance if elem[0] not in bannedIds]
+        print("Lowest unbanned distances: " + str(ids_distance))
 
-        return res
+        ids_distance = [elem[0] for elem in ids_distance]
+        return ids_distance
 
     def recommendCBF(self, input_id):
 
@@ -47,8 +52,12 @@ class Controller:
 
         ids_similarity_desc = sorted(ids_similarity, key=lambda x: x[1], reverse=True)
         print("Highest similarities: " + str(ids_similarity_desc))
-        ids = [elem[0] for elem in ids_similarity_desc]
+
         ratedJobIds = self.db.getRatedJobsCBF(input_id)
-        ids = [elem for elem in ids if elem not in ratedJobIds]
-        print("Highest unrated similarities: " + str(ids))
+        print("Banned ids for CNF:" + str(ratedJobIds))
+
+        ids_similarity_desc = [elem for elem in ids_similarity_desc if elem[0] not in ratedJobIds]
+        print("Highest unrated similarities: " + str(ids_similarity_desc))
+
+        ids = [elem[0] for elem in ids_similarity_desc]
         return ids
