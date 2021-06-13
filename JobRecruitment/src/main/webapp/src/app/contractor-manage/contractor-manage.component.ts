@@ -107,7 +107,6 @@ export class ContractorManageComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ContractorSaveComponent,{
       width: '50%',
-      height: '80vh',
       data: dialogConfig.data
     });
     dialogRef.afterClosed().subscribe(result => {

@@ -208,7 +208,7 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public Integer countAppliedJobPreferences(Long id) {
-        log.trace("In JobServiceImpl - method: countAppliedJobPreferences() - id={}", id);
+        //log.trace("In JobServiceImpl - method: countAppliedJobPreferences() - id={}", id);
 
         return (int)preferenceRepository.findAll().stream()
                 .filter(preference -> preference.getJob().getId().equals(id))

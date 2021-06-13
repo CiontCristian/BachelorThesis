@@ -26,7 +26,7 @@ class Controller:
         ids_distance = self.knn.recommend(jobs, len(bannedIds))
         print("Lowest distances: " + str(ids_distance))
         print("Banned ids for KNN:" + str(bannedIds))
-        
+
         ids_distance = [elem for elem in ids_distance if elem[0] not in bannedIds]
         print("Lowest unbanned distances: " + str(ids_distance))
 
