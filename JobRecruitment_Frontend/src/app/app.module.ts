@@ -102,7 +102,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatExpansionModule,
         MatTableModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyCnQwM5bsv0_rr-akrFM5cfE0VFUSEoG7Q'
+            apiKey: ''
         }),
         MatSlideToggleModule,
         NgxChartsModule,
